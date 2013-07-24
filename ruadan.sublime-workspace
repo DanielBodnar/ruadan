@@ -1,0 +1,423 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 99.0,
+		"selected_items":
+		[
+			[
+				"bash",
+				"Set Syntax: Shell Script (Bash)"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"project",
+				"Project: Add Folder"
+			],
+			[
+				"packinsta",
+				"Package Control: Install Package"
+			],
+			[
+				"emmet",
+				"Emmet: Split\\Join Tag"
+			],
+			[
+				"match",
+				"Emmet: Match Pair (outward)"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"save",
+				"File: Save All"
+			],
+			[
+				"delete",
+				"File: Delete"
+			],
+			[
+				"file: ew",
+				"File: New File Relative to Current View"
+			],
+			[
+				"file: new",
+				"File: New File Relative to Current View"
+			],
+			[
+				"new",
+				"File: New File Relative to Current View"
+			],
+			[
+				"syntax bash",
+				"Set Syntax: Shell Script (Bash)"
+			],
+			[
+				"",
+				"View: Toggle Minimap"
+			],
+			[
+				"package",
+				"Package Control: List Packages"
+			],
+			[
+				"file:",
+				"File: Move"
+			],
+			[
+				"Package Control: ",
+				"Package Control: List Packages"
+			],
+			[
+				"install ",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"packa",
+				"Preferences: Browse Packages"
+			],
+			[
+				"pack",
+				"Package Control: Remove Package"
+			]
+		],
+		"width": 579.0
+	},
+	"console":
+	{
+		"height": 125.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/dannifriedland/Dev/disco_pop/.git/COMMIT_EDITMSG",
+		"/usr/local/etc/redis.conf",
+		"/Users/dannifriedland/.zshrc",
+		"/Users/dannifriedland/Library/Application Support/Sublime Text 2/Packages/Default/Default (OSX).sublime-keymap",
+		"/Users/dannifriedland/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/Users/dannifriedland/Dev/ruadan/public/stylesheets/style.styl",
+		"/Users/dannifriedland/Dev/ey-cloud-recipes/cookbooks/graylog2/recipes/server.rb",
+		"/Users/dannifriedland/Dev/ey-cloud-recipes/cookbooks/mongodb/recipes/default.rb",
+		"/Users/dannifriedland/Dev/ey-cloud-recipes/cookbooks/graylog2/attributes/default.rb",
+		"/Users/dannifriedland/Dev/ey-cloud-recipes/cookbooks/mongodb/attributes/recipe.rb",
+		"/Users/dannifriedland/Desktop/ebay.txt",
+		"/Users/dannifriedland/Library/Application Support/Sublime Text 2/Packages/User/Default (OSX).sublime-keymap",
+		"/Users/dannifriedland/Dev/stalker/Gemfile",
+		"/Users/dannifriedland/Library/Application Support/Sublime Text 2/Packages/PlainTasks/messages/Tutorial.todo",
+		"/private/etc/hosts",
+		"/Users/dannifriedland/Dev/stalker/t",
+		"/Users/dannifriedland/Library/Application Support/Sublime Text 2/Packages/Package Control/Package Control.sublime-settings",
+		"/Users/dannifriedland/Library/Application Support/Sublime Text 2/Packages/SideBarEnhancements/Default (OSX).sublime-keymap",
+		"/Users/dannifriedland/Library/Application Support/Sublime Text 2/Packages/Github Tools/Default.sublime-commands",
+		"/Users/dannifriedland/Library/Application Support/Sublime Text 2/Packages/SideBarEnhancements/Side Bar.sublime-settings",
+		"/Users/dannifriedland/Library/Application Support/Sublime Text 2/Packages/AdvancedNewFile/AdvancedNewFile.sublime-settings",
+		"/Users/dannifriedland/Dev/disco_pop/test.rb",
+		"/Users/dannifriedland/Library/Application Support/Sublime Text 2/Packages/AdvancedNewFile/README.md",
+		"/Users/dannifriedland/Library/Application Support/Sublime Text 2/Packages/AdvancedNewFile/Default (OSX).sublime-keymap",
+		"/Users/dannifriedland/Library/Application Support/Sublime Text 2/Packages/User/AdvancedNewFile.sublime-settings",
+		"/Users/dannifriedland/Library/Application Support/Sublime Text 2/Packages/SchemeCycler/Default.sublime-keymap",
+		"/Users/dannifriedland/Library/Application Support/Sublime Text 2/Packages/User/Distraction Free.sublime-settings",
+		"/Users/dannifriedland/Library/Application Support/Sublime Text 2/Packages/SideBarEnhancements/messages/11.13.2012.1305.0.txt",
+		"/Users/dannifriedland/Dev/Ebay/.git/COMMIT_EDITMSG",
+		"/Users/dannifriedland/Dev/graylog/.git/COMMIT_EDITMSG",
+		"/Users/dannifriedland/Dev/vial/.git/COMMIT_EDITMSG",
+		"/Users/dannifriedland/.gitconfig",
+		"/Users/dannifriedland/.ssh/config",
+		"/Users/dannifriedland/.ssh/known_hosts",
+		"/Users/dannifriedland/Dev/disco_pop/Gemfile",
+		"/Users/dannifriedland/Dev/graylog/.git/rebase-merge/git-rebase-todo",
+		"/Users/dannifriedland/Downloads/graylog2-server-0.11.0/elasticsearch.yml.example",
+		"/Users/dannifriedland/Downloads/graylog2-server-0.11.0/graylog2.conf.example",
+		"/Users/dannifriedland/Dev/ey-cloud-recipes/.git/rebase-merge/git-rebase-todo",
+		"/Users/dannifriedland/.rvmrc",
+		"/Users/dannifriedland/Downloads/order_map.json",
+		"/Users/dannifriedland/Dev/disco_pop/.git/rebase-merge/git-rebase-todo",
+		"/Users/dannifriedland/Downloads/report.csv",
+		"/Users/dannifriedland/Desktop/a",
+		"/Users/dannifriedland/Desktop/bootstrap.log",
+		"/Users/dannifriedland/Downloads/order_map.txt",
+		"/Users/dannifriedland/Desktop/all.js",
+		"/Users/dannifriedland/Desktop/core.js",
+		"/Users/dannifriedland/Desktop/archive_all.js",
+		"/Users/dannifriedland/Desktop/get_orders_data",
+		"/Users/dannifriedland/Downloads/order_number_map.out",
+		"/Users/dannifriedland/Desktop/data.json",
+		"/Users/dannifriedland/Downloads/not_found.csv",
+		"/Users/dannifriedland/Downloads/isotope-site/jquery.isotope.js",
+		"/Users/dannifriedland/.oh-my-zsh/.git/MERGE_MSG",
+		"/Users/dannifriedland/Downloads/missing_items.csv",
+		"/Users/dannifriedland/Downloads/itemsAffected.out",
+		"/Users/dannifriedland/Downloads/maxim-key.pub",
+		"/Users/dannifriedland/Dev/configreader/.git/COMMIT_EDITMSG",
+		"/Users/dannifriedland/Downloads/complete/The.Simpsons.S24E09.Homer.Goes.to.Prep.School.PROPER.720p.WEB-DL.DD5.1.H.264-LFF/The.Simpsons.S24E09.Homer.Goes.to.Prep.School.PROPER.720p.WEB-DL.DD5.1.H.264-LFF.nfo",
+		"/Users/dannifriedland/Dev/spiral/test.ex",
+		"/Users/dannifriedland/Dev/disco_pop/.MacOSX/environment.plist",
+		"/Users/dannifriedland/Dev/disco_pop/test",
+		"/Users/dannifriedland/Dev/disco_pop/test.bash",
+		"/Users/dannifriedland/Dev/disco_pop/.rvmrc",
+		"/Users/dannifriedland/Downloads/complete/The.Simpsons.S24E07.720p.WEB-DL.DD5.1.H264/The.Simpsons.S24E07.The.Day.the.Earth.Stood.Cool.720p.WEB-DL.DD5.1.H264.nfo",
+		"/Users/dannifriedland/Dev/disco_pop/.git/TAG_EDITMSG",
+		"/Users/dannifriedland/Dev/disco_pop/.git/MERGE_MSG",
+		"/Users/dannifriedland/Downloads/Application_2012-12-10T18-18-25_2012-12-11T18-18-25.json",
+		"/Users/dannifriedland/Dev/disco_pop/t.txt",
+		"/Users/dannifriedland/Desktop/slice.js",
+		"/Users/dannifriedland/Desktop/response.json",
+		"/Users/dannifriedland/Desktop/f.eml",
+		"/Users/dannifriedland/Dev/disco_pop/subl",
+		"/Users/dannifriedland/Downloads/Application_2012-11-24T20-25-00_2012-11-24T20-45-00.json",
+		"/Users/dannifriedland/Dev/slice_api/.git/COMMIT_EDITMSG",
+		"/Users/dannifriedland/Downloads/Application_2012-11-14T12-05-15_2012-11-21T12-05-15.log",
+		"/Library/LaunchDaemons/and",
+		"/Library/LaunchDaemons/perform",
+		"/System/Library/LaunchAgents/org.openbsd.ssh-agent.plist",
+		"/Library/LaunchAgents/net.culater.SIMBL.Agent.plist",
+		"/Library/LaunchDaemons/org.nginx.nginx.plist",
+		"/Library/StartupItems/ChmodBPF/README.macosx",
+		"/Users/dannifriedland/.mongo3/landscape.yml",
+		"/usr/local/bin/mongo",
+		"/tmp/subl stdin dBLTu9.txt",
+		"/usr/lib/meteor/app/meteor/run.js",
+		"/usr/local/bin/meteor",
+		"/Users/dannifriedland/Dev/byta/.git/MERGE_MSG",
+		"/Users/dannifriedland/Dev/cookbooks/delayed_job/recipes/default.rb",
+		"/Users/dannifriedland/Dev/cookbooks/main/recipes/default.rb",
+		"/Users/dannifriedland/Dev/byta/.meteor/.gitignore",
+		"/Users/dannifriedland/Dev/byta/.meteor/packages",
+		"/Users/dannifriedland/Dev/byta/.git/COMMIT_EDITMSG",
+		"/Users/dannifriedland/Dev/disco_pop/db/schema.rb"
+	],
+	"find":
+	{
+		"height": 36.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"word",
+			"select",
+			"project",
+			"buffer",
+			"goto",
+			"open",
+			"ope",
+			"open file",
+			"mongo_utility_instances",
+			"mongo",
+			"logs",
+			"log",
+			"delete",
+			"ci",
+			"condition",
+			"scss",
+			"8842151292159782863",
+			"\nHost staging_dp_web_master\n  Hostname ec2-50-112-254-107.us-west-2.compute.amazonaws.com\n  User deploy\n  IdentityFile ~/.ssh/id_rsa.pub",
+			"ci.",
+			"ci",
+			"bluehotdog",
+			"\\\n\\\"",
+			"\\\n\\\\\"",
+			"\\\n\\\"",
+			"12999763169054705758.15218479506951306842.1323980704.1",
+			".N",
+			"N",
+			"N()",
+			"changeStatus",
+			"o =",
+			"if (o",
+			"if (o && w)",
+			"o",
+			"o =",
+			"o=",
+			"o = ",
+			"o",
+			"but we're unable to verify the items within the package at",
+			"allTrackingHistory",
+			"allS",
+			"allsS",
+			"allshi",
+			"P",
+			"P ",
+			"P",
+			"P =",
+			"P=",
+			"P",
+			"blackBox",
+			"Q",
+			"var Q",
+			"Q",
+			"pick",
+			"quite_assets",
+			"uite_assets",
+			"rspec",
+			"no-to@stuffmail",
+			"\\n",
+			"\\r\\n",
+			"\\n",
+			"define",
+			"picture=\"",
+			"רוטשילד",
+			",",
+			"export",
+			"ci",
+			"\\r\\n\\r\\n",
+			"\\\\\\\\\\\\\"",
+			"\\\\\\\\\\\\\",",
+			"ka",
+			"Ba ",
+			"Ba",
+			"D",
+			"b[",
+			"D",
+			"D[",
+			"D.",
+			"D ",
+			"D",
+			"D(",
+			" D(",
+			" d(",
+			"d(",
+			"function D",
+			"D",
+			"ebay",
+			"b[1]",
+			"function l",
+			"\\\\r\\\\n",
+			"\\\\\"",
+			"\\\\r\\\\n",
+			"\\\\\"",
+			"\\\\r\\\\n",
+			"ec2-50-112-241-2",
+			"dp"
+		],
+		"highlight": false,
+		"in_selection": false,
+		"preserve_case": true,
+		"regex": false,
+		"replace_history":
+		[
+			"\"",
+			"f",
+			"",
+			"\\r\\n",
+			"\"",
+			"",
+			"\"",
+			"\\n"
+		],
+		"reverse": false,
+		"show_context": false,
+		"use_buffer2": false,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 41.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 309.0
+	},
+	"replace":
+	{
+		"height": 76.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"styl",
+				"public/stylesheets/style.styl"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"show_minimap": false,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 251.0,
+	"status_bar_visible": true
+}

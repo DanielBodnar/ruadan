@@ -1,0 +1,1 @@
+(function(){var a,b;a=function(){return postMessage("done")},b=function(b){if(b.data==="start")return a()}}).call(this)

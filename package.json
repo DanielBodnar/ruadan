@@ -1,0 +1,26 @@
+{
+  "name": "ruadan",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "*",
+    "connect-assets": "*",
+    "jade": "*",
+    "less": "*",
+    "coffee-script": "*",
+    "requirejs": "*",
+    "connect-assets-jsprimer": "*"
+  },
+  "devDependencies": {
+    "growl": "*",
+    "karma": "*"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "node node_modules/karma/bin/karma start config/karma.config.js"
+
+  },
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.1.x"
+  }
+}

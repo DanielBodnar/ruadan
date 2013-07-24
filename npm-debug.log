@@ -1,0 +1,413 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/Cellar/node/0.10.13/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install' ]
+2 info using npm@1.3.2
+3 info using node@v0.10.13
+4 verbose readDependencies using package.json deps
+5 verbose install where, deps [ '/Users/dannifriedland/Dev/ruadan',
+5 verbose install   [ 'express',
+5 verbose install     'connect-assets',
+5 verbose install     'jade',
+5 verbose install     'less',
+5 verbose install     'coffee-script',
+5 verbose install     'requirejs',
+5 verbose install     'connect-assets-jsprimer',
+5 verbose install     'karma-growl-reporter',
+5 verbose install     'growl',
+5 verbose install     'karma' ] ]
+6 info preinstall ruadan@0.0.1
+7 verbose readDependencies using package.json deps
+8 verbose already installed skipping jade@* /Users/dannifriedland/Dev/ruadan
+9 verbose already installed skipping less@* /Users/dannifriedland/Dev/ruadan
+10 verbose already installed skipping coffee-script@* /Users/dannifriedland/Dev/ruadan
+11 verbose already installed skipping requirejs@* /Users/dannifriedland/Dev/ruadan
+12 verbose already installed skipping connect-assets-jsprimer@* /Users/dannifriedland/Dev/ruadan
+13 verbose cache add [ 'karma-growl-reporter@*', null ]
+14 verbose cache add name=undefined spec="karma-growl-reporter@*" args=["karma-growl-reporter@*",null]
+15 verbose parsed url { protocol: null,
+15 verbose parsed url   slashes: null,
+15 verbose parsed url   auth: null,
+15 verbose parsed url   host: null,
+15 verbose parsed url   port: null,
+15 verbose parsed url   hostname: null,
+15 verbose parsed url   hash: null,
+15 verbose parsed url   search: null,
+15 verbose parsed url   query: null,
+15 verbose parsed url   pathname: 'karma-growl-reporter@*',
+15 verbose parsed url   path: 'karma-growl-reporter@*',
+15 verbose parsed url   href: 'karma-growl-reporter@*' }
+16 verbose cache add name="karma-growl-reporter" spec="*" args=["karma-growl-reporter","*"]
+17 verbose parsed url { protocol: null,
+17 verbose parsed url   slashes: null,
+17 verbose parsed url   auth: null,
+17 verbose parsed url   host: null,
+17 verbose parsed url   port: null,
+17 verbose parsed url   hostname: null,
+17 verbose parsed url   hash: null,
+17 verbose parsed url   search: null,
+17 verbose parsed url   query: null,
+17 verbose parsed url   pathname: '*',
+17 verbose parsed url   path: '*',
+17 verbose parsed url   href: '*' }
+18 verbose addNamed [ 'karma-growl-reporter', '*' ]
+19 verbose addNamed [ null, '*' ]
+20 verbose already installed skipping growl@* /Users/dannifriedland/Dev/ruadan
+21 silly lockFile 7c015f89-karma-growl-reporter karma-growl-reporter@*
+22 verbose lock karma-growl-reporter@* /Users/dannifriedland/.npm/7c015f89-karma-growl-reporter.lock
+23 silly addNameRange { name: 'karma-growl-reporter', range: '*', hasData: false }
+24 verbose already installed skipping express@* /Users/dannifriedland/Dev/ruadan
+25 verbose already installed skipping karma@* /Users/dannifriedland/Dev/ruadan
+26 verbose url raw karma-growl-reporter
+27 verbose url resolving [ 'https://registry.npmjs.org/', './karma-growl-reporter' ]
+28 verbose url resolved https://registry.npmjs.org/karma-growl-reporter
+29 info trying registry request attempt 1 at 22:34:51
+30 http GET https://registry.npmjs.org/karma-growl-reporter
+31 verbose already installed skipping connect-assets@* /Users/dannifriedland/Dev/ruadan
+32 http 200 https://registry.npmjs.org/karma-growl-reporter
+33 silly registry.get cb [ 200,
+33 silly registry.get   { vary: 'Accept',
+33 silly registry.get     server: 'CouchDB/1.3.0 (Erlang OTP/R15B03)',
+33 silly registry.get     etag: '"3DB1BFFPH2DX8BM5HTBIQQF48"',
+33 silly registry.get     date: 'Tue, 16 Jul 2013 05:34:51 GMT',
+33 silly registry.get     'content-type': 'application/json',
+33 silly registry.get     'content-length': '4020' } ]
+34 silly addNameRange number 2 { name: 'karma-growl-reporter', range: '*', hasData: true }
+35 silly addNameRange versions [ 'karma-growl-reporter', [ '0.0.1', '0.0.2' ] ]
+36 verbose addNamed [ 'karma-growl-reporter', '0.0.2' ]
+37 verbose addNamed [ '0.0.2', '0.0.2' ]
+38 silly lockFile 89c7fee0-karma-growl-reporter-0-0-2 karma-growl-reporter@0.0.2
+39 verbose lock karma-growl-reporter@0.0.2 /Users/dannifriedland/.npm/89c7fee0-karma-growl-reporter-0-0-2.lock
+40 silly lockFile bfb26059-r-karma-growl-reporter-0-0-2-tgz https://registry.npmjs.org/karma-growl-reporter/-/karma-growl-reporter-0.0.2.tgz
+41 verbose lock https://registry.npmjs.org/karma-growl-reporter/-/karma-growl-reporter-0.0.2.tgz /Users/dannifriedland/.npm/bfb26059-r-karma-growl-reporter-0-0-2-tgz.lock
+42 verbose addRemoteTarball [ 'https://registry.npmjs.org/karma-growl-reporter/-/karma-growl-reporter-0.0.2.tgz',
+42 verbose addRemoteTarball   'df5ad8a495610e8c32277ed0ad504fd6222f125e' ]
+43 info retry fetch attempt 1 at 22:34:53
+44 verbose fetch to= /var/folders/jp/35c9t69s78lf6nnnjhx2qk7w0000gn/T/npm-39404/1373952893241-0.2676708912476897/tmp.tgz
+45 http GET https://registry.npmjs.org/karma-growl-reporter/-/karma-growl-reporter-0.0.2.tgz
+46 http 200 https://registry.npmjs.org/karma-growl-reporter/-/karma-growl-reporter-0.0.2.tgz
+47 verbose tar unpack /var/folders/jp/35c9t69s78lf6nnnjhx2qk7w0000gn/T/npm-39404/1373952893241-0.2676708912476897/tmp.tgz
+48 silly lockFile 53943ed9-93241-0-2676708912476897-package tar:///var/folders/jp/35c9t69s78lf6nnnjhx2qk7w0000gn/T/npm-39404/1373952893241-0.2676708912476897/package
+49 verbose lock tar:///var/folders/jp/35c9t69s78lf6nnnjhx2qk7w0000gn/T/npm-39404/1373952893241-0.2676708912476897/package /Users/dannifriedland/.npm/53943ed9-93241-0-2676708912476897-package.lock
+50 silly lockFile bf4a0267-93241-0-2676708912476897-tmp-tgz tar:///var/folders/jp/35c9t69s78lf6nnnjhx2qk7w0000gn/T/npm-39404/1373952893241-0.2676708912476897/tmp.tgz
+51 verbose lock tar:///var/folders/jp/35c9t69s78lf6nnnjhx2qk7w0000gn/T/npm-39404/1373952893241-0.2676708912476897/tmp.tgz /Users/dannifriedland/.npm/bf4a0267-93241-0-2676708912476897-tmp-tgz.lock
+52 silly gunzTarPerm modes [ '755', '644' ]
+53 silly gunzTarPerm extractEntry package.json
+54 silly gunzTarPerm extractEntry README.md
+55 silly gunzTarPerm extractEntry LICENSE
+56 silly gunzTarPerm extractEntry index.js
+57 silly gunzTarPerm extractEntry CONTRIBUTING.md
+58 silly gunzTarPerm extractEntry images/error.png
+59 silly gunzTarPerm extractEntry images/failed.png
+60 silly gunzTarPerm extractEntry images/success.png
+61 silly lockFile 53943ed9-93241-0-2676708912476897-package tar:///var/folders/jp/35c9t69s78lf6nnnjhx2qk7w0000gn/T/npm-39404/1373952893241-0.2676708912476897/package
+62 silly lockFile 53943ed9-93241-0-2676708912476897-package tar:///var/folders/jp/35c9t69s78lf6nnnjhx2qk7w0000gn/T/npm-39404/1373952893241-0.2676708912476897/package
+63 silly lockFile bf4a0267-93241-0-2676708912476897-tmp-tgz tar:///var/folders/jp/35c9t69s78lf6nnnjhx2qk7w0000gn/T/npm-39404/1373952893241-0.2676708912476897/tmp.tgz
+64 silly lockFile bf4a0267-93241-0-2676708912476897-tmp-tgz tar:///var/folders/jp/35c9t69s78lf6nnnjhx2qk7w0000gn/T/npm-39404/1373952893241-0.2676708912476897/tmp.tgz
+65 verbose tar pack [ '/Users/dannifriedland/.npm/karma-growl-reporter/0.0.2/package.tgz',
+65 verbose tar pack   '/var/folders/jp/35c9t69s78lf6nnnjhx2qk7w0000gn/T/npm-39404/1373952893241-0.2676708912476897/package' ]
+66 verbose tarball /Users/dannifriedland/.npm/karma-growl-reporter/0.0.2/package.tgz
+67 verbose folder /var/folders/jp/35c9t69s78lf6nnnjhx2qk7w0000gn/T/npm-39404/1373952893241-0.2676708912476897/package
+68 silly lockFile 53943ed9-93241-0-2676708912476897-package tar:///var/folders/jp/35c9t69s78lf6nnnjhx2qk7w0000gn/T/npm-39404/1373952893241-0.2676708912476897/package
+69 verbose lock tar:///var/folders/jp/35c9t69s78lf6nnnjhx2qk7w0000gn/T/npm-39404/1373952893241-0.2676708912476897/package /Users/dannifriedland/.npm/53943ed9-93241-0-2676708912476897-package.lock
+70 silly lockFile c8ba49a4-growl-reporter-0-0-2-package-tgz tar:///Users/dannifriedland/.npm/karma-growl-reporter/0.0.2/package.tgz
+71 verbose lock tar:///Users/dannifriedland/.npm/karma-growl-reporter/0.0.2/package.tgz /Users/dannifriedland/.npm/c8ba49a4-growl-reporter-0-0-2-package-tgz.lock
+72 silly lockFile 53943ed9-93241-0-2676708912476897-package tar:///var/folders/jp/35c9t69s78lf6nnnjhx2qk7w0000gn/T/npm-39404/1373952893241-0.2676708912476897/package
+73 silly lockFile 53943ed9-93241-0-2676708912476897-package tar:///var/folders/jp/35c9t69s78lf6nnnjhx2qk7w0000gn/T/npm-39404/1373952893241-0.2676708912476897/package
+74 silly lockFile c8ba49a4-growl-reporter-0-0-2-package-tgz tar:///Users/dannifriedland/.npm/karma-growl-reporter/0.0.2/package.tgz
+75 silly lockFile c8ba49a4-growl-reporter-0-0-2-package-tgz tar:///Users/dannifriedland/.npm/karma-growl-reporter/0.0.2/package.tgz
+76 silly lockFile fc5529d3-rma-growl-reporter-0-0-2-package /Users/dannifriedland/.npm/karma-growl-reporter/0.0.2/package
+77 verbose lock /Users/dannifriedland/.npm/karma-growl-reporter/0.0.2/package /Users/dannifriedland/.npm/fc5529d3-rma-growl-reporter-0-0-2-package.lock
+78 silly lockFile fc5529d3-rma-growl-reporter-0-0-2-package /Users/dannifriedland/.npm/karma-growl-reporter/0.0.2/package
+79 silly lockFile fc5529d3-rma-growl-reporter-0-0-2-package /Users/dannifriedland/.npm/karma-growl-reporter/0.0.2/package
+80 verbose tar unpack /Users/dannifriedland/.npm/karma-growl-reporter/0.0.2/package.tgz
+81 silly lockFile 5018a626-rma-growl-reporter-0-0-2-package tar:///Users/dannifriedland/.npm/karma-growl-reporter/0.0.2/package
+82 verbose lock tar:///Users/dannifriedland/.npm/karma-growl-reporter/0.0.2/package /Users/dannifriedland/.npm/5018a626-rma-growl-reporter-0-0-2-package.lock
+83 silly lockFile c8ba49a4-growl-reporter-0-0-2-package-tgz tar:///Users/dannifriedland/.npm/karma-growl-reporter/0.0.2/package.tgz
+84 verbose lock tar:///Users/dannifriedland/.npm/karma-growl-reporter/0.0.2/package.tgz /Users/dannifriedland/.npm/c8ba49a4-growl-reporter-0-0-2-package-tgz.lock
+85 silly gunzTarPerm modes [ '755', '644' ]
+86 silly gunzTarPerm extractEntry package.json
+87 silly gunzTarPerm extractEntry README.md
+88 silly gunzTarPerm extractEntry LICENSE
+89 silly gunzTarPerm extractEntry index.js
+90 silly gunzTarPerm extractEntry CONTRIBUTING.md
+91 silly gunzTarPerm extractEntry images/error.png
+92 silly gunzTarPerm extractEntry images/failed.png
+93 silly gunzTarPerm extractEntry images/success.png
+94 silly lockFile 5018a626-rma-growl-reporter-0-0-2-package tar:///Users/dannifriedland/.npm/karma-growl-reporter/0.0.2/package
+95 silly lockFile 5018a626-rma-growl-reporter-0-0-2-package tar:///Users/dannifriedland/.npm/karma-growl-reporter/0.0.2/package
+96 silly lockFile c8ba49a4-growl-reporter-0-0-2-package-tgz tar:///Users/dannifriedland/.npm/karma-growl-reporter/0.0.2/package.tgz
+97 silly lockFile c8ba49a4-growl-reporter-0-0-2-package-tgz tar:///Users/dannifriedland/.npm/karma-growl-reporter/0.0.2/package.tgz
+98 verbose chmod /Users/dannifriedland/.npm/karma-growl-reporter/0.0.2/package.tgz 644
+99 verbose chown /Users/dannifriedland/.npm/karma-growl-reporter/0.0.2/package.tgz [ 501, 20 ]
+100 silly lockFile bfb26059-r-karma-growl-reporter-0-0-2-tgz https://registry.npmjs.org/karma-growl-reporter/-/karma-growl-reporter-0.0.2.tgz
+101 silly lockFile bfb26059-r-karma-growl-reporter-0-0-2-tgz https://registry.npmjs.org/karma-growl-reporter/-/karma-growl-reporter-0.0.2.tgz
+102 silly lockFile 89c7fee0-karma-growl-reporter-0-0-2 karma-growl-reporter@0.0.2
+103 silly lockFile 89c7fee0-karma-growl-reporter-0-0-2 karma-growl-reporter@0.0.2
+104 silly lockFile 7c015f89-karma-growl-reporter karma-growl-reporter@*
+105 silly lockFile 7c015f89-karma-growl-reporter karma-growl-reporter@*
+106 silly resolved [ { name: 'karma-growl-reporter',
+106 silly resolved     version: '0.0.2',
+106 silly resolved     description: 'A Karma plugin. Report results with growl.',
+106 silly resolved     main: 'index.js',
+106 silly resolved     scripts: { test: 'echo "Error: no test specified" && exit 1' },
+106 silly resolved     repository:
+106 silly resolved      { type: 'git',
+106 silly resolved        url: 'git://github.com/karma-runner/karma-growl-reporter.git' },
+106 silly resolved     keywords: [ 'karma-plugin', 'reporter', 'growl' ],
+106 silly resolved     author: { name: 'Vojta Jina', email: 'vojta.jina@gmail.com' },
+106 silly resolved     dependencies: { growly: '~1.1.0' },
+106 silly resolved     peerDependencies: { karma: '~0.9' },
+106 silly resolved     license: 'MIT',
+106 silly resolved     devDependencies:
+106 silly resolved      { grunt: '~0.4.1',
+106 silly resolved        'grunt-npm': '~0.0.2',
+106 silly resolved        'grunt-bump': '~0.0.7',
+106 silly resolved        'grunt-auto-release': '~0.0.2' },
+106 silly resolved     contributors: [ [Object], [Object] ],
+106 silly resolved     readme: '# karma-growl-reporter\n\nKarma reporter using Growl to display results.\nFor more information on Karma see the [homepage].\n\n### Usage\n\n1. Install Growl for [Mac][1] / [Windows][2] / [Linux][3]\n\n2. Install [growly][4]\n\n        npm install growly\n\n3. Add `growl` to [karma.conf.js][5]\n\n        reporters = [\'progress\', \'growl\'];\n\n  [1]: http://growl.info/\n  [2]: http://www.growlforwindows.com/\n  [3]: http://karmanebula.com/technically-borked/2012/1/1/install-growl-for-linux-and-gntp-send-on-ubuntu-1110.html\n  [4]: https://github.com/theabraham/growly\n  [5]: http://karma-runner.github.io/0.8/config/configuration-file.html\n  [homepage]: http://karma-runner.github.com\n\n\n\n\n',
+106 silly resolved     readmeFilename: 'README.md',
+106 silly resolved     bugs: { url: 'https://github.com/karma-runner/karma-growl-reporter/issues' },
+106 silly resolved     _id: 'karma-growl-reporter@0.0.2',
+106 silly resolved     dist: { shasum: 'c78d3d72d6326f39663e3979e725b8b7e5ec85a4' },
+106 silly resolved     _from: 'karma-growl-reporter@*',
+106 silly resolved     _resolved: 'https://registry.npmjs.org/karma-growl-reporter/-/karma-growl-reporter-0.0.2.tgz' } ]
+107 info install karma-growl-reporter@0.0.2 into /Users/dannifriedland/Dev/ruadan
+108 info installOne karma-growl-reporter@0.0.2
+109 info /Users/dannifriedland/Dev/ruadan/node_modules/karma-growl-reporter unbuild
+110 verbose tar unpack /Users/dannifriedland/.npm/karma-growl-reporter/0.0.2/package.tgz
+111 silly lockFile c86ff217-ode-modules-karma-growl-reporter tar:///Users/dannifriedland/Dev/ruadan/node_modules/karma-growl-reporter
+112 verbose lock tar:///Users/dannifriedland/Dev/ruadan/node_modules/karma-growl-reporter /Users/dannifriedland/.npm/c86ff217-ode-modules-karma-growl-reporter.lock
+113 silly lockFile c8ba49a4-growl-reporter-0-0-2-package-tgz tar:///Users/dannifriedland/.npm/karma-growl-reporter/0.0.2/package.tgz
+114 verbose lock tar:///Users/dannifriedland/.npm/karma-growl-reporter/0.0.2/package.tgz /Users/dannifriedland/.npm/c8ba49a4-growl-reporter-0-0-2-package-tgz.lock
+115 silly gunzTarPerm modes [ '755', '644' ]
+116 silly gunzTarPerm extractEntry package.json
+117 silly gunzTarPerm extractEntry README.md
+118 silly gunzTarPerm extractEntry LICENSE
+119 silly gunzTarPerm extractEntry index.js
+120 silly gunzTarPerm extractEntry CONTRIBUTING.md
+121 silly gunzTarPerm extractEntry images/error.png
+122 silly gunzTarPerm extractEntry images/failed.png
+123 silly gunzTarPerm extractEntry images/success.png
+124 silly lockFile c86ff217-ode-modules-karma-growl-reporter tar:///Users/dannifriedland/Dev/ruadan/node_modules/karma-growl-reporter
+125 silly lockFile c86ff217-ode-modules-karma-growl-reporter tar:///Users/dannifriedland/Dev/ruadan/node_modules/karma-growl-reporter
+126 silly lockFile c8ba49a4-growl-reporter-0-0-2-package-tgz tar:///Users/dannifriedland/.npm/karma-growl-reporter/0.0.2/package.tgz
+127 silly lockFile c8ba49a4-growl-reporter-0-0-2-package-tgz tar:///Users/dannifriedland/.npm/karma-growl-reporter/0.0.2/package.tgz
+128 info preinstall karma-growl-reporter@0.0.2
+129 verbose readDependencies using package.json deps
+130 verbose readDependencies using package.json deps
+131 verbose cache add [ 'growly@~1.1.0', null ]
+132 verbose cache add name=undefined spec="growly@~1.1.0" args=["growly@~1.1.0",null]
+133 verbose parsed url { protocol: null,
+133 verbose parsed url   slashes: null,
+133 verbose parsed url   auth: null,
+133 verbose parsed url   host: null,
+133 verbose parsed url   port: null,
+133 verbose parsed url   hostname: null,
+133 verbose parsed url   hash: null,
+133 verbose parsed url   search: null,
+133 verbose parsed url   query: null,
+133 verbose parsed url   pathname: 'growly@~1.1.0',
+133 verbose parsed url   path: 'growly@~1.1.0',
+133 verbose parsed url   href: 'growly@~1.1.0' }
+134 verbose cache add name="growly" spec="~1.1.0" args=["growly","~1.1.0"]
+135 verbose parsed url { protocol: null,
+135 verbose parsed url   slashes: null,
+135 verbose parsed url   auth: null,
+135 verbose parsed url   host: null,
+135 verbose parsed url   port: null,
+135 verbose parsed url   hostname: null,
+135 verbose parsed url   hash: null,
+135 verbose parsed url   search: null,
+135 verbose parsed url   query: null,
+135 verbose parsed url   pathname: '~1.1.0',
+135 verbose parsed url   path: '~1.1.0',
+135 verbose parsed url   href: '~1.1.0' }
+136 verbose addNamed [ 'growly', '~1.1.0' ]
+137 verbose addNamed [ null, '>=1.1.0-0 <1.2.0-0' ]
+138 silly lockFile 11a6c0cf-growly-1-1-0 growly@~1.1.0
+139 verbose lock growly@~1.1.0 /Users/dannifriedland/.npm/11a6c0cf-growly-1-1-0.lock
+140 silly addNameRange { name: 'growly', range: '>=1.1.0-0 <1.2.0-0', hasData: false }
+141 verbose url raw growly
+142 verbose url resolving [ 'https://registry.npmjs.org/', './growly' ]
+143 verbose url resolved https://registry.npmjs.org/growly
+144 info trying registry request attempt 1 at 22:34:55
+145 verbose etag "3QIV8JY827SSSRP516NF8X0CP"
+146 http GET https://registry.npmjs.org/growly
+147 http 200 https://registry.npmjs.org/growly
+148 silly registry.get cb [ 200,
+148 silly registry.get   { vary: 'Accept',
+148 silly registry.get     server: 'CouchDB/1.3.0 (Erlang OTP/R15B03)',
+148 silly registry.get     etag: '"6SSBDHOEQ9PBZU9Y5P4O8WPYX"',
+148 silly registry.get     date: 'Tue, 16 Jul 2013 05:34:54 GMT',
+148 silly registry.get     'content-type': 'application/json',
+148 silly registry.get     'content-length': '20345' } ]
+149 silly addNameRange number 2 { name: 'growly', range: '>=1.1.0-0 <1.2.0-0', hasData: true }
+150 silly addNameRange versions [ 'growly', [ '1.0.0', '1.1.0', '1.1.1' ] ]
+151 verbose addNamed [ 'growly', '1.1.1' ]
+152 verbose addNamed [ '1.1.1', '1.1.1' ]
+153 silly lockFile 4d238e67-growly-1-1-1 growly@1.1.1
+154 verbose lock growly@1.1.1 /Users/dannifriedland/.npm/4d238e67-growly-1-1-1.lock
+155 silly lockFile 4d238e67-growly-1-1-1 growly@1.1.1
+156 silly lockFile 4d238e67-growly-1-1-1 growly@1.1.1
+157 silly lockFile 11a6c0cf-growly-1-1-0 growly@~1.1.0
+158 silly lockFile 11a6c0cf-growly-1-1-0 growly@~1.1.0
+159 silly resolved [ { name: 'growly',
+159 silly resolved     version: '1.1.1',
+159 silly resolved     description: 'Simple zero-dependency Growl notifications using GNTP.',
+159 silly resolved     keywords: [ 'growl', 'growly', 'snarl', 'notifications', 'gntp', 'messages' ],
+159 silly resolved     author:
+159 silly resolved      { name: 'Ibrahim Al-Rajhi',
+159 silly resolved        email: 'abrahamalrajhi@gmail.com',
+159 silly resolved        url: 'http://ibrahimalrajhi.com/' },
+159 silly resolved     repository: { type: 'git', url: 'http://github.com/theabraham/growly' },
+159 silly resolved     bugs: { url: 'http://github.com/theabraham/growly/issues' },
+159 silly resolved     main: 'lib/growly.js',
+159 silly resolved     directories: { example: 'example', lib: 'lib' },
+159 silly resolved     license: 'MIT',
+159 silly resolved     readme: '# Growly #\n\nSimple zero-dependency Growl notifications using GNTP.\n\n## Installation ##\n\nInstall growly using `npm`:\n\n```\nnpm install growly\n```\n\nAnd then require it:\n\n```javascript\nvar growly = require(\'growly\');\n```\n\nThis module uses the Growl Network Transport Protocol (GNTP) which was implemented in Growl since version 1.3, so you **must have an appropriate version of Growl installed** for Growly to work.\n\n## Example ##\n\nSending a minimal Growl notification:\n\n```javascript\nvar growly = require(\'growly\');\n\ngrowly.notify(\'This is as easy as it gets\', { title: \'Hello, World!\' });\n```\n\nMore examples can be found in the *example/* directory.\n\n## Usage ##\n\nThe growly module exposes only two methods: `Growly.register()` and `Growly.notify()`. \n\n### Growly.register(appname, [appicon], [notifications], [callback]) ###\n\nRegisters a new application with Growl. Registration is completely optional since it will be performed automatically for you with sensible defaults. Useful if you want your application, with its own icon and types of notifications, to show up in Growl\'s prefence panel.\n\n  - `appname` the name of the application (required.)\n  - `appicon` url, file path, or Buffer instance for an application icon image.\n  - `notifications` a list of defined notification types with the following properties:\n    - `.label` name used to identify the type of notification being used (required.)\n    - `.dispname` name users will see in Growl\'s preference panel (defaults to `.label`.)\n    - `.enabled` whether or not notifications of this type are enabled (defaults to true.)\n  - `callback` called when the registration completes; if registration fails, the first argument will be an Error object.\n\nAn example:\n\n```javascript\ngrowly.register(\'My Application\', \'path/to/icon.png\', [\n    { label: \'success\', dispname: \'Success\' },\n    { label: \'warning\', dispname: \'Warning\', enabled: false }\n], function(err) {\n    console.log(err || \'Registration successful!\');\n});\n```\n\n### Growly.notify(text, [opts], [callback]) ###\n\nSends a Growl notification. If an application wasn\'t registered beforehand with `growly.register()`, a default application will automatically be registered beforesending the notification.\n\n  - `text` the body of the notification.\n  - `opts` an object with the following properties:\n    - `.title` title of the notification.\n    - `.icon` url, file path, or Buffer instance for the notification\'s icon.\n    - `.sticky` whether or not to sticky the notification (defaults to false.)\n    - `.label` type of notification to use (defaults to the first registered notification type.)\n    - `.priority` the priority of the notification from lowest (-2) to highest (2).\n  - `callback` called when the user has closed/clicked the notification. The callback is passed an Error object `err` as the first argument when the notification fails; otherwise, the second argument `action` is a string that\'ll describe which action has been taken by the user (either \'closed\' or \'clicked\'.)\n\nAn example:\n\n```javascript\n/* Assuming an application was registered with a notification type labeled \'warning\'. */\ngrowly.notify(\'Stuffs broken!\', { label: \'warning\' }, function(err, action) {\n    console.log(\'Action:\', action);\n});\n```\n\n## License ##\n\nCopyright (C) 2012 Ibrahim Al-Rajhi <abrahamalrajhi@gmail.com>\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n',
+159 silly resolved     readmeFilename: 'README.md',
+159 silly resolved     _id: 'growly@1.1.1',
+159 silly resolved     _from: 'growly@~1.1.0' } ]
+160 info install growly@1.1.1 into /Users/dannifriedland/Dev/ruadan/node_modules/karma-growl-reporter
+161 info installOne growly@1.1.1
+162 info /Users/dannifriedland/Dev/ruadan/node_modules/karma-growl-reporter/node_modules/growly unbuild
+163 verbose tar unpack /Users/dannifriedland/.npm/growly/1.1.1/package.tgz
+164 silly lockFile 17482ce1-owl-reporter-node-modules-growly tar:///Users/dannifriedland/Dev/ruadan/node_modules/karma-growl-reporter/node_modules/growly
+165 verbose lock tar:///Users/dannifriedland/Dev/ruadan/node_modules/karma-growl-reporter/node_modules/growly /Users/dannifriedland/.npm/17482ce1-owl-reporter-node-modules-growly.lock
+166 silly lockFile 2f1a9c64-and-npm-growly-1-1-1-package-tgz tar:///Users/dannifriedland/.npm/growly/1.1.1/package.tgz
+167 verbose lock tar:///Users/dannifriedland/.npm/growly/1.1.1/package.tgz /Users/dannifriedland/.npm/2f1a9c64-and-npm-growly-1-1-1-package-tgz.lock
+168 silly gunzTarPerm modes [ '755', '644' ]
+169 silly gunzTarPerm extractEntry package.json
+170 silly gunzTarPerm extractEntry README.md
+171 silly gunzTarPerm extractEntry HISTORY.md
+172 silly gunzTarPerm extractEntry example/bakery.js
+173 silly gunzTarPerm extractEntry example/simple.js
+174 silly gunzTarPerm extractEntry example/cake.png
+175 silly gunzTarPerm extractEntry example/muffin.png
+176 silly gunzTarPerm extractEntry lib/gntp.js
+177 silly gunzTarPerm extractEntry lib/growly.js
+178 silly lockFile 17482ce1-owl-reporter-node-modules-growly tar:///Users/dannifriedland/Dev/ruadan/node_modules/karma-growl-reporter/node_modules/growly
+179 silly lockFile 17482ce1-owl-reporter-node-modules-growly tar:///Users/dannifriedland/Dev/ruadan/node_modules/karma-growl-reporter/node_modules/growly
+180 silly lockFile 2f1a9c64-and-npm-growly-1-1-1-package-tgz tar:///Users/dannifriedland/.npm/growly/1.1.1/package.tgz
+181 silly lockFile 2f1a9c64-and-npm-growly-1-1-1-package-tgz tar:///Users/dannifriedland/.npm/growly/1.1.1/package.tgz
+182 info preinstall growly@1.1.1
+183 verbose readDependencies using package.json deps
+184 verbose readDependencies using package.json deps
+185 silly resolved []
+186 verbose about to build /Users/dannifriedland/Dev/ruadan/node_modules/karma-growl-reporter/node_modules/growly
+187 info build /Users/dannifriedland/Dev/ruadan/node_modules/karma-growl-reporter/node_modules/growly
+188 verbose linkStuff [ false,
+188 verbose linkStuff   false,
+188 verbose linkStuff   false,
+188 verbose linkStuff   '/Users/dannifriedland/Dev/ruadan/node_modules/karma-growl-reporter/node_modules' ]
+189 info linkStuff growly@1.1.1
+190 verbose linkBins growly@1.1.1
+191 verbose linkMans growly@1.1.1
+192 verbose rebuildBundles growly@1.1.1
+193 info install growly@1.1.1
+194 info postinstall growly@1.1.1
+195 verbose about to build /Users/dannifriedland/Dev/ruadan/node_modules/karma-growl-reporter
+196 info build /Users/dannifriedland/Dev/ruadan/node_modules/karma-growl-reporter
+197 verbose linkStuff [ false,
+197 verbose linkStuff   false,
+197 verbose linkStuff   false,
+197 verbose linkStuff   '/Users/dannifriedland/Dev/ruadan/node_modules' ]
+198 info linkStuff karma-growl-reporter@0.0.2
+199 verbose linkBins karma-growl-reporter@0.0.2
+200 verbose linkMans karma-growl-reporter@0.0.2
+201 verbose rebuildBundles karma-growl-reporter@0.0.2
+202 verbose rebuildBundles [ 'growly' ]
+203 info install karma-growl-reporter@0.0.2
+204 info postinstall karma-growl-reporter@0.0.2
+205 verbose readDependencies using package.json deps
+206 verbose already installed skipping karma@~0.9 /Users/dannifriedland/Dev/ruadan
+207 silly resolved []
+208 info build /Users/dannifriedland/Dev/ruadan
+209 verbose linkStuff [ false, false, false, '/Users/dannifriedland/Dev' ]
+210 info linkStuff ruadan@0.0.1
+211 verbose linkBins ruadan@0.0.1
+212 verbose linkMans ruadan@0.0.1
+213 verbose rebuildBundles ruadan@0.0.1
+214 verbose rebuildBundles [ '.bin',
+214 verbose rebuildBundles   'chai',
+214 verbose rebuildBundles   'coffee-script',
+214 verbose rebuildBundles   'connect-assets',
+214 verbose rebuildBundles   'connect-assets-jsprimer',
+214 verbose rebuildBundles   'express',
+214 verbose rebuildBundles   'growl',
+214 verbose rebuildBundles   'jade',
+214 verbose rebuildBundles   'karma',
+214 verbose rebuildBundles   'karma-growl-reporter',
+214 verbose rebuildBundles   'karma-osx-reporter',
+214 verbose rebuildBundles   'less',
+214 verbose rebuildBundles   'mocha',
+214 verbose rebuildBundles   'requirejs' ]
+215 verbose rebuild bundle /Users/dannifriedland/Dev/ruadan/node_modules/chai
+216 info build /Users/dannifriedland/Dev/ruadan/node_modules/chai
+217 info preinstall chai@1.6.0
+218 verbose linkStuff [ false,
+218 verbose linkStuff   false,
+218 verbose linkStuff   false,
+218 verbose linkStuff   '/Users/dannifriedland/Dev/ruadan/node_modules' ]
+219 info linkStuff chai@1.6.0
+220 verbose linkBins chai@1.6.0
+221 verbose linkMans chai@1.6.0
+222 verbose rebuildBundles chai@1.6.0
+223 info install chai@1.6.0
+224 info postinstall chai@1.6.0
+225 verbose rebuild bundle /Users/dannifriedland/Dev/ruadan/node_modules/karma-osx-reporter
+226 info build /Users/dannifriedland/Dev/ruadan/node_modules/karma-osx-reporter
+227 info preinstall karma-osx-reporter@0.0.1
+228 verbose linkStuff [ false,
+228 verbose linkStuff   false,
+228 verbose linkStuff   false,
+228 verbose linkStuff   '/Users/dannifriedland/Dev/ruadan/node_modules' ]
+229 info linkStuff karma-osx-reporter@0.0.1
+230 verbose linkBins karma-osx-reporter@0.0.1
+231 verbose linkMans karma-osx-reporter@0.0.1
+232 verbose rebuildBundles karma-osx-reporter@0.0.1
+233 verbose rebuildBundles [ '.bin', 'node-osx-notifier' ]
+234 info install karma-osx-reporter@0.0.1
+235 info postinstall karma-osx-reporter@0.0.1
+236 verbose rebuild bundle /Users/dannifriedland/Dev/ruadan/node_modules/mocha
+237 info build /Users/dannifriedland/Dev/ruadan/node_modules/mocha
+238 info preinstall mocha@1.10.0
+239 verbose linkStuff [ false,
+239 verbose linkStuff   false,
+239 verbose linkStuff   false,
+239 verbose linkStuff   '/Users/dannifriedland/Dev/ruadan/node_modules' ]
+240 info linkStuff mocha@1.10.0
+241 verbose linkBins mocha@1.10.0
+242 verbose link bins [ { mocha: './bin/mocha', _mocha: './bin/_mocha' },
+242 verbose link bins   '/Users/dannifriedland/Dev/ruadan/node_modules/.bin',
+242 verbose link bins   false ]
+243 verbose linkMans mocha@1.10.0
+244 verbose rebuildBundles mocha@1.10.0
+245 verbose rebuildBundles [ '.bin',
+245 verbose rebuildBundles   'commander',
+245 verbose rebuildBundles   'debug',
+245 verbose rebuildBundles   'diff',
+245 verbose rebuildBundles   'glob',
+245 verbose rebuildBundles   'growl',
+245 verbose rebuildBundles   'jade',
+245 verbose rebuildBundles   'mkdirp',
+245 verbose rebuildBundles   'ms' ]
+246 info install mocha@1.10.0
+247 info postinstall mocha@1.10.0
+248 info install ruadan@0.0.1
+249 info postinstall ruadan@0.0.1
+250 info prepublish ruadan@0.0.1
+251 warn unmet dependency /Users/dannifriedland/Dev/ruadan/node_modules/karma-osx-reporter/node_modules/node-osx-notifier/node_modules/express/node_modules/connect requires fresh@'0.1.0' but will load
+251 warn unmet dependency /Users/dannifriedland/Dev/ruadan/node_modules/karma-osx-reporter/node_modules/node-osx-notifier/node_modules/express/node_modules/fresh,
+251 warn unmet dependency which is version 0.0.1
+252 error peerinvalid The package karma does not satisfy its siblings' peerDependencies requirements!
+252 error peerinvalid Peer karma-growl-reporter@0.0.2 wants karma@~0.9
+252 error peerinvalid Peer karma-osx-reporter@0.0.1 wants karma@~0.9
+253 error System Darwin 12.4.0
+254 error command "/usr/local/Cellar/node/0.10.13/bin/node" "/usr/local/bin/npm" "install"
+255 error cwd /Users/dannifriedland/Dev/ruadan
+256 error node -v v0.10.13
+257 error npm -v 1.3.2
+258 error code EPEERINVALID
+259 verbose exit [ 1, true ]

@@ -1,0 +1,1 @@
+(function(){var a;a=new Worker("worker.js"),a.onmessage=function(a){return a.data},a.postMessage("start")}).call(this)
