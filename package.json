@@ -1,6 +1,7 @@
 {
   "name": "ruadan",
   "version": "0.0.1",
+  "repository": "git@github.com:TheGiftsProject/ruadan.git",
   "dependencies": {
     "express": "*",
     "connect-assets": "*",
@@ -8,16 +9,27 @@
     "less": "*",
     "coffee-script": "*",
     "requirejs": "*",
-    "connect-assets-jsprimer": "*"
+    "connect-assets-jsprimer": "*",
+    "requirejs-middleware": "*"
   },
   "devDependencies": {
-    "growl": "*",
-    "karma": "*"
+    "karma": "0.8",
+    "chai": "*",
+    "cheerio": "*",
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-contrib-requirejs": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-contrib-clean": "*",
+    "grunt-contrib-coffee": "*",
+    "grunt-contrib-copy": "*",
+    "grunt-develop": "*",
+    "grunt-bower-requirejs": "~0.7.0"
   },
   "scripts": {
     "start": "node server.js",
     "test": "node node_modules/karma/bin/karma start config/karma.config.js"
-
   },
   "engines": {
     "node": "0.10.x",

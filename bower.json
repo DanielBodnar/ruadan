@@ -1,0 +1,17 @@
+{
+  "name": "ruadan",
+  "version": "0.0.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "requirejs": "*",
+    "jquery": "*",
+    "lodash": "*",
+    "eventEmitter": "*"
+  }
+}

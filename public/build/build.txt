@@ -1,0 +1,17 @@
+
+bootstrap_recorder.js
+----------------
+/Users/dannifriedland/Dev/ruadan/bower_components/lodash/lodash.js
+recording/recorder.js
+/Users/dannifriedland/Dev/ruadan/bower_components/jquery/jquery.js
+recording/node_map.js
+recording/serializer.js
+recording/recorder_client.js
+bootstrap_recorder.js
+
+bootstrap_replayer.js
+----------------
+/Users/dannifriedland/Dev/ruadan/bower_components/jquery/jquery.js
+/Users/dannifriedland/Dev/ruadan/bower_components/lodash/lodash.js
+replaying/deserializer.js
+bootstrap_replayer.js

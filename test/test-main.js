@@ -2,6 +2,9 @@ var tests = Object.keys(window.__karma__.files).filter(function (file) {
   return /_spec\.coffee-compiled\.js$/.test(file);
 });
 
+f = jasmine.getFixtures();
+f.fixturesPath = '/test/fixtures';
+
 requirejs.config({
   // Karma serves files from '/base'
   baseUrl: 'js/',

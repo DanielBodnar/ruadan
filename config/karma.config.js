@@ -13,11 +13,15 @@ files = [
   REQUIRE,
   REQUIRE_ADAPTER,
   // simple patterns to load the needed testfiles
+
   {pattern: '../node_modules/chai/chai.js', included: false},
+  {pattern: '../test/support/**/*.js', watched: true, included: true, served: true},
+  {pattern: '../test/fixtures/**/*.html', watched: true, included: false, served: true},
 
   {pattern: '../lib/**/*.js', included: false},
   {pattern: '../lib/**/*.coffee', included: false},
   {pattern: '../app/**/*.js', included: false},
+
   {pattern: '../app/**/*.coffee', included: false},
   {pattern: '../test/**/*_spec.js', included: false},
   {pattern: '../test/**/*_spec.coffee', included: false},
@@ -32,7 +36,7 @@ preprocessors = {
 
 // list of files to exclude
 exclude = [
-  
+
 ];
 
 proxies = {

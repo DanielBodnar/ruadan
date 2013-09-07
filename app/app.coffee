@@ -2,11 +2,13 @@
 express = require 'express'
 http = require 'http'
 app = express()
+util = require('util')
 
 assets = require 'connect-assets'
 jsPrimer = require 'connect-assets-jsprimer'
 
-coffeeDir = __dirname + '/coffee'
+#requirejsMiddleware = require 'requirejs-middleware'
+
 publicDir = __dirname + '/public'
 env = app.get 'env'
 
@@ -16,35 +18,27 @@ require("#{__dirname}/../config/boot")(app)
 # Configuration
 app.configure ->
   port = process.env.PORT || 3000
-  if process.argv.indexOf('-p') >= 0
-    port = process.argv[process.argv.indexOf('-p') + 1]
-
+  port = process.argv[process.argv.indexOf('-p') + 1] if process.argv.indexOf('-p') >= 0
   app.set 'port', port
   app.set 'views', "#{__dirname}/views"
   app.set 'view engine', 'jade'
-  app.use express.static(publicDir)
-  app.use express.static('builtAssets')
-  app.use express.favicon()
-  app.use express.logger('dev')
+
+  app.use express.static(__dirname + '/../public')
+  app.use express.static(__dirname + '/../bower_components')
+
+
+  app.use express.logger()
   app.use express.bodyParser()
   app.use express.methodOverride()
-#  app.use express.compiler
-#    src: coffeeDir
-#    dest: publicDir
-#    enable: ['coffeescript']
-  app.use assets(
-    src: "#{__dirname}/assets"
-    build: true
-    buildsExpire: true
-    detectChanges: true
-    uglify: false
-    debug: true
-    buildFilenamer: (file, code)->
-      file
+  app.use((req, res, next) ->
+    console.log("params: ",util.inspect(req.params), "query:", util.inspect(req.query),
+        "body:", util.inspect(req.body))
+    next()
   )
   app.use app.router
 
-jsPrimer.loadAndWatchFiles assets, console.log, null, ()->
+
+
 
 app.configure 'development', ->
   app.use express.errorHandler()

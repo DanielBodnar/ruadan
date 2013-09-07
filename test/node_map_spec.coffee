@@ -4,18 +4,20 @@ define([
   NodeMap
 )->
   describe 'NodeMap', ->
+    beforeEach ->
+      @map = new NodeMap()
+
     node = document.createTextNode("text node");
     describe 'get', ->
       it 'should return defaultValue for nonexistant node', ->
-        map = new NodeMap()
-        expect(map.get(node)).toBeNull()
-        expect(map.get(node, 'something')).toEqual('something')
+        expect(@map.get(node)).toBeNull()
+        expect(@map.get(node, 'something')).toEqual('something')
 
       it 'should return node if found', ->
-        map = new NodeMap()
         val = 'someValue'
-        map.set(node, val)
-        expect(map.get(node)).toEqual(val)
+        @map.set(node, val)
+        expect(@map.get(node)).toEqual(val)
 
+    describe 'set', ->
 
 )
