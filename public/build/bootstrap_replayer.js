@@ -14812,12 +14812,19 @@ if ( typeof window === "object" && typeof window.document === "object" ) {
                 delete nodeData.attributes["href"];
                 node.innerHTML = nodeData.styleText;
                 break;
+              case 'IFRAME':
+                node = this.root.createComment('iframe');
+                break;
               default:
                 node = this._createElement(nodeData.tagName);
             }
-            this._addAttributes(node, nodeData.attributes);
+            if (nodeData.tagName !== "IFRAME") {
+              this._addAttributes(node, nodeData.attributes);
+            }
         }
-        this._addStyle(node, nodeData.styles);
+        if (!(nodeData.nodeType === ("" + Node.ELEMENT_NODE) && nodeData.tagName === "IFRAME")) {
+          this._addStyle(node, nodeData.styles);
+        }
         if (!node) {
           throw "ouch";
         }

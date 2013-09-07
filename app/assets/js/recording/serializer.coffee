@@ -9,6 +9,7 @@ define([
     constructor: (@knownNodesMap = new NodeMap()) ->
     serialize: (node, recursive = false)->
       return null unless node?
+
       data = @knownNodesMap.get(node)
       return data if data? #we already serialzied the node
       id = @knownNodesMap.set(node)

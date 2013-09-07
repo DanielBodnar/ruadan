@@ -41,10 +41,12 @@ define([
               nodeData.attributes["xhref"] = href
               delete nodeData.attributes["href"]
               node.innerHTML = nodeData.styleText
+            when 'IFRAME'
+              node = @root.createComment('iframe')
             else
               node = @_createElement(nodeData.tagName)
-          @_addAttributes(node, nodeData.attributes)
-      @_addStyle(node, nodeData.styles)
+          @_addAttributes(node, nodeData.attributes) unless nodeData.tagName == "IFRAME"
+      @_addStyle(node, nodeData.styles) unless nodeData.nodeType == "#{Node.ELEMENT_NODE}" && nodeData.tagName == "IFRAME"
       throw "ouch" unless node
       @idMap[nodeData.id] = node
 

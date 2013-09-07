@@ -12,9 +12,9 @@
     <file path="/backup_helper.rb" changelist="9ee561e2-eec1-4cd8-ba71-52f282f0e847" time="1377096204326" ignored="false" />
     <file path="/application_controller.coffee" changelist="9ee561e2-eec1-4cd8-ba71-52f282f0e847" time="1378383781507" ignored="false" />
     <file path="/deserialize.coffee" changelist="9ee561e2-eec1-4cd8-ba71-52f282f0e847" time="1377200672027" ignored="false" />
-    <file path="/deserializer.coffee" changelist="9ee561e2-eec1-4cd8-ba71-52f282f0e847" time="1378563366462" ignored="false" />
+    <file path="/deserializer.coffee" changelist="9ee561e2-eec1-4cd8-ba71-52f282f0e847" time="1378567516024" ignored="false" />
     <file path="/a.dummy" changelist="9ee561e2-eec1-4cd8-ba71-52f282f0e847" time="1378556489990" ignored="false" />
-    <file path="/serializer.coffee" changelist="9ee561e2-eec1-4cd8-ba71-52f282f0e847" time="1378563917006" ignored="false" />
+    <file path="/serializer.coffee" changelist="9ee561e2-eec1-4cd8-ba71-52f282f0e847" time="1378566884827" ignored="false" />
     <file path="/replayer.jade" changelist="9ee561e2-eec1-4cd8-ba71-52f282f0e847" time="1378384029364" ignored="false" />
     <file path="/bootstrap_replayer.coffee" changelist="9ee561e2-eec1-4cd8-ba71-52f282f0e847" time="1378405563601" ignored="false" />
     <file path="/html2canvas.js" changelist="9ee561e2-eec1-4cd8-ba71-52f282f0e847" time="1377202456655" ignored="false" />
@@ -42,8 +42,10 @@
     <file path="/index.coffee" changelist="9ee561e2-eec1-4cd8-ba71-52f282f0e847" time="1378384342716" ignored="false" />
     <file path="/async_loader.js" changelist="9ee561e2-eec1-4cd8-ba71-52f282f0e847" time="1378384917176" ignored="false" />
     <file path="/replay.jade" changelist="9ee561e2-eec1-4cd8-ba71-52f282f0e847" time="1378391476207" ignored="false" />
-    <file path="/phantom.coffee" changelist="9ee561e2-eec1-4cd8-ba71-52f282f0e847" time="1378564336089" ignored="false" />
+    <file path="/phantom.coffee" changelist="9ee561e2-eec1-4cd8-ba71-52f282f0e847" time="1378566659232" ignored="false" />
     <file path="/recorder.coffee" changelist="9ee561e2-eec1-4cd8-ba71-52f282f0e847" time="1378404402360" ignored="false" />
+    <file path="$PROJECT_DIR$/public/build/bootstrap_replayer.js" changelist="9ee561e2-eec1-4cd8-ba71-52f282f0e847" time="1378567299370" ignored="false" />
+    <file path="$PROJECT_DIR$/public/build/bootstrap_recorder.js" changelist="9ee561e2-eec1-4cd8-ba71-52f282f0e847" time="1378567299370" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,28 +74,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="serializer.coffee" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/assets/js/recording/serializer.coffee">
+      <file leaf-file-name="Gruntfile.coffee" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Gruntfile.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="83" column="0" selection-start="2399" selection-end="2399" vertical-scroll-proportion="0.76086956">
+            <state line="15" column="17" selection-start="311" selection-end="311" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="deserializer.coffee" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/assets/js/replaying/deserializer.coffee">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="92" column="0" selection-start="2569" selection-end="2569" vertical-scroll-proportion="-15.6">
-              <folding />
-            </state>
+      <file leaf-file-name="capture.png" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/capture.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
           </provider>
         </entry>
       </file>
       <file leaf-file-name="phantom.coffee" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/phantom.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="21" selection-start="306" selection-end="320" vertical-scroll-proportion="0.0">
+            <state line="33" column="0" selection-start="711" selection-end="711" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -148,8 +148,8 @@
         <option value="$PROJECT_DIR$/app/assets/js/recording/recorder.coffee" />
         <option value="$PROJECT_DIR$/config/requirejs.coffee" />
         <option value="$PROJECT_DIR$/app/assets/js/recording/recorder_client.coffee" />
-        <option value="$PROJECT_DIR$/app/assets/js/replaying/deserializer.coffee" />
         <option value="$PROJECT_DIR$/app/assets/js/recording/serializer.coffee" />
+        <option value="$PROJECT_DIR$/app/assets/js/replaying/deserializer.coffee" />
         <option value="$PROJECT_DIR$/phantom.coffee" />
       </list>
     </option>
@@ -217,70 +217,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="ruadan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ruadan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ruadan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="config" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ruadan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ruadan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bower_components" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ruadan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ruadan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bower_components" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lodash" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ruadan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ruadan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bower_components" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eventEmitter" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -605,20 +541,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/js/async_loader.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="0" selection-start="330" selection-end="330" vertical-scroll-proportion="0.14492753">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Gruntfile.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="17" selection-start="311" selection-end="311" vertical-scroll-proportion="0.41133454">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/requirejs.coffee">
       <provider selected="true" editor-type-id="text-editor">
         <state line="24" column="0" selection-start="530" selection-end="530" vertical-scroll-proportion="0.4347826">
@@ -649,20 +571,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/js/recording/recorder_client.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="14" selection-start="269" selection-end="269" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/js/replaying/deserializer.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="92" column="0" selection-start="2569" selection-end="2569" vertical-scroll-proportion="-15.6">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/js/recording/observer.coffee">
       <provider selected="true" editor-type-id="text-editor">
         <state line="7" column="16" selection-start="82" selection-end="82" vertical-scroll-proportion="0.0">
@@ -670,23 +578,51 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/capture.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/phantom.coffee">
+    <entry file="file://$PROJECT_DIR$/app/assets/js/async_loader.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="21" selection-start="306" selection-end="320" vertical-scroll-proportion="0.0">
+        <state line="8" column="0" selection-start="0" selection-end="330" vertical-scroll-proportion="0.14492753">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/js/recording/serializer.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="83" column="0" selection-start="2399" selection-end="2399" vertical-scroll-proportion="0.76086956">
+        <state line="11" column="0" selection-start="212" selection-end="212" vertical-scroll-proportion="0.19927536">
           <folding />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/js/replaying/deserializer.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="43" column="25" selection-start="1370" selection-end="1370" vertical-scroll-proportion="0.4856787">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/js/recording/recorder_client.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="14" selection-start="269" selection-end="269" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phantom.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="0" selection-start="711" selection-end="711" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Gruntfile.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="17" selection-start="311" selection-end="311" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/capture.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
   </component>
