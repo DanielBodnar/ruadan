@@ -1,13 +1,16 @@
 define([
-#  'observer'
+  'recording/observers/mutation_observer'
+  'recording/observers/mouse_observer'
 ], (
-#  Observer
+  MutationObserver
+  MouseObserver
 )->
   class Recorder
     constructor: (options)->
       @client = options.client
       @rootElement = options.rootElement
-#      @observer = new Observer()
+      @mutationObserver = new MutationObserver()
+      @mouseObserver = new MouseObserver()
       @_bindObserverEvents()
 
     initialize: ->
@@ -16,12 +19,17 @@ define([
       @client.initialize(@rootElement)
 
     startRecording: ->
-#      @observer.observe(@rootElement)
+      @mutationObserver.observe(@rootElement)
+      @mouseObserver.observe(@rootElement)
 
     stopRecording: ->
-#      @observer.disconnect()
+      @mutationObserver.disconnect()
+      @mouseObserver.disconnect()
 
     _bindObserverEvents: ->
-#      @observer.on('change', (mutations)=> @client.onChange(mutations))
+      @mutationObserver.on('change', (mutations)=> @client.onChange(mutations))
+      @mouseObserver.on('change', (data)=>
+        console.log("mouse moved", data.x, data.y)
+      )
 
 )

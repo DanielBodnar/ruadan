@@ -14893,7 +14893,6 @@ if ( typeof window === "object" && typeof window.document === "object" ) {
       deserializer = new Deserializer(document.getElementsByTagName("iframe")[0].contentWindow.document);
       deserializer.deserialize(data.nodes);
       html = document.getElementsByTagName("iframe")[0].contentWindow.document.getElementsByTagName("html")[0].innerHTML;
-      console.log(html);
       initialState = {
         content: html,
         viewport: {

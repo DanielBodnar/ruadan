@@ -1,17 +1,21 @@
 (function() {
-  define(['lodash'], function(_) {
-    var Observer;
-    return Observer = (function() {
-      function Observer() {
-        var MutationObserver,
-          _this = this;
+  var __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  define(['lodash', 'eventEmitter'], function(_, EventEmitter) {
+    var MutationObserver;
+    return MutationObserver = (function(_super) {
+      __extends(MutationObserver, _super);
+
+      function MutationObserver() {
+        var _this = this;
         MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
         this.observer = new MutationObserver(function(mutations) {
           return _this._onChange(mutations);
         });
       }
 
-      Observer.prototype.observe = function(el, options) {
+      MutationObserver.prototype.observe = function(el, options) {
         var defaultOptions;
         if (options == null) {
           options = {};
@@ -30,17 +34,17 @@
         return this.observer.observe(el, _.extend(defaultOptions, options));
       };
 
-      Observer.prototype.disconnect = function() {
+      MutationObserver.prototype.disconnect = function() {
         return this.observer.disconnect();
       };
 
-      Observer.prototype._onChange = function(mutations) {
+      MutationObserver.prototype._onChange = function(mutations) {
         return this.trigger('change', [mutations]);
       };
 
-      return Observer;
+      return MutationObserver;
 
-    })();
+    })(EventEmitter);
   });
 
 }).call(this);

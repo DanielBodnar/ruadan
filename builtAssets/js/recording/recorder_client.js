@@ -39,7 +39,7 @@
       };
 
       RecorderClient.prototype._handleMutation = function(mutation) {
-        console.dir(mutation);
+        console.log("mutation", mutation);
         if (this._hasAddedNodes(mutation)) {
           return this._handleAddedNodes(mutation.addedNodes);
         }

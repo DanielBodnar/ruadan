@@ -6,7 +6,8 @@
       rootElement: document.getElementsByTagName("html")[0],
       client: client
     });
-    return recorder.initialize();
+    recorder.initialize();
+    return recorder.startRecording();
   });
 
 }).call(this);

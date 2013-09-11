@@ -2,6 +2,9 @@
 bootstrap_recorder.js
 ----------------
 /Users/dannifriedland/Dev/ruadan/bower_components/lodash/lodash.js
+/Users/dannifriedland/Dev/ruadan/bower_components/eventEmitter/eventEmitter.js
+recording/observers/mutation_observer.js
+recording/observers/mouse_observer.js
 recording/recorder.js
 /Users/dannifriedland/Dev/ruadan/bower_components/jquery/jquery.js
 recording/node_map.js

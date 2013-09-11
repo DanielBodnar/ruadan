@@ -34,7 +34,7 @@ define([
       _.each(mutations, (mutation)=> @_handleMutation(mutation))
 
     _handleMutation: (mutation)->
-      console.dir(mutation)
+      console.log("mutation", mutation)
       @_handleAddedNodes(mutation.addedNodes) if @_hasAddedNodes(mutation)
 
     _hasAddedNodes: (mutation)->

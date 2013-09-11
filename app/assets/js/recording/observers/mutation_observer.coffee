@@ -1,11 +1,11 @@
 define([
   'lodash'
-#  'eventEmitter'
+  'eventEmitter'
 ],(
   _
-#  EventEmitter
+  EventEmitter
 )->
-  class Observer
+  class MutationObserver extends EventEmitter
     constructor: ()->
       MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver
       @observer = new MutationObserver((mutations)=>@_onChange(mutations))

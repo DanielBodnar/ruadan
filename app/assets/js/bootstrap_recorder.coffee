@@ -13,5 +13,5 @@ define([
     client: client
   )
   recorder.initialize()
-#  recorder.startRecording()
+  recorder.startRecording()
 )
