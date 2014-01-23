@@ -3,33 +3,41 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   define(['lodash', 'eventEmitter'], function(_, EventEmitter) {
-    var MutationObserver;
-    return MutationObserver = (function(_super) {
-      __extends(MutationObserver, _super);
+    var MouseObserver;
+    return MouseObserver = (function(_super) {
+      __extends(MouseObserver, _super);
 
-      function MutationObserver() {}
-
-      MutationObserver.prototype.observe = function(el, options) {
+      function MouseObserver() {
         var _this = this;
-        this.el = el;
-        if (options == null) {
-          options = {};
-        }
         this._listenerFunc = function(e) {
           return _this._onChange(e);
         };
-        return this._listener = this.el.addEventListener('mousemove', this._listenerFunc, false);
+      }
+
+      MouseObserver.prototype.initialize = function(element) {
+        this.element = element;
+        return this.trigger("initialize", [
+          {
+            x: 0,
+            y: 0,
+            timestamp: new Date().getTime()
+          }
+        ]);
       };
 
-      MutationObserver.prototype.disconnect = function() {
-        return this.el.removeEventListener('mousemove', this._listenerFunc, false);
+      MouseObserver.prototype.observe = function() {
+        return this._listener = this.element.addEventListener('mousemove', this._listenerFunc, false);
       };
 
-      MutationObserver.prototype._onChange = function(event) {
+      MouseObserver.prototype.disconnect = function() {
+        return this.element.removeEventListener('mousemove', this._listenerFunc, false);
+      };
+
+      MouseObserver.prototype._onChange = function(event) {
         var x, y;
         x = event.pageX;
         y = event.pageY;
-        return this.trigger('change', [
+        return this.trigger('mouseMoved', [
           {
             x: x,
             y: y,
@@ -38,7 +46,7 @@
         ]);
       };
 
-      return MutationObserver;
+      return MouseObserver;
 
     })(EventEmitter);
   });

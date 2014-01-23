@@ -14767,13 +14767,15 @@ if ( typeof window === "object" && typeof window.document === "object" ) {
   define('replaying/deserializer',['lodash'], function(_) {
     var Deserializer;
     return Deserializer = (function() {
-      function Deserializer(root, idMap) {
-        this.root = root;
+      function Deserializer(document, root, idMap) {
+        this.document = document;
+        this.root = root != null ? root : null;
         this.idMap = idMap != null ? idMap : {};
+        this.root = this.document.implementation.createHTMLDocument();
       }
 
       Deserializer.prototype.deserialize = function(nodeData, parent) {
-        var child, href, node, _i, _len, _ref;
+        var child, href, node, _i, _len, _ref, _ref1;
         if (parent == null) {
           parent = this.root;
         }
@@ -14806,6 +14808,9 @@ if ( typeof window === "object" && typeof window.document === "object" ) {
                 node = this.root.getElementsByTagName("body")[0];
                 break;
               case 'LINK':
+                if (((_ref = nodeData.attributes["rel"]) != null ? _ref.toLowerCase() : void 0) !== "stylesheet") {
+                  break;
+                }
                 node = this._createElement("style");
                 href = nodeData.attributes["href"];
                 nodeData.attributes["xhref"] = href;
@@ -14815,8 +14820,9 @@ if ( typeof window === "object" && typeof window.document === "object" ) {
               case 'IFRAME':
                 node = this.root.createComment('iframe');
                 break;
-              default:
-                node = this._createElement(nodeData.tagName);
+            }
+            if (!node) {
+              node = this._createElement(nodeData.tagName);
             }
             if (nodeData.tagName !== "IFRAME") {
               this._addAttributes(node, nodeData.attributes);
@@ -14840,9 +14846,9 @@ if ( typeof window === "object" && typeof window.document === "object" ) {
             }
         }
         if (nodeData.childNodes != null) {
-          _ref = nodeData.childNodes;
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            child = _ref[_i];
+          _ref1 = nodeData.childNodes;
+          for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+            child = _ref1[_i];
             this.deserialize(child, node);
           }
         }
@@ -14889,19 +14895,27 @@ if ( typeof window === "object" && typeof window.document === "object" ) {
 (function() {
   define('bootstrap_replayer',['jquery', 'replaying/deserializer'], function($, Deserializer) {
     return $.get("http://127.0.0.1:3000/view", function(data) {
-      var deserializer, html, initialState;
-      deserializer = new Deserializer(document.getElementsByTagName("iframe")[0].contentWindow.document);
-      deserializer.deserialize(data.nodes);
-      html = document.getElementsByTagName("iframe")[0].contentWindow.document.getElementsByTagName("html")[0].innerHTML;
-      initialState = {
-        content: html,
-        viewport: {
-          width: data.viewport.width,
-          height: data.viewport.height
-        }
+      var deserializer, destDocument, html, iframe, newNode, res;
+      deserializer = new Deserializer(document);
+      res = deserializer.deserialize(data.initialMutationState.nodes);
+      iframe = document.getElementById("theframe");
+      destDocument = iframe.contentDocument;
+      newNode = destDocument.importNode(res, true);
+      destDocument.replaceChild(newNode, destDocument.documentElement);
+      html = res.innerHTML;
+      iframe.contentWindow.scrollTo(data.initialScrollState.x, data.initialScrollState.y);
+      iframe.setAttribute("width", "" + data.initialViewportState.width);
+      iframe.setAttribute("height", "" + data.initialViewportState.height);
+      iframe.setAttribute("frameborder", "0");
+      iframe.style.width = "" + data.initialViewportState.width + "px";
+      iframe.style.height = "" + data.initialViewportState.height + "px";
+      data = {
+        viewport: data.initialViewportState,
+        scroll: data.initialScrollState,
+        html: html
       };
       if (window.callPhantom) {
-        return window.callPhantom(initialState);
+        return window.callPhantom(data);
       }
     });
   });

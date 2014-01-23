@@ -5,18 +5,21 @@ define([
   _
   EventEmitter
 )->
-  class MutationObserver extends EventEmitter
-    constructor: ()->
-
-    observe: (@el, options = {})->
+  class MouseObserver extends EventEmitter
+    constructor: ->
       @_listenerFunc = (e)=> @_onChange(e)
-      @_listener = @el.addEventListener('mousemove', @_listenerFunc, false)
+
+    initialize: (@element)->
+      @trigger("initialize", [x: 0, y: 0, timestamp: new Date().getTime()])
+
+    observe: ->
+      @_listener = @element.addEventListener('mousemove', @_listenerFunc, false)
 
     disconnect: ->
-      @el.removeEventListener('mousemove', @_listenerFunc, false)
+      @element.removeEventListener('mousemove', @_listenerFunc, false)
 
     _onChange: (event)->
       x = event.pageX
       y = event.pageY
-      @trigger('change', [{x: x, y:y, timestamp: event.timeStamp}])
+      @trigger('mouseMoved', [{x: x, y:y, timestamp: event.timeStamp}])
 )

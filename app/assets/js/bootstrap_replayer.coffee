@@ -6,15 +6,26 @@ define([
   Deserializer
 )->
   $.get("http://127.0.0.1:3000/view", (data)->
-    deserializer = new Deserializer(document.getElementsByTagName("iframe")[0].contentWindow.document)
-    deserializer.deserialize(data.nodes)
-    html = document.getElementsByTagName("iframe")[0].contentWindow.document.getElementsByTagName("html")[0].innerHTML
-    initialState =
-      content: html
-      viewport:
-        width: data.viewport.width
-        height: data.viewport.height
+    deserializer = new Deserializer(document)
+    res = deserializer.deserialize(data.initialMutationState.nodes)
 
-    window.callPhantom(initialState) if window.callPhantom
+    iframe = document.getElementById("theframe")
+    destDocument = iframe.contentDocument
+    newNode = destDocument.importNode(res, true)
+    destDocument.replaceChild(newNode, destDocument.documentElement)
+    html = res.innerHTML
+
+    iframe.contentWindow.scrollTo(data.initialScrollState.x, data.initialScrollState.y)
+    iframe.setAttribute("width", "#{data.initialViewportState.width}")
+    iframe.setAttribute("height", "#{data.initialViewportState.height}")
+    iframe.setAttribute("frameborder", "0")
+    iframe.style.width = "#{data.initialViewportState.width}px"
+    iframe.style.height = "#{data.initialViewportState.height}px"
+
+    data =
+      viewport: data.initialViewportState
+      scroll: data.initialScrollState
+      html: html
+    window.callPhantom(data) if window.callPhantom
   )
 )

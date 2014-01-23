@@ -6390,23 +6390,226 @@
 }.call(this));
 
 (function() {
+  define('recording/node_map',[], function() {
+    var ID_PROP, NodeMap, ensureId, getId, hasId, setId;
+    ID_PROP = '__mutation_summary_node_map_id__';
+    NodeMap = (function() {
+      function NodeMap() {
+        this.currId = 0;
+        this._nodeMap = {};
+      }
+
+      NodeMap.prototype.set = function(node, value) {
+        var id;
+        id = ensureId(node, this.getNextId());
+        this._nodeMap[getId(node)] = {
+          k: node,
+          v: value
+        };
+        return id;
+      };
+
+      NodeMap.prototype.get = function(node, defaultValue) {
+        var byId, result;
+        if (defaultValue == null) {
+          defaultValue = null;
+        }
+        result = defaultValue;
+        if (hasId(node)) {
+          byId = this._nodeMap[getId(node)];
+          if (byId) {
+            result = byId.v;
+          }
+        }
+        return result;
+      };
+
+      NodeMap.prototype.has = function(node) {
+        return hasId(node) && getId(node) in this._nodeMap;
+      };
+
+      NodeMap.prototype["delete"] = function(node) {
+        if (hasId(node)) {
+          return delete this._nodeMap[getId(node)];
+        }
+      };
+
+      NodeMap.prototype.getNextId = function() {
+        return this.currId++;
+      };
+
+      return NodeMap;
+
+    })();
+    ensureId = function(node, nextId) {
+      if (!hasId(node)) {
+        setId(node, nextId);
+      }
+      return getId(node);
+    };
+    hasId = function(node) {
+      return getId(node) != null;
+    };
+    getId = function(node) {
+      return node[ID_PROP];
+    };
+    setId = function(node, id) {
+      return node[ID_PROP] = id;
+    };
+    return NodeMap;
+  });
+
+}).call(this);
+
+(function() {
+  define('recording/serializer',['lodash', 'recording/node_map'], function(_, NodeMap) {
+    var Serialzier;
+    Serialzier = (function() {
+      function Serialzier(knownNodesMap) {
+        this.knownNodesMap = knownNodesMap != null ? knownNodesMap : new NodeMap();
+      }
+
+      Serialzier.prototype.serialize = function(node, recursive) {
+        var data, docType, elm, id;
+        if (recursive == null) {
+          recursive = false;
+        }
+        if (node == null) {
+          return null;
+        }
+        data = this.knownNodesMap.get(node);
+        if (data != null) {
+          return data;
+        }
+        id = this.knownNodesMap.set(node);
+        data = {
+          nodeType: node.nodeType,
+          id: id
+        };
+        this._serializeStyle(node, data);
+        switch (data.nodeType) {
+          case Node.DOCUMENT_NODE:
+            elm = node;
+            data.nodeTypeName = "DOCUMENT_NODE";
+            data.url = elm.url;
+            data.alinkColor = elm.alinkColor;
+            data.dir = elm.dir;
+            if (recursive && elm.childNodes.length) {
+              this._serializeChildNodes(elm, data);
+            }
+            break;
+          case Node.DOCUMENT_TYPE_NODE:
+            docType = node;
+            data.publicId = docType.publicId;
+            data.systemId = docType.systemId;
+            data.nodeTypeName = "DOCUMENT_TYPE_NODE";
+            break;
+          case Node.COMMENT_NODE:
+          case Node.TEXT_NODE:
+            data.textContent = node.textContent;
+            data.nodeTypeName = "TEXT_NODE";
+            break;
+          case Node.ELEMENT_NODE:
+            elm = node;
+            data.nodeTypeName = "ELEMENT_NODE";
+            data.tagName = elm.tagName;
+            if (elm.tagName.toLowerCase() === "link") {
+              this._serializeLinkTag(node, data);
+            }
+            this._serializeAttributes(elm, data);
+            if (recursive && elm.childNodes.length) {
+              this._serializeChildNodes(elm, data);
+            }
+            break;
+        }
+        this.knownNodesMap.set(node, data);
+        return data;
+      };
+
+      Serialzier.prototype._serializeAttributes = function(node, data) {
+        var attrib, i, _results;
+        data.attributes = {};
+        i = 0;
+        _results = [];
+        while (i < node.attributes.length) {
+          attrib = node.attributes[i];
+          if (attrib.specified) {
+            data.attributes[attrib.name] = attrib.value;
+          }
+          _results.push(i++);
+        }
+        return _results;
+      };
+
+      Serialzier.prototype._serializeChildNodes = function(node, data) {
+        var child, _results;
+        data.childNodes = [];
+        child = node.firstChild;
+        _results = [];
+        while (child) {
+          data.childNodes.push(this.serialize(child, true));
+          _results.push(child = child.nextSibling);
+        }
+        return _results;
+      };
+
+      Serialzier.prototype._serializeStyle = function(node, data) {
+        var res;
+        res = _.chain(node.style).filter(function(value) {
+          return !_.isEmpty(node.style[value]);
+        }).map(function(value) {
+          return [value, node.style[value]];
+        }).compact().value();
+        return data.styles = res;
+      };
+
+      Serialzier.prototype._serializeLinkTag = function(node, data) {
+        if (node.sheet == null) {
+          return;
+        }
+        return data.styleText = _.chain(node.sheet.rules).map(function(v) {
+          return v.cssText;
+        }).value().join("\n");
+      };
+
+      return Serialzier;
+
+    })();
+    return Serialzier;
+  });
+
+}).call(this);
+
+(function() {
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define('recording/observers/mutation_observer',['lodash', 'eventEmitter'], function(_, EventEmitter) {
+  define('recording/observers/mutation_observer',['lodash', 'eventEmitter', 'recording/serializer'], function(_, EventEmitter, Serializer) {
     var MutationObserver;
     return MutationObserver = (function(_super) {
       __extends(MutationObserver, _super);
 
       function MutationObserver() {
         var _this = this;
+        this.serializer = new Serializer();
         MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
         this.observer = new MutationObserver(function(mutations) {
           return _this._onChange(mutations);
         });
       }
 
-      MutationObserver.prototype.observe = function(el, options) {
+      MutationObserver.prototype.initialize = function(element) {
+        var currentState, eventData;
+        this.element = element;
+        currentState = this.serializer.serialize(this.element, true);
+        eventData = {
+          nodes: currentState,
+          timestamp: new Date().getTime()
+        };
+        return this.trigger("initialize", [eventData]);
+      };
+
+      MutationObserver.prototype.observe = function(options) {
         var defaultOptions;
         if (options == null) {
           options = {};
@@ -6422,7 +6625,7 @@
           cssPropertyOldValue: true,
           attributeFilter: []
         };
-        return this.observer.observe(el, _.extend(defaultOptions, options));
+        return this.observer.observe(this.element, _.extend(defaultOptions, options));
       };
 
       MutationObserver.prototype.disconnect = function() {
@@ -6430,7 +6633,31 @@
       };
 
       MutationObserver.prototype._onChange = function(mutations) {
-        return this.trigger('change', [mutations]);
+        var _this = this;
+        return _.each(mutations, function(mutation) {
+          return _this._handleMutation(mutation);
+        });
+      };
+
+      MutationObserver.prototype._handleMutation = function(mutation) {
+        return console.log("mutation", mutation);
+      };
+
+      MutationObserver.prototype._hasAddedNodes = function(mutation) {
+        return (mutation.addedNodes != null) && mutation.addedNodes.length > 0;
+      };
+
+      MutationObserver.prototype._handleAddedNodes = function(nodes) {
+        var _this = this;
+        return _.each(nodes, function(node) {
+          return _this._handleAddedNode(node);
+        });
+      };
+
+      MutationObserver.prototype._handleAddedNode = function(node) {
+        var serializedNode;
+        serializedNode = this.serializer.serialize(node, true);
+        return console.log("serialized node", serializedNode);
       };
 
       return MutationObserver;
@@ -6445,33 +6672,41 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   define('recording/observers/mouse_observer',['lodash', 'eventEmitter'], function(_, EventEmitter) {
-    var MutationObserver;
-    return MutationObserver = (function(_super) {
-      __extends(MutationObserver, _super);
+    var MouseObserver;
+    return MouseObserver = (function(_super) {
+      __extends(MouseObserver, _super);
 
-      function MutationObserver() {}
-
-      MutationObserver.prototype.observe = function(el, options) {
+      function MouseObserver() {
         var _this = this;
-        this.el = el;
-        if (options == null) {
-          options = {};
-        }
         this._listenerFunc = function(e) {
           return _this._onChange(e);
         };
-        return this._listener = this.el.addEventListener('mousemove', this._listenerFunc, false);
+      }
+
+      MouseObserver.prototype.initialize = function(element) {
+        this.element = element;
+        return this.trigger("initialize", [
+          {
+            x: 0,
+            y: 0,
+            timestamp: new Date().getTime()
+          }
+        ]);
       };
 
-      MutationObserver.prototype.disconnect = function() {
-        return this.el.removeEventListener('mousemove', this._listenerFunc, false);
+      MouseObserver.prototype.observe = function() {
+        return this._listener = this.element.addEventListener('mousemove', this._listenerFunc, false);
       };
 
-      MutationObserver.prototype._onChange = function(event) {
+      MouseObserver.prototype.disconnect = function() {
+        return this.element.removeEventListener('mousemove', this._listenerFunc, false);
+      };
+
+      MouseObserver.prototype._onChange = function(event) {
         var x, y;
         x = event.pageX;
         y = event.pageY;
-        return this.trigger('change', [
+        return this.trigger('mouseMoved', [
           {
             x: x,
             y: y,
@@ -6480,7 +6715,7 @@
         ]);
       };
 
-      return MutationObserver;
+      return MouseObserver;
 
     })(EventEmitter);
   });
@@ -6488,7 +6723,103 @@
 }).call(this);
 
 (function() {
-  define('recording/recorder',['recording/observers/mutation_observer', 'recording/observers/mouse_observer'], function(MutationObserver, MouseObserver) {
+  var __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  define('recording/observers/scroll_observer',['lodash', 'eventEmitter'], function(_, EventEmitter) {
+    var ScrollObserver;
+    return ScrollObserver = (function(_super) {
+      __extends(ScrollObserver, _super);
+
+      function ScrollObserver() {
+        var _this = this;
+        this._listenerFunc = function(e) {
+          return _this._onChange(e);
+        };
+      }
+
+      ScrollObserver.prototype.initialize = function(element) {
+        this.element = element;
+        return this.trigger("initialize", [
+          {
+            x: this.element.scrollX,
+            y: this.element.scrollY,
+            timestamp: new Date().getTime()
+          }
+        ]);
+      };
+
+      ScrollObserver.prototype.observe = function() {
+        return this._listener = this.element.addEventListener('scroll', this._listenerFunc, false);
+      };
+
+      ScrollObserver.prototype.disconnect = function() {
+        return this.element.removeEventListener('scroll', this._listenerFunc, false);
+      };
+
+      ScrollObserver.prototype._onChange = function(event) {
+        var x, y;
+        x = this.element.scrollX;
+        y = this.element.scrollY;
+        console.log("scroll", x, y);
+        return this.trigger('scroll', [
+          {
+            x: x,
+            y: y,
+            timestamp: event.timeStamp
+          }
+        ]);
+      };
+
+      return ScrollObserver;
+
+    })(EventEmitter);
+  });
+
+}).call(this);
+
+(function() {
+  var __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  define('recording/observers/viewport_observer',['eventEmitter'], function(EventEmitter) {
+    var ViewportObserver;
+    return ViewportObserver = (function(_super) {
+      __extends(ViewportObserver, _super);
+
+      function ViewportObserver() {
+        var _this = this;
+        this._listenerFunc = function(e) {
+          return _this._onChange(e);
+        };
+      }
+
+      ViewportObserver.prototype.initialize = function(element) {
+        this.element = element;
+        return this.trigger("initialize", [
+          {
+            width: this.element.clientWidth,
+            height: this.element.clientHeight,
+            timestamp: new Date().getTime()
+          }
+        ]);
+      };
+
+      ViewportObserver.prototype.observe = function() {};
+
+      ViewportObserver.prototype.disconnect = function() {};
+
+      ViewportObserver.prototype._onChange = function(event) {};
+
+      return ViewportObserver;
+
+    })(EventEmitter);
+  });
+
+}).call(this);
+
+(function() {
+  define('recording/recorder',['recording/observers/mutation_observer', 'recording/observers/mouse_observer', 'recording/observers/scroll_observer', 'recording/observers/viewport_observer'], function(MutationObserver, MouseObserver, ScrollObserver, ViewportObserver) {
     var Recorder;
     return Recorder = (function() {
       function Recorder(options) {
@@ -6496,32 +6827,44 @@
         this.rootElement = options.rootElement;
         this.mutationObserver = new MutationObserver();
         this.mouseObserver = new MouseObserver();
+        this.scrollingObserver = new ScrollObserver();
+        this.viewportObserver = new ViewportObserver();
         this._bindObserverEvents();
       }
 
       Recorder.prototype.initialize = function() {
-        this.client.setViewportHeight(document.documentElement.clientHeight);
-        this.client.setViewportWidth(document.documentElement.clientWidth);
+        this.scrollingObserver.initialize(window);
+        this.mutationObserver.initialize(this.rootElement);
+        this.mouseObserver.initialize(this.rootElement);
+        this.viewportObserver.initialize(this.rootElement);
         return this.client.initialize(this.rootElement);
       };
 
       Recorder.prototype.startRecording = function() {
         this.mutationObserver.observe(this.rootElement);
+        this.scrollingObserver.observe(this.rootElement);
         return this.mouseObserver.observe(this.rootElement);
       };
 
       Recorder.prototype.stopRecording = function() {
         this.mutationObserver.disconnect();
+        this.scrollingObserver.disconnect();
         return this.mouseObserver.disconnect();
       };
 
       Recorder.prototype._bindObserverEvents = function() {
         var _this = this;
-        this.mutationObserver.on('change', function(mutations) {
-          return _this.client.onChange(mutations);
+        this.scrollingObserver.on('initialize', function(info) {
+          return _this.client.setInitialScrollState(info);
         });
-        return this.mouseObserver.on('change', function(data) {
-          return console.log("mouse moved", data.x, data.y);
+        this.scrollingObserver.on('scroll', function(info) {
+          return _this.client.onScroll(info);
+        });
+        this.mutationObserver.on('initialize', function(info) {
+          return _this.client.setInitialMutationState(info);
+        });
+        return this.viewportObserver.on('initialize', function(info) {
+          return _this.client.setInitialViewportState(info);
         });
       };
 
@@ -15363,258 +15706,42 @@ if ( typeof window === "object" && typeof window.document === "object" ) {
 })( window );
 
 (function() {
-  define('recording/node_map',[], function() {
-    var ID_PROP, NodeMap, ensureId, getId, hasId, setId;
-    ID_PROP = '__mutation_summary_node_map_id__';
-    NodeMap = (function() {
-      function NodeMap() {
-        this.currId = 0;
-        this._nodeMap = {};
-      }
-
-      NodeMap.prototype.set = function(node, value) {
-        var id;
-        id = ensureId(node, this.getNextId());
-        this._nodeMap[getId(node)] = {
-          k: node,
-          v: value
-        };
-        return id;
-      };
-
-      NodeMap.prototype.get = function(node, defaultValue) {
-        var byId, result;
-        if (defaultValue == null) {
-          defaultValue = null;
-        }
-        result = defaultValue;
-        if (hasId(node)) {
-          byId = this._nodeMap[getId(node)];
-          if (byId) {
-            result = byId.v;
-          }
-        }
-        return result;
-      };
-
-      NodeMap.prototype.has = function(node) {
-        return hasId(node) && getId(node) in this._nodeMap;
-      };
-
-      NodeMap.prototype["delete"] = function(node) {
-        if (hasId(node)) {
-          return delete this._nodeMap[getId(node)];
-        }
-      };
-
-      NodeMap.prototype.getNextId = function() {
-        return this.currId++;
-      };
-
-      return NodeMap;
-
-    })();
-    ensureId = function(node, nextId) {
-      if (!hasId(node)) {
-        setId(node, nextId);
-      }
-      return getId(node);
-    };
-    hasId = function(node) {
-      return getId(node) != null;
-    };
-    getId = function(node) {
-      return node[ID_PROP];
-    };
-    setId = function(node, id) {
-      return node[ID_PROP] = id;
-    };
-    return NodeMap;
-  });
-
-}).call(this);
-
-(function() {
-  define('recording/serializer',['lodash', 'recording/node_map'], function(_, NodeMap) {
-    var Serialzier;
-    Serialzier = (function() {
-      function Serialzier(knownNodesMap) {
-        this.knownNodesMap = knownNodesMap != null ? knownNodesMap : new NodeMap();
-      }
-
-      Serialzier.prototype.serialize = function(node, recursive) {
-        var data, docType, elm, id;
-        if (recursive == null) {
-          recursive = false;
-        }
-        if (node == null) {
-          return null;
-        }
-        data = this.knownNodesMap.get(node);
-        if (data != null) {
-          return data;
-        }
-        id = this.knownNodesMap.set(node);
-        data = {
-          nodeType: node.nodeType,
-          id: id
-        };
-        this._serializeStyle(node, data);
-        switch (data.nodeType) {
-          case Node.DOCUMENT_NODE:
-            elm = node;
-            data.nodeTypeName = "DOCUMENT_NODE";
-            data.url = elm.url;
-            data.alinkColor = elm.alinkColor;
-            data.dir = elm.dir;
-            if (recursive && elm.childNodes.length) {
-              this._serializeChildNodes(elm, data);
-            }
-            break;
-          case Node.DOCUMENT_TYPE_NODE:
-            docType = node;
-            data.publicId = docType.publicId;
-            data.systemId = docType.systemId;
-            data.nodeTypeName = "DOCUMENT_TYPE_NODE";
-            break;
-          case Node.COMMENT_NODE:
-          case Node.TEXT_NODE:
-            data.textContent = node.textContent;
-            data.nodeTypeName = "TEXT_NODE";
-            break;
-          case Node.ELEMENT_NODE:
-            elm = node;
-            data.nodeTypeName = "ELEMENT_NODE";
-            data.tagName = elm.tagName;
-            if (elm.tagName.toLowerCase() === "link") {
-              this._serializeLinkTag(node, data);
-            }
-            this._serializeAttributes(elm, data);
-            if (recursive && elm.childNodes.length) {
-              this._serializeChildNodes(elm, data);
-            }
-            break;
-        }
-        this.knownNodesMap.set(node, data);
-        return data;
-      };
-
-      Serialzier.prototype._serializeAttributes = function(node, data) {
-        var attrib, i, _results;
-        data.attributes = {};
-        i = 0;
-        _results = [];
-        while (i < node.attributes.length) {
-          attrib = node.attributes[i];
-          if (attrib.specified) {
-            data.attributes[attrib.name] = attrib.value;
-          }
-          _results.push(i++);
-        }
-        return _results;
-      };
-
-      Serialzier.prototype._serializeChildNodes = function(node, data) {
-        var child, _results;
-        data.childNodes = [];
-        child = node.firstChild;
-        _results = [];
-        while (child) {
-          data.childNodes.push(this.serialize(child, true));
-          _results.push(child = child.nextSibling);
-        }
-        return _results;
-      };
-
-      Serialzier.prototype._serializeStyle = function(node, data) {
-        var res;
-        res = _.chain(node.style).filter(function(value) {
-          return !_.isEmpty(node.style[value]);
-        }).map(function(value) {
-          return [value, node.style[value]];
-        }).compact().value();
-        return data.styles = res;
-      };
-
-      Serialzier.prototype._serializeLinkTag = function(node, data) {
-        if (node.sheet == null) {
-          return;
-        }
-        return data.styleText = _.chain(node.sheet.rules).map(function(v) {
-          return v.cssText;
-        }).value().join("\n");
-      };
-
-      return Serialzier;
-
-    })();
-    return Serialzier;
-  });
-
-}).call(this);
-
-(function() {
-  define('recording/recorder_client',['lodash', 'jquery', 'recording/serializer'], function(_, $, Serializer) {
+  define('recording/recorder_client',['lodash', 'jquery'], function(_, $, Serializer) {
     var RecorderClient;
     return RecorderClient = (function() {
       function RecorderClient(document) {
         this.document = document;
-        this.viewport = {};
       }
 
       RecorderClient.prototype.initialize = function(rootElement) {
-        var initialData;
-        this.viewport || (this.viewport = {});
-        this.serializer = new Serializer();
-        initialData = {
-          nodes: this.serializer.serialize(rootElement, true),
-          viewport: {
-            height: this.viewport.height,
-            width: this.viewport.width
-          }
-        };
+        this.rootElement = rootElement;
+      };
+
+      RecorderClient.prototype.setInitialMutationState = function(data) {
+        return this._record("initialMutationState", data);
+      };
+
+      RecorderClient.prototype.setInitialScrollState = function(data) {
+        return this._record("initialScrollState", data);
+      };
+
+      RecorderClient.prototype.setInitialViewportState = function(data) {
+        return this._record("initialViewportState", data);
+      };
+
+      RecorderClient.prototype.onMutation = function(data) {};
+
+      RecorderClient.prototype.onMouseMove = function(data) {};
+
+      RecorderClient.prototype.onScroll = function(data) {
+        return console.log("scroll", data);
+      };
+
+      RecorderClient.prototype._record = function(action, data) {
         return $.post("http://127.0.0.1:3000/record", {
-          initialData: initialData
+          action: action,
+          data: data
         });
-      };
-
-      RecorderClient.prototype.setViewportHeight = function(heightInPixels) {
-        return this.viewport.height = heightInPixels;
-      };
-
-      RecorderClient.prototype.setViewportWidth = function(widthInPixels) {
-        return this.viewport.width = widthInPixels;
-      };
-
-      RecorderClient.prototype.onChange = function(mutations) {
-        var _this = this;
-        return _.each(mutations, function(mutation) {
-          return _this._handleMutation(mutation);
-        });
-      };
-
-      RecorderClient.prototype._handleMutation = function(mutation) {
-        console.log("mutation", mutation);
-        if (this._hasAddedNodes(mutation)) {
-          return this._handleAddedNodes(mutation.addedNodes);
-        }
-      };
-
-      RecorderClient.prototype._hasAddedNodes = function(mutation) {
-        return (mutation.addedNodes != null) && mutation.addedNodes.length > 0;
-      };
-
-      RecorderClient.prototype._handleAddedNodes = function(nodes) {
-        var _this = this;
-        return _.each(nodes, function(node) {
-          return _this._handleAddedNode(node);
-        });
-      };
-
-      RecorderClient.prototype._handleAddedNode = function(node) {
-        var serializedNode;
-        serializedNode = this.serializer.serialize(node, true);
-        return console.log("serialized node", serializedNode);
       };
 
       return RecorderClient;

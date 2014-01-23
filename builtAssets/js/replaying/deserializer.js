@@ -2,13 +2,15 @@
   define(['lodash'], function(_) {
     var Deserializer;
     return Deserializer = (function() {
-      function Deserializer(root, idMap) {
-        this.root = root;
+      function Deserializer(document, root, idMap) {
+        this.document = document;
+        this.root = root != null ? root : null;
         this.idMap = idMap != null ? idMap : {};
+        this.root = this.document.implementation.createHTMLDocument();
       }
 
       Deserializer.prototype.deserialize = function(nodeData, parent) {
-        var child, href, node, _i, _len, _ref;
+        var child, href, node, _i, _len, _ref, _ref1;
         if (parent == null) {
           parent = this.root;
         }
@@ -41,6 +43,9 @@
                 node = this.root.getElementsByTagName("body")[0];
                 break;
               case 'LINK':
+                if (((_ref = nodeData.attributes["rel"]) != null ? _ref.toLowerCase() : void 0) !== "stylesheet") {
+                  break;
+                }
                 node = this._createElement("style");
                 href = nodeData.attributes["href"];
                 nodeData.attributes["xhref"] = href;
@@ -50,8 +55,9 @@
               case 'IFRAME':
                 node = this.root.createComment('iframe');
                 break;
-              default:
-                node = this._createElement(nodeData.tagName);
+            }
+            if (!node) {
+              node = this._createElement(nodeData.tagName);
             }
             if (nodeData.tagName !== "IFRAME") {
               this._addAttributes(node, nodeData.attributes);
@@ -75,9 +81,9 @@
             }
         }
         if (nodeData.childNodes != null) {
-          _ref = nodeData.childNodes;
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            child = _ref[_i];
+          _ref1 = nodeData.childNodes;
+          for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+            child = _ref1[_i];
             this.deserialize(child, node);
           }
         }

@@ -4,7 +4,8 @@ define([
   _
 )->
   class Deserializer
-    constructor: (@root, @idMap={}) ->
+    constructor: (@document, @root = null, @idMap={}) ->
+      @root = @document.implementation.createHTMLDocument()
 
     deserialize: (nodeData, parent = @root)->
       return null unless nodeData?
@@ -36,15 +37,18 @@ define([
               node = @root.getElementsByTagName("body")[0]
               break
             when 'LINK'
+              break unless nodeData.attributes["rel"]?.toLowerCase() == "stylesheet"
               node = @_createElement("style")
               href = nodeData.attributes["href"]
               nodeData.attributes["xhref"] = href
               delete nodeData.attributes["href"]
               node.innerHTML = nodeData.styleText
+              break
             when 'IFRAME'
               node = @root.createComment('iframe')
-            else
-              node = @_createElement(nodeData.tagName)
+              break
+
+          node = @_createElement(nodeData.tagName) unless node
           @_addAttributes(node, nodeData.attributes) unless nodeData.tagName == "IFRAME"
       @_addStyle(node, nodeData.styles) unless nodeData.nodeType == "#{Node.ELEMENT_NODE}" && nodeData.tagName == "IFRAME"
       throw "ouch" unless node

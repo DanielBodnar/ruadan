@@ -71,7 +71,6 @@ define([
       ).map((value) ->
         [value, node.style[value]]
       ).compact().value()
-
       data.styles = res
 
 

@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../papercup-server/.idea/papercup-server.iml" filepath="$PROJECT_DIR$/../papercup-server/.idea/papercup-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/ruadan.iml" filepath="$PROJECT_DIR$/.idea/ruadan.iml" />
     </modules>
   </component>
