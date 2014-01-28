@@ -5,6 +5,7 @@ define([
   _
   NodeMap
 )->
+  #comment
   class Serialzier
     constructor: (@knownNodesMap = new NodeMap()) ->
     serialize: (node, recursive = false)->
@@ -17,7 +18,7 @@ define([
         nodeType: node.nodeType
         id: id
       }
-      @_serializeStyle(node, data)
+      data.styles = @_serializeStyle(node)
       switch data.nodeType
         when Node.DOCUMENT_NODE
           elm = node
@@ -42,7 +43,7 @@ define([
           data.nodeTypeName = "ELEMENT_NODE"
           data.tagName = elm.tagName
           @_serializeLinkTag(node, data) if elm.tagName.toLowerCase()=="link"
-          @_serializeAttributes(elm, data)
+          data.attributes = @_serializeAttributes(elm, data)
           @_serializeChildNodes(elm, data) if recursive && elm.childNodes.length
           break
 
@@ -50,12 +51,10 @@ define([
       data
 
     _serializeAttributes: (node, data)->
-      data.attributes = {}
-      i = 0
-      while i < node.attributes.length
-        attrib = node.attributes[i]
-        data.attributes[attrib.name] = attrib.value if attrib.specified
-        i++
+      attributes = {}
+      for attrib in node.attributes
+        attributes[attrib.name] = attrib.value if attrib.specified
+      attributes
 
     _serializeChildNodes: (node, data)->
       data.childNodes = []
@@ -65,13 +64,12 @@ define([
         data.childNodes.push @serialize(child, true)
         child = child.nextSibling
 
-    _serializeStyle: (node, data) ->
-      res = _.chain(node.style).filter((value)->
-        !_.isEmpty(node.style[value])
-      ).map((value) ->
-        [value, node.style[value]]
-      ).compact().value()
-      data.styles = res
+    _serializeStyle: (node) ->
+      _.chain(node.style)
+        .filter((value)-> !_.isEmpty(node.style[value]))
+        .map((value) -> [value, node.style[value]])
+        .compact()
+        .value()
 
 
     _serializeLinkTag: (node, data)->

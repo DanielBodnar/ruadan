@@ -1,49 +1,51 @@
 (function() {
-  define(['recording/observers/mutation_observer', 'recording/observers/mouse_observer', 'recording/observers/scroll_observer', 'recording/observers/viewport_observer'], function(MutationObserver, MouseObserver, ScrollObserver, ViewportObserver) {
+  define(['lodash', 'recording/observers/mutation_observer', 'recording/observers/mouse_observer', 'recording/observers/scroll_observer', 'recording/observers/viewport_observer'], function(_, MutationObserver, MouseObserver, ScrollObserver, ViewportObserver) {
     var Recorder;
     return Recorder = (function() {
       function Recorder(options) {
-        this.client = options.client;
         this.rootElement = options.rootElement;
-        this.mutationObserver = new MutationObserver();
-        this.mouseObserver = new MouseObserver();
-        this.scrollingObserver = new ScrollObserver();
-        this.viewportObserver = new ViewportObserver();
-        this._bindObserverEvents();
+        this.client = new options.Client(options.document, this.rootElement);
+        this.observers = {
+          mutation: new MutationObserver(),
+          mouse: new MouseObserver(),
+          scrolling: new ScrollObserver(),
+          viewport: new ViewportObserver()
+        };
+        this._bindObserverEvents(this.observers);
+        this.initialize();
       }
 
       Recorder.prototype.initialize = function() {
-        this.scrollingObserver.initialize(window);
-        this.mutationObserver.initialize(this.rootElement);
-        this.mouseObserver.initialize(this.rootElement);
-        this.viewportObserver.initialize(this.rootElement);
-        return this.client.initialize(this.rootElement);
+        this.observers.scrolling.initialize(window);
+        this.observers.mutation.initialize(this.rootElement);
+        this.observers.mouse.initialize(this.rootElement);
+        return this.observers.viewport.initialize(this.rootElement);
       };
 
       Recorder.prototype.startRecording = function() {
-        this.mutationObserver.observe(this.rootElement);
-        this.scrollingObserver.observe(this.rootElement);
-        return this.mouseObserver.observe(this.rootElement);
+        return _.each(this.observers, function(v, k) {
+          return v.observe();
+        });
       };
 
       Recorder.prototype.stopRecording = function() {
-        this.mutationObserver.disconnect();
-        this.scrollingObserver.disconnect();
-        return this.mouseObserver.disconnect();
+        return _.each(this.observers, function(v, k) {
+          return v.disconnect();
+        });
       };
 
-      Recorder.prototype._bindObserverEvents = function() {
+      Recorder.prototype._bindObserverEvents = function(observers) {
         var _this = this;
-        this.scrollingObserver.on('initialize', function(info) {
+        observers.scrolling.on('initialize', function(info) {
           return _this.client.setInitialScrollState(info);
         });
-        this.scrollingObserver.on('scroll', function(info) {
+        observers.scrolling.on('scroll', function(info) {
           return _this.client.onScroll(info);
         });
-        this.mutationObserver.on('initialize', function(info) {
+        observers.mutation.on('initialize', function(info) {
           return _this.client.setInitialMutationState(info);
         });
-        return this.viewportObserver.on('initialize', function(info) {
+        return observers.viewport.on('initialize', function(info) {
           return _this.client.setInitialViewportState(info);
         });
       };

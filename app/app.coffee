@@ -23,6 +23,11 @@ app.configure ->
   app.set 'views', "#{__dirname}/views"
   app.set 'view engine', 'jade'
 
+  app.use((req, res, next) ->
+    res.header("Access-Control-Allow-Origin", "*")
+    res.header("Access-Control-Allow-Headers", "X-Requested-With")
+    next()
+  )
   app.use express.static(__dirname + '/../public')
   app.use express.static(__dirname + '/../bower_components')
 
@@ -42,6 +47,7 @@ app.configure ->
 
 app.configure 'development', ->
   app.use express.errorHandler()
+
 
 # Routes
 require("#{__dirname}/routes")(app)

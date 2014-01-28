@@ -1,0 +1,42 @@
+<html>
+<head>
+    <style>
+        .someClass {
+            color: red;
+        }
+        .someClass:hover {
+            color: blue;
+        }
+    </style>
+    <script>
+
+        var logMutations = function(mutations) {
+            console.log(mutations);
+        };
+        var listenToEvents = function() {
+            var MutationObserver, observer, options;
+            MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+            observer = new MutationObserver(logMutations);
+            options = {
+                childList: true,
+                attributes: true,
+                characterData: true,
+                subtree: true,
+                attributeOldValue: true,
+                characterDataOldValue: true,
+                cssProperties: true,
+                cssPropertyOldValue: true,
+                cssPropertyFilter: [],
+                attributeFilter: []
+            };
+            return observer.observe(document.getElementsByTagName("html")[0], options);
+        };
+        listenToEvents()
+    </script>
+</head>
+<body>
+    <a class="someClass" href="javascript:;">
+        hover me
+    </a>
+</body>
+</html>

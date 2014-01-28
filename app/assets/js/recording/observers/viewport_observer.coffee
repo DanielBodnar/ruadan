@@ -4,9 +4,6 @@ define([
   EventEmitter
 )->
   class ViewportObserver extends EventEmitter
-    constructor: ->
-      @_listenerFunc = (e)=> @_onChange(e)
-
     initialize: (@element)->
       @trigger("initialize", [
         width: @element.clientWidth,

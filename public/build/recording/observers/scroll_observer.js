@@ -3,15 +3,13 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   define(['lodash', 'eventEmitter'], function(_, EventEmitter) {
-    var ScrollObserver;
+    var ScrollObserver, _ref;
     return ScrollObserver = (function(_super) {
       __extends(ScrollObserver, _super);
 
       function ScrollObserver() {
-        var _this = this;
-        this._listenerFunc = function(e) {
-          return _this._onChange(e);
-        };
+        _ref = ScrollObserver.__super__.constructor.apply(this, arguments);
+        return _ref;
       }
 
       ScrollObserver.prototype.initialize = function(element) {
@@ -26,18 +24,17 @@
       };
 
       ScrollObserver.prototype.observe = function() {
-        return this._listener = this.element.addEventListener('scroll', this._listenerFunc, false);
+        return this._listener = this.element.addEventListener('scroll', this._onChange.bind(this), false);
       };
 
       ScrollObserver.prototype.disconnect = function() {
-        return this.element.removeEventListener('scroll', this._listenerFunc, false);
+        return this.element.removeEventListener('scroll', this._onChange.bind(this), false);
       };
 
       ScrollObserver.prototype._onChange = function(event) {
         var x, y;
         x = this.element.scrollX;
         y = this.element.scrollY;
-        console.log("scroll", x, y);
         return this.trigger('scroll', [
           {
             x: x,

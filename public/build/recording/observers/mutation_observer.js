@@ -74,8 +74,7 @@
 
       MutationObserver.prototype._handleAddedNode = function(node) {
         var serializedNode;
-        serializedNode = this.serializer.serialize(node, true);
-        return console.log("serialized node", serializedNode);
+        return serializedNode = this.serializer.serialize(node, true);
       };
 
       return MutationObserver;

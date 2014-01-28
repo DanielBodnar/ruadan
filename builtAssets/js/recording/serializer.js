@@ -23,7 +23,7 @@
           nodeType: node.nodeType,
           id: id
         };
-        this._serializeStyle(node, data);
+        data.styles = this._serializeStyle(node);
         switch (data.nodeType) {
           case Node.DOCUMENT_NODE:
             elm = node;
@@ -53,7 +53,7 @@
             if (elm.tagName.toLowerCase() === "link") {
               this._serializeLinkTag(node, data);
             }
-            this._serializeAttributes(elm, data);
+            data.attributes = this._serializeAttributes(elm, data);
             if (recursive && elm.childNodes.length) {
               this._serializeChildNodes(elm, data);
             }
@@ -64,18 +64,16 @@
       };
 
       Serialzier.prototype._serializeAttributes = function(node, data) {
-        var attrib, i, _results;
-        data.attributes = {};
-        i = 0;
-        _results = [];
-        while (i < node.attributes.length) {
-          attrib = node.attributes[i];
+        var attrib, attributes, _i, _len, _ref;
+        attributes = {};
+        _ref = node.attributes;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          attrib = _ref[_i];
           if (attrib.specified) {
-            data.attributes[attrib.name] = attrib.value;
+            attributes[attrib.name] = attrib.value;
           }
-          _results.push(i++);
         }
-        return _results;
+        return attributes;
       };
 
       Serialzier.prototype._serializeChildNodes = function(node, data) {
@@ -90,14 +88,12 @@
         return _results;
       };
 
-      Serialzier.prototype._serializeStyle = function(node, data) {
-        var res;
-        res = _.chain(node.style).filter(function(value) {
+      Serialzier.prototype._serializeStyle = function(node) {
+        return _.chain(node.style).filter(function(value) {
           return !_.isEmpty(node.style[value]);
         }).map(function(value) {
           return [value, node.style[value]];
         }).compact().value();
-        return data.styles = res;
       };
 
       Serialzier.prototype._serializeLinkTag = function(node, data) {

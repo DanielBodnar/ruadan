@@ -7,11 +7,11 @@ define([
   Recorder
   RecorderClient
 )->
-  client = new RecorderClient(document)
   recorder = new Recorder(
-    rootElement: document.getElementsByTagName("html")[0],
-    client: client
+    document: document
+    rootElement: document.getElementsByTagName("html")[0]
+    Client: RecorderClient
   )
-  recorder.initialize()
+
   recorder.startRecording()
 )

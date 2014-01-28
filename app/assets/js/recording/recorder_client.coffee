@@ -7,9 +7,8 @@ define([
   Serializer
 )->
   class RecorderClient
+    constructor: (@document, @rootElement)->
 
-    constructor: (@document)->
-    initialize: (@rootElement)->
     setInitialMutationState: (data)->
       @_record("initialMutationState", data)
 
@@ -20,7 +19,11 @@ define([
       @_record("initialViewportState", data)
 
     onMutation: (data)->
+      console.log("mutation happened", data)
+
     onMouseMove: (data)->
+      conosle.log("mouse moved", data)
+
     onScroll: (data) ->
       console.log("scroll", data)
 

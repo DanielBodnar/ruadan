@@ -1,9 +1,11 @@
 define([
+  'lodash'
   'recording/observers/mutation_observer'
   'recording/observers/mouse_observer'
   'recording/observers/scroll_observer'
   'recording/observers/viewport_observer'
 ], (
+  _
   MutationObserver
   MouseObserver
   ScrollObserver
@@ -11,37 +13,38 @@ define([
 )->
   class Recorder
     constructor: (options)->
-      @client = options.client
       @rootElement = options.rootElement
-      @mutationObserver = new MutationObserver()
-      @mouseObserver = new MouseObserver()
-      @scrollingObserver = new ScrollObserver()
-      @viewportObserver = new ViewportObserver()
-      @_bindObserverEvents()
+      @client = new options.Client(options.document, @rootElement)
+
+      @observers = {
+        mutation: new MutationObserver()
+        mouse: new MouseObserver()
+        scrolling: new ScrollObserver()
+        viewport: new ViewportObserver()
+      }
+
+      @_bindObserverEvents(@observers)
+
+      @initialize()
 
     initialize: ->
-      @scrollingObserver.initialize(window)
-      @mutationObserver.initialize(@rootElement)
-      @mouseObserver.initialize(@rootElement)
-      @viewportObserver.initialize(@rootElement)
-      @client.initialize(@rootElement)
+      @observers.scrolling.initialize(window)
+      @observers.mutation.initialize(@rootElement)
+      @observers.mouse.initialize(@rootElement)
+      @observers.viewport.initialize(@rootElement)
 
     startRecording: ->
-      @mutationObserver.observe(@rootElement)
-      @scrollingObserver.observe(@rootElement)
-      @mouseObserver.observe(@rootElement)
+      _.each(@observers, (v, k)-> v.observe())
 
     stopRecording: ->
-      @mutationObserver.disconnect()
-      @scrollingObserver.disconnect()
-      @mouseObserver.disconnect()
+      _.each(@observers, (v, k)-> v.disconnect())
 
-    _bindObserverEvents: ->
+    _bindObserverEvents: (observers)->
 #      @mutationObserver.on('change', (mutations)=> @client.onChange(mutations))
-      @scrollingObserver.on('initialize', (info) => @client.setInitialScrollState(info))
-      @scrollingObserver.on('scroll', (info) => @client.onScroll(info))
-      @mutationObserver.on('initialize', (info) => @client.setInitialMutationState(info))
-      @viewportObserver.on('initialize', (info) => @client.setInitialViewportState(info))
+      observers.scrolling.on('initialize', (info) => @client.setInitialScrollState(info))
+      observers.scrolling.on('scroll', (info) => @client.onScroll(info))
+      observers.mutation.on('initialize', (info) => @client.setInitialMutationState(info))
+      observers.viewport.on('initialize', (info) => @client.setInitialViewportState(info))
 #      @mouseObserver.on('mouseMoved', (position)=> @client.onMouseMove(position))
 
 )

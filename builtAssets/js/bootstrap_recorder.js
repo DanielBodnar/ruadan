@@ -1,12 +1,11 @@
 (function() {
   define(['lodash', 'recording/recorder', 'recording/recorder_client'], function(_, Recorder, RecorderClient) {
-    var client, recorder;
-    client = new RecorderClient(document);
+    var recorder;
     recorder = new Recorder({
+      document: document,
       rootElement: document.getElementsByTagName("html")[0],
-      client: client
+      Client: RecorderClient
     });
-    recorder.initialize();
     return recorder.startRecording();
   });
 

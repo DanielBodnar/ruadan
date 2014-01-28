@@ -6,17 +6,14 @@ define([
   EventEmitter
 )->
   class MouseObserver extends EventEmitter
-    constructor: ->
-      @_listenerFunc = (e)=> @_onChange(e)
-
     initialize: (@element)->
       @trigger("initialize", [x: 0, y: 0, timestamp: new Date().getTime()])
 
     observe: ->
-      @_listener = @element.addEventListener('mousemove', @_listenerFunc, false)
+      @_listener = @element.addEventListener('mousemove', @_onChange.bind(@), false)
 
     disconnect: ->
-      @element.removeEventListener('mousemove', @_listenerFunc, false)
+      @element.removeEventListener('mousemove', @_onChange.bind(@), false)
 
     _onChange: (event)->
       x = event.pageX

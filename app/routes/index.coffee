@@ -1,5 +1,6 @@
 module.exports = (app) ->
   # Index
+
   app.get '/', app.ApplicationController.index
   app.post '/record', app.ApplicationController.record
   app.get '/replay', app.ApplicationController.replay

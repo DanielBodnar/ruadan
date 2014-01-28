@@ -2,13 +2,10 @@
   define(['lodash', 'jquery'], function(_, $, Serializer) {
     var RecorderClient;
     return RecorderClient = (function() {
-      function RecorderClient(document) {
+      function RecorderClient(document, rootElement) {
         this.document = document;
-      }
-
-      RecorderClient.prototype.initialize = function(rootElement) {
         this.rootElement = rootElement;
-      };
+      }
 
       RecorderClient.prototype.setInitialMutationState = function(data) {
         return this._record("initialMutationState", data);
@@ -22,9 +19,13 @@
         return this._record("initialViewportState", data);
       };
 
-      RecorderClient.prototype.onMutation = function(data) {};
+      RecorderClient.prototype.onMutation = function(data) {
+        return console.log("mutation happened", data);
+      };
 
-      RecorderClient.prototype.onMouseMove = function(data) {};
+      RecorderClient.prototype.onMouseMove = function(data) {
+        return conosle.log("mouse moved", data);
+      };
 
       RecorderClient.prototype.onScroll = function(data) {
         return console.log("scroll", data);

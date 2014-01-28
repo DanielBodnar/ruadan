@@ -65,10 +65,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="application_controller.coffee" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/application_controller.coffee">
+      <file leaf-file-name="bootstrap_recorder.coffee" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/js/bootstrap_recorder.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="7" selection-start="890" selection-end="890" vertical-scroll-proportion="0.0" vertical-offset="465" max-vertical-offset="840">
+            <state line="17" column="0" selection-start="284" selection-end="284" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="345">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="recorder_client.coffee" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/assets/js/recording/recorder_client.coffee">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="25" column="0" selection-start="514" selection-end="514" vertical-scroll-proportion="0.3324468" vertical-offset="0" max-vertical-offset="1128">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="recorder.coffee" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/js/recording/recorder.coffee">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="38" column="4" selection-start="961" selection-end="961" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="840">
               <folding />
             </state>
           </provider>
@@ -77,70 +95,16 @@
       <file leaf-file-name="scroll_observer.coffee" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/js/recording/observers/scroll_observer.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="49" selection-start="244" selection-end="251" vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="480">
+            <state line="21" column="1" selection-start="587" selection-end="587" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="420">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="phantom.coffee" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/phantom.coffee">
+      <file leaf-file-name="serializer.coffee" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/js/recording/serializer.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="26" selection-start="613" selection-end="613" vertical-scroll-proportion="0.48913044" vertical-offset="0" max-vertical-offset="840">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bootstrap_replayer.coffee" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/assets/js/bootstrap_replayer.coffee">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="0" selection-start="470" selection-end="470" vertical-scroll-proportion="0.0" vertical-offset="240" max-vertical-offset="555">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="replay.jade" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/replay.jade">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="0" selection-start="173" selection-end="173" vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="150">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Gruntfile.coffee" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Gruntfile.coffee">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="14" selection-start="713" selection-end="713" vertical-scroll-proportion="0.0" vertical-offset="450" max-vertical-offset="930">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="package.json" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/package.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="31" selection-start="573" selection-end="573" vertical-scroll-proportion="0.0" vertical-offset="330" max-vertical-offset="660">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bootstrap_recorder.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/build/bootstrap_recorder.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="424" column="23" selection-start="12360" selection-end="12360" vertical-scroll-proportion="0.0" vertical-offset="6360" max-vertical-offset="236580">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="requirejs.coffee" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/requirejs.coffee">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="0" selection-start="530" selection-end="530" vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="450">
+            <state line="40" column="13" selection-start="1173" selection-end="1173" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1410">
               <folding />
             </state>
           </provider>
@@ -154,7 +118,7 @@
     </FindUsagesManager>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../papercup-server" />
   </component>
   <component name="GitLogSettings">
     <option name="myDateState">
@@ -164,29 +128,36 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/assets/js/bootstrap_recorder.coffee" />
         <option value="$PROJECT_DIR$/app/assets/js/recording/observer.coffee" />
-        <option value="$PROJECT_DIR$/app/assets/js/recording/observers/mouse_observer.coffee" />
-        <option value="$PROJECT_DIR$/app/assets/js/recording/observers/mutation_observer.coffee" />
-        <option value="$PROJECT_DIR$/app/assets/js/recording/serializer.coffee" />
         <option value="$PROJECT_DIR$/app/assets/js/replaying/deserializer.coffee" />
         <option value="$PROJECT_DIR$/app/controllers/application_controller.coffee" />
-        <option value="$PROJECT_DIR$/app/assets/js/recording/recorder.coffee" />
-        <option value="$PROJECT_DIR$/app/assets/js/recording/observers/viewport_observer.coffee" />
         <option value="$PROJECT_DIR$/app/assets/css/styles.less" />
         <option value="$PROJECT_DIR$/app/views/layout.jade" />
-        <option value="$PROJECT_DIR$/app/assets/js/recording/recorder_client.coffee" />
-        <option value="$PROJECT_DIR$/app/assets/js/recording/observers/scroll_observer.coffee" />
         <option value="$PROJECT_DIR$/phantom.coffee" />
         <option value="$PROJECT_DIR$/app/assets/js/bootstrap_replayer.coffee" />
         <option value="$PROJECT_DIR$/app/views/replay.jade" />
+        <option value="$PROJECT_DIR$/example/mutationObserver/basic.coffee" />
+        <option value="$PROJECT_DIR$/example/mutationObserver/sample.html" />
+        <option value="$PROJECT_DIR$/app/assets/js/recording/observers/mutation_observer.coffee" />
+        <option value="$PROJECT_DIR$/app/assets/js/recording/observers/viewport_observer.coffee" />
+        <option value="$PROJECT_DIR$/app/assets/js/recording/observers/mouse_observer.coffee" />
+        <option value="$PROJECT_DIR$/example/mutationObserver/shadow_dom.html" />
+        <option value="$PROJECT_DIR$/example/mutationObserver/css.html" />
+        <option value="$PROJECT_DIR$/app/assets/js/recording/serializer.coffee" />
+        <option value="$PROJECT_DIR$/app/assets/js/async_loader.js" />
+        <option value="$PROJECT_DIR$/app/routes/index.coffee" />
+        <option value="$PROJECT_DIR$/app/app.coffee" />
+        <option value="$PROJECT_DIR$/app/assets/js/recording/recorder_client.coffee" />
+        <option value="$PROJECT_DIR$/app/assets/js/bootstrap_recorder.coffee" />
+        <option value="$PROJECT_DIR$/app/assets/js/recording/recorder.coffee" />
+        <option value="$PROJECT_DIR$/app/assets/js/recording/observers/scroll_observer.coffee" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="22" />
     <option name="width" value="1920" />
-    <option name="height" value="878" />
+    <option name="height" value="1178" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -230,17 +201,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Tests" />
-        <subPane subId="All">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -269,75 +229,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="config" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ruadan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ruadan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ruadan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ruadan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ruadan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ruadan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="routes" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ruadan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ruadan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="helpers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -376,6 +268,121 @@
               <option name="myItemId" value="assets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ruadan" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ruadan" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="replaying" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ruadan" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ruadan" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="recording" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ruadan" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ruadan" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="recording" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="observers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ruadan" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ruadan" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Tests" />
+        <subPane subId="All">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
@@ -392,9 +399,12 @@
     <property name="options.searchVisible" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.settings.patched" value="true" />
+    <property name="LayoutCode.rearrangeEntriesHTML" value="false" />
+    <property name="LayoutCode.rearrangeEntriesCoffeeScript" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/example/mutationObserver" />
       <recent name="$PROJECT_DIR$/public/javascripts" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -484,7 +494,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1920" height="878" extended-state="6" />
+    <frame x="0" y="22" width="1920" height="1178" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -492,7 +502,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1640625" sideWeight="0.67172897" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1859375" sideWeight="0.67172897" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
@@ -500,16 +510,37 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32818532" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32827103" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="REST Client" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32943925" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+    </layout>
+    <layout-to-restore>
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32818532" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="REST Client" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32943925" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1859375" sideWeight="0.67172897" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-    </layout>
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
-    <option name="RECENTLY_FILTERED_USERS">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
       <collection />
     </option>
   </component>
@@ -523,29 +554,18 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="2" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/controllers/application_controller.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="7" selection-start="890" selection-end="890" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="840">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/js/recording/observers/scroll_observer.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="49" selection-start="244" selection-end="251" vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="480">
-          <folding />
-        </state>
+        <state line="12" column="49" selection-start="244" selection-end="251" vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="480" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/phantom.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="0" selection-start="890" selection-end="890" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="840">
-          <folding />
-        </state>
+        <state line="46" column="0" selection-start="890" selection-end="890" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="840" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/js/bootstrap_replayer.coffee">
@@ -557,9 +577,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/replay.jade">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="0" selection-start="173" selection-end="173" vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="150">
-          <folding />
-        </state>
+        <state line="4" column="0" selection-start="173" selection-end="173" vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="150" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Gruntfile.coffee">
@@ -585,30 +603,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/config/requirejs.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="0" selection-start="530" selection-end="530" vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="450">
-          <folding />
-        </state>
+        <state line="24" column="0" selection-start="530" selection-end="530" vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="450" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/application_controller.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="7" selection-start="890" selection-end="890" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="840">
-          <folding />
-        </state>
+        <state line="31" column="7" selection-start="890" selection-end="890" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="840" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/js/recording/observers/scroll_observer.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="49" selection-start="244" selection-end="251" vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="480">
-          <folding />
-        </state>
+        <state line="12" column="49" selection-start="244" selection-end="251" vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="480" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/phantom.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="12" selection-start="331" selection-end="331" vertical-scroll-proportion="0.0" vertical-offset="240" max-vertical-offset="840">
-          <folding />
-        </state>
+        <state line="16" column="12" selection-start="331" selection-end="331" vertical-scroll-proportion="0.0" vertical-offset="240" max-vertical-offset="840" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/js/bootstrap_replayer.coffee">
@@ -620,9 +630,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/replay.jade">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="0" selection-start="173" selection-end="173" vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="150">
-          <folding />
-        </state>
+        <state line="4" column="0" selection-start="173" selection-end="173" vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="150" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Gruntfile.coffee">
@@ -634,23 +642,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/application_controller.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="7" selection-start="890" selection-end="890" vertical-scroll-proportion="0.0" vertical-offset="465" max-vertical-offset="780">
-          <folding />
-        </state>
+        <state line="31" column="7" selection-start="890" selection-end="890" vertical-scroll-proportion="0.0" vertical-offset="465" max-vertical-offset="780" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/js/recording/observers/scroll_observer.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="49" selection-start="244" selection-end="251" vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="420">
-          <folding />
-        </state>
+        <state line="12" column="49" selection-start="244" selection-end="251" vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="420" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/phantom.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="12" selection-start="331" selection-end="331" vertical-scroll-proportion="0.0" vertical-offset="240" max-vertical-offset="780">
-          <folding />
-        </state>
+        <state line="16" column="12" selection-start="331" selection-end="331" vertical-scroll-proportion="0.0" vertical-offset="240" max-vertical-offset="780" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/js/bootstrap_replayer.coffee">
@@ -662,9 +664,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/replay.jade">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="0" selection-start="173" selection-end="173" vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="90">
-          <folding />
-        </state>
+        <state line="4" column="0" selection-start="173" selection-end="173" vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="90" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Gruntfile.coffee">
@@ -674,24 +674,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/js/replaying/deserializer.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="15" selection-start="126" selection-end="170" vertical-scroll-proportion="0.1437198" vertical-offset="0" max-vertical-offset="0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/js/recording/observers/viewport_observer.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="31" selection-start="250" selection-end="250" vertical-scroll-proportion="0.19927536" vertical-offset="0" max-vertical-offset="0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/layout.jade">
       <provider selected="true" editor-type-id="text-editor">
         <state line="3" column="24" selection-start="46" selection-end="46" vertical-scroll-proportion="0.054347824" vertical-offset="0" max-vertical-offset="0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/js/recording/recorder_client.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="14" selection-start="283" selection-end="283" vertical-scroll-proportion="0.28985506" vertical-offset="0" max-vertical-offset="0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/css/styles.less">
@@ -699,40 +684,9 @@
         <state line="21" column="20" selection-start="489" selection-end="489" vertical-scroll-proportion="0.38043478" vertical-offset="0" max-vertical-offset="0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/js/bootstrap_recorder.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/js/recording/recorder.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="40" selection-start="787" selection-end="787" vertical-scroll-proportion="0.45289856" vertical-offset="0" max-vertical-offset="0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/capture.png">
       <provider selected="true" editor-type-id="images">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/application_controller.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="7" selection-start="890" selection-end="890" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/js/recording/observers/scroll_observer.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="49" selection-start="244" selection-end="251" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/js/bootstrap_replayer.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="0" selection-start="470" selection-end="470" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/server.js">
@@ -742,30 +696,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/replay.jade">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="0" selection-start="173" selection-end="173" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Gruntfile.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="14" selection-start="713" selection-end="713" vertical-scroll-proportion="0.0" vertical-offset="450" max-vertical-offset="930">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/app.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="0" selection-start="1005" selection-end="1005" vertical-scroll-proportion="0.54521275" vertical-offset="0" max-vertical-offset="1128">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="31" selection-start="573" selection-end="573" vertical-scroll-proportion="0.0" vertical-offset="330" max-vertical-offset="660">
-          <folding />
-        </state>
+        <state line="4" column="0" selection-start="173" selection-end="173" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/build/bootstrap_recorder.js">
@@ -777,14 +708,167 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/config/requirejs.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="0" selection-start="530" selection-end="530" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="450">
-          <folding />
-        </state>
+        <state line="24" column="0" selection-start="530" selection-end="530" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="450" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/phantom.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="26" selection-start="613" selection-end="613" vertical-scroll-proportion="0.48913044" vertical-offset="0" max-vertical-offset="840">
+        <state line="7" column="13" selection-start="176" selection-end="176" vertical-scroll-proportion="0.0930851" vertical-offset="0" max-vertical-offset="1128" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/application_controller.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="7" selection-start="890" selection-end="890" vertical-scroll-proportion="0.41223404" vertical-offset="0" max-vertical-offset="1128" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/js/recording/observers/mutation_observer.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="56" column="0" selection-start="1607" selection-end="1607" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="945">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/js/recording/observers/viewport_observer.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="1" selection-start="346" selection-end="346" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="375">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/mutationObserver/basic.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="28" selection-start="1062" selection-end="1062" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/mutation_events/example.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="30" selection-start="284" selection-end="284" vertical-scroll-proportion="0.16304348" vertical-offset="0" max-vertical-offset="1104" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/mutationObserver/sample.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="0" selection-start="315" selection-end="410" vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="675">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/mutationObserver/css.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="0" selection-start="170" selection-end="1077" vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="720">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/builtAssets/js/bootstrap_recorder.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="0" selection-start="402" selection-end="402" vertical-scroll-proportion="0.17287233" vertical-offset="0" max-vertical-offset="1128">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="20" selection-start="488" selection-end="488" vertical-scroll-proportion="-12.5" vertical-offset="0" max-vertical-offset="660">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/app.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="22" selection-start="526" selection-end="526" vertical-scroll-proportion="0.27925533" vertical-offset="0" max-vertical-offset="1128">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/routes/index.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="0" selection-start="36" selection-end="36" vertical-scroll-proportion="0.026595745" vertical-offset="0" max-vertical-offset="1128">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Gruntfile.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="0" selection-start="224" selection-end="224" vertical-scroll-proportion="0.13297872" vertical-offset="0" max-vertical-offset="1128">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/js/recording/node_map.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="13" selection-start="473" selection-end="473" vertical-scroll-proportion="0.11968085" vertical-offset="0" max-vertical-offset="1128">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/mutationObserver/shadow_dom.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="14" selection-start="574" selection-end="574" vertical-scroll-proportion="0.23097827" vertical-offset="0" max-vertical-offset="1104">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/js/replaying/deserializer.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="19" selection-start="1527" selection-end="1527" vertical-scroll-proportion="0.5984042" vertical-offset="0" max-vertical-offset="1560">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/js/async_loader.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="69" selection-start="206" selection-end="206" vertical-scroll-proportion="0.06648936" vertical-offset="0" max-vertical-offset="1128">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/js/recording/observers/mouse_observer.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="24" selection-start="132" selection-end="132" vertical-scroll-proportion="0.10638298" vertical-offset="0" max-vertical-offset="1128">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/js/bootstrap_recorder.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="0" selection-start="284" selection-end="284" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="345">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/js/bootstrap_replayer.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="37" selection-start="968" selection-end="968" vertical-scroll-proportion="0.34574467" vertical-offset="0" max-vertical-offset="1128">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/js/recording/serializer.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="40" column="13" selection-start="1173" selection-end="1173" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1410">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/js/recording/observers/scroll_observer.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="1" selection-start="587" selection-end="587" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="420">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/js/recording/recorder.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="4" selection-start="961" selection-end="961" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="840">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/js/recording/recorder_client.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="0" selection-start="514" selection-end="514" vertical-scroll-proportion="0.3324468" vertical-offset="0" max-vertical-offset="1128">
           <folding />
         </state>
       </provider>

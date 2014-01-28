@@ -6486,7 +6486,7 @@
           nodeType: node.nodeType,
           id: id
         };
-        this._serializeStyle(node, data);
+        data.styles = this._serializeStyle(node);
         switch (data.nodeType) {
           case Node.DOCUMENT_NODE:
             elm = node;
@@ -6516,7 +6516,7 @@
             if (elm.tagName.toLowerCase() === "link") {
               this._serializeLinkTag(node, data);
             }
-            this._serializeAttributes(elm, data);
+            data.attributes = this._serializeAttributes(elm, data);
             if (recursive && elm.childNodes.length) {
               this._serializeChildNodes(elm, data);
             }
@@ -6527,18 +6527,16 @@
       };
 
       Serialzier.prototype._serializeAttributes = function(node, data) {
-        var attrib, i, _results;
-        data.attributes = {};
-        i = 0;
-        _results = [];
-        while (i < node.attributes.length) {
-          attrib = node.attributes[i];
+        var attrib, attributes, _i, _len, _ref;
+        attributes = {};
+        _ref = node.attributes;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          attrib = _ref[_i];
           if (attrib.specified) {
-            data.attributes[attrib.name] = attrib.value;
+            attributes[attrib.name] = attrib.value;
           }
-          _results.push(i++);
         }
-        return _results;
+        return attributes;
       };
 
       Serialzier.prototype._serializeChildNodes = function(node, data) {
@@ -6553,14 +6551,12 @@
         return _results;
       };
 
-      Serialzier.prototype._serializeStyle = function(node, data) {
-        var res;
-        res = _.chain(node.style).filter(function(value) {
+      Serialzier.prototype._serializeStyle = function(node) {
+        return _.chain(node.style).filter(function(value) {
           return !_.isEmpty(node.style[value]);
         }).map(function(value) {
           return [value, node.style[value]];
         }).compact().value();
-        return data.styles = res;
       };
 
       Serialzier.prototype._serializeLinkTag = function(node, data) {
@@ -6656,8 +6652,7 @@
 
       MutationObserver.prototype._handleAddedNode = function(node) {
         var serializedNode;
-        serializedNode = this.serializer.serialize(node, true);
-        return console.log("serialized node", serializedNode);
+        return serializedNode = this.serializer.serialize(node, true);
       };
 
       return MutationObserver;
@@ -6672,15 +6667,13 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   define('recording/observers/mouse_observer',['lodash', 'eventEmitter'], function(_, EventEmitter) {
-    var MouseObserver;
+    var MouseObserver, _ref;
     return MouseObserver = (function(_super) {
       __extends(MouseObserver, _super);
 
       function MouseObserver() {
-        var _this = this;
-        this._listenerFunc = function(e) {
-          return _this._onChange(e);
-        };
+        _ref = MouseObserver.__super__.constructor.apply(this, arguments);
+        return _ref;
       }
 
       MouseObserver.prototype.initialize = function(element) {
@@ -6695,11 +6688,11 @@
       };
 
       MouseObserver.prototype.observe = function() {
-        return this._listener = this.element.addEventListener('mousemove', this._listenerFunc, false);
+        return this._listener = this.element.addEventListener('mousemove', this._onChange.bind(this), false);
       };
 
       MouseObserver.prototype.disconnect = function() {
-        return this.element.removeEventListener('mousemove', this._listenerFunc, false);
+        return this.element.removeEventListener('mousemove', this._onChange.bind(this), false);
       };
 
       MouseObserver.prototype._onChange = function(event) {
@@ -6727,15 +6720,13 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   define('recording/observers/scroll_observer',['lodash', 'eventEmitter'], function(_, EventEmitter) {
-    var ScrollObserver;
+    var ScrollObserver, _ref;
     return ScrollObserver = (function(_super) {
       __extends(ScrollObserver, _super);
 
       function ScrollObserver() {
-        var _this = this;
-        this._listenerFunc = function(e) {
-          return _this._onChange(e);
-        };
+        _ref = ScrollObserver.__super__.constructor.apply(this, arguments);
+        return _ref;
       }
 
       ScrollObserver.prototype.initialize = function(element) {
@@ -6750,18 +6741,17 @@
       };
 
       ScrollObserver.prototype.observe = function() {
-        return this._listener = this.element.addEventListener('scroll', this._listenerFunc, false);
+        return this._listener = this.element.addEventListener('scroll', this._onChange.bind(this), false);
       };
 
       ScrollObserver.prototype.disconnect = function() {
-        return this.element.removeEventListener('scroll', this._listenerFunc, false);
+        return this.element.removeEventListener('scroll', this._onChange.bind(this), false);
       };
 
       ScrollObserver.prototype._onChange = function(event) {
         var x, y;
         x = this.element.scrollX;
         y = this.element.scrollY;
-        console.log("scroll", x, y);
         return this.trigger('scroll', [
           {
             x: x,
@@ -6783,15 +6773,13 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   define('recording/observers/viewport_observer',['eventEmitter'], function(EventEmitter) {
-    var ViewportObserver;
+    var ViewportObserver, _ref;
     return ViewportObserver = (function(_super) {
       __extends(ViewportObserver, _super);
 
       function ViewportObserver() {
-        var _this = this;
-        this._listenerFunc = function(e) {
-          return _this._onChange(e);
-        };
+        _ref = ViewportObserver.__super__.constructor.apply(this, arguments);
+        return _ref;
       }
 
       ViewportObserver.prototype.initialize = function(element) {
@@ -6819,51 +6807,53 @@
 }).call(this);
 
 (function() {
-  define('recording/recorder',['recording/observers/mutation_observer', 'recording/observers/mouse_observer', 'recording/observers/scroll_observer', 'recording/observers/viewport_observer'], function(MutationObserver, MouseObserver, ScrollObserver, ViewportObserver) {
+  define('recording/recorder',['lodash', 'recording/observers/mutation_observer', 'recording/observers/mouse_observer', 'recording/observers/scroll_observer', 'recording/observers/viewport_observer'], function(_, MutationObserver, MouseObserver, ScrollObserver, ViewportObserver) {
     var Recorder;
     return Recorder = (function() {
       function Recorder(options) {
-        this.client = options.client;
         this.rootElement = options.rootElement;
-        this.mutationObserver = new MutationObserver();
-        this.mouseObserver = new MouseObserver();
-        this.scrollingObserver = new ScrollObserver();
-        this.viewportObserver = new ViewportObserver();
-        this._bindObserverEvents();
+        this.client = new options.Client(options.document, this.rootElement);
+        this.observers = {
+          mutation: new MutationObserver(),
+          mouse: new MouseObserver(),
+          scrolling: new ScrollObserver(),
+          viewport: new ViewportObserver()
+        };
+        this._bindObserverEvents(this.observers);
+        this.initialize();
       }
 
       Recorder.prototype.initialize = function() {
-        this.scrollingObserver.initialize(window);
-        this.mutationObserver.initialize(this.rootElement);
-        this.mouseObserver.initialize(this.rootElement);
-        this.viewportObserver.initialize(this.rootElement);
-        return this.client.initialize(this.rootElement);
+        this.observers.scrolling.initialize(window);
+        this.observers.mutation.initialize(this.rootElement);
+        this.observers.mouse.initialize(this.rootElement);
+        return this.observers.viewport.initialize(this.rootElement);
       };
 
       Recorder.prototype.startRecording = function() {
-        this.mutationObserver.observe(this.rootElement);
-        this.scrollingObserver.observe(this.rootElement);
-        return this.mouseObserver.observe(this.rootElement);
+        return _.each(this.observers, function(v, k) {
+          return v.observe();
+        });
       };
 
       Recorder.prototype.stopRecording = function() {
-        this.mutationObserver.disconnect();
-        this.scrollingObserver.disconnect();
-        return this.mouseObserver.disconnect();
+        return _.each(this.observers, function(v, k) {
+          return v.disconnect();
+        });
       };
 
-      Recorder.prototype._bindObserverEvents = function() {
+      Recorder.prototype._bindObserverEvents = function(observers) {
         var _this = this;
-        this.scrollingObserver.on('initialize', function(info) {
+        observers.scrolling.on('initialize', function(info) {
           return _this.client.setInitialScrollState(info);
         });
-        this.scrollingObserver.on('scroll', function(info) {
+        observers.scrolling.on('scroll', function(info) {
           return _this.client.onScroll(info);
         });
-        this.mutationObserver.on('initialize', function(info) {
+        observers.mutation.on('initialize', function(info) {
           return _this.client.setInitialMutationState(info);
         });
-        return this.viewportObserver.on('initialize', function(info) {
+        return observers.viewport.on('initialize', function(info) {
           return _this.client.setInitialViewportState(info);
         });
       };
@@ -15709,13 +15699,10 @@ if ( typeof window === "object" && typeof window.document === "object" ) {
   define('recording/recorder_client',['lodash', 'jquery'], function(_, $, Serializer) {
     var RecorderClient;
     return RecorderClient = (function() {
-      function RecorderClient(document) {
+      function RecorderClient(document, rootElement) {
         this.document = document;
-      }
-
-      RecorderClient.prototype.initialize = function(rootElement) {
         this.rootElement = rootElement;
-      };
+      }
 
       RecorderClient.prototype.setInitialMutationState = function(data) {
         return this._record("initialMutationState", data);
@@ -15729,9 +15716,13 @@ if ( typeof window === "object" && typeof window.document === "object" ) {
         return this._record("initialViewportState", data);
       };
 
-      RecorderClient.prototype.onMutation = function(data) {};
+      RecorderClient.prototype.onMutation = function(data) {
+        return console.log("mutation happened", data);
+      };
 
-      RecorderClient.prototype.onMouseMove = function(data) {};
+      RecorderClient.prototype.onMouseMove = function(data) {
+        return conosle.log("mouse moved", data);
+      };
 
       RecorderClient.prototype.onScroll = function(data) {
         return console.log("scroll", data);
@@ -15753,13 +15744,12 @@ if ( typeof window === "object" && typeof window.document === "object" ) {
 
 (function() {
   define('bootstrap_recorder',['lodash', 'recording/recorder', 'recording/recorder_client'], function(_, Recorder, RecorderClient) {
-    var client, recorder;
-    client = new RecorderClient(document);
+    var recorder;
     recorder = new Recorder({
+      document: document,
       rootElement: document.getElementsByTagName("html")[0],
-      client: client
+      Client: RecorderClient
     });
-    recorder.initialize();
     return recorder.startRecording();
   });
 

@@ -3,15 +3,13 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   define(['lodash', 'eventEmitter'], function(_, EventEmitter) {
-    var MouseObserver;
+    var MouseObserver, _ref;
     return MouseObserver = (function(_super) {
       __extends(MouseObserver, _super);
 
       function MouseObserver() {
-        var _this = this;
-        this._listenerFunc = function(e) {
-          return _this._onChange(e);
-        };
+        _ref = MouseObserver.__super__.constructor.apply(this, arguments);
+        return _ref;
       }
 
       MouseObserver.prototype.initialize = function(element) {
@@ -26,11 +24,11 @@
       };
 
       MouseObserver.prototype.observe = function() {
-        return this._listener = this.element.addEventListener('mousemove', this._listenerFunc, false);
+        return this._listener = this.element.addEventListener('mousemove', this._onChange.bind(this), false);
       };
 
       MouseObserver.prototype.disconnect = function() {
-        return this.element.removeEventListener('mousemove', this._listenerFunc, false);
+        return this.element.removeEventListener('mousemove', this._onChange.bind(this), false);
       };
 
       MouseObserver.prototype._onChange = function(event) {

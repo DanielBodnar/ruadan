@@ -54,7 +54,4 @@ define([
 
     _handleAddedNode: (node)->
       serializedNode = @serializer.serialize(node, true)
-      console.log("serialized node", serializedNode)
-
-
 )
