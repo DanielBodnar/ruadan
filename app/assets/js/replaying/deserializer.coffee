@@ -7,12 +7,17 @@ define([
     constructor: (@document, @root = null, @idMap={}) ->
       @root = @document.implementation.createHTMLDocument()
 
+    deleteNode: (nodeData)->
+      delete @idMap[nodeData.id]
+
     deserialize: (nodeData, parent = @root)->
       return null unless nodeData?
+
       node = @idMap[nodeData.id]
+
       return node if node?
 
-      switch nodeData.nodeType
+      switch "#{nodeData.nodeType}"
         when "#{Node.COMMENT_NODE}"
           node = @root.createComment(nodeData.textContent)
           break
@@ -38,6 +43,7 @@ define([
               break
             when 'LINK'
               break unless nodeData.attributes["rel"]?.toLowerCase() == "stylesheet"
+#              node = @root.createComment('link')
               node = @_createElement("style")
               href = nodeData.attributes["href"]
               nodeData.attributes["xhref"] = href
@@ -49,19 +55,26 @@ define([
               break
 
           node = @_createElement(nodeData.tagName) unless node
-          @_addAttributes(node, nodeData.attributes) unless nodeData.tagName == "IFRAME"
-      @_addStyle(node, nodeData.styles) unless nodeData.nodeType == "#{Node.ELEMENT_NODE}" && nodeData.tagName == "IFRAME"
+
+          @_addAttributes(node, nodeData.attributes) unless node.nodeType == Node.COMMENT_NODE
+
+      @_addStyle(node, nodeData.styles) unless "#{nodeData.nodeType}" == "#{Node.ELEMENT_NODE}" && node.nodeType == Node.COMMENT_NODE
+
       throw "ouch" unless node
+
       @idMap[nodeData.id] = node
 
       switch nodeData.tagName
         when 'HTML', 'HEAD', 'BODY'
           break;
         else
-          parent.appendChild(node) if parent
+          node = parent.appendChild(node) if parent && "#{parent.nodeType}" != "#{Node.COMMENT_NODE}"
+
       if nodeData.childNodes?
         for child in nodeData.childNodes
           @deserialize(child, node)
+
+
       node
 
 

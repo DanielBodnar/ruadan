@@ -42,8 +42,12 @@ define([
           elm = node
           data.nodeTypeName = "ELEMENT_NODE"
           data.tagName = elm.tagName
+
+
           @_serializeLinkTag(node, data) if elm.tagName.toLowerCase()=="link"
           data.attributes = @_serializeAttributes(elm, data)
+          if data.tagName.toLowerCase() == "img"
+            data.attributes["src"] = elm.src
           @_serializeChildNodes(elm, data) if recursive && elm.childNodes.length
           break
 
@@ -65,12 +69,12 @@ define([
         child = child.nextSibling
 
     _serializeStyle: (node) ->
-      _.chain(node.style)
-        .filter((value)-> !_.isEmpty(node.style[value]))
-        .map((value) -> [value, node.style[value]])
+      style = getComputedStyle(node)
+      _.chain(style)
+        .filter((value)-> !_.isEmpty(style[value]))
+        .map((value) -> [value, style[value]])
         .compact()
         .value()
-
 
     _serializeLinkTag: (node, data)->
       return unless node.sheet?

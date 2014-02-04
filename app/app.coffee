@@ -33,13 +33,13 @@ app.configure ->
 
 
   app.use express.logger()
-  app.use express.bodyParser()
+  app.use express.bodyParser({limit: '50mb'})
   app.use express.methodOverride()
-  app.use((req, res, next) ->
-    console.log("params: ",util.inspect(req.params), "query:", util.inspect(req.query),
-        "body:", util.inspect(req.body))
-    next()
-  )
+#  app.use((req, res, next) ->
+#    console.log("params: ",util.inspect(req.params), "query:", util.inspect(req.query),
+#        "body:", util.inspect(req.body))
+#    next()
+#  )
   app.use app.router
 
 

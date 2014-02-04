@@ -31,18 +31,18 @@
         return this.element.removeEventListener('mousemove', this._onChange.bind(this), false);
       };
 
-      MouseObserver.prototype._onChange = function(event) {
+      MouseObserver.prototype._onChange = _.throttle((function(event) {
         var x, y;
-        x = event.pageX;
-        y = event.pageY;
-        return this.trigger('mouseMoved', [
+        x = event.clientX;
+        y = event.clientY;
+        return this.trigger('mouse_moved', [
           {
             x: x,
             y: y,
             timestamp: event.timeStamp
           }
         ]);
-      };
+      }), 300);
 
       return MouseObserver;
 

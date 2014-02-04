@@ -1,4 +1,6 @@
 extends layout
 block content
-    iframe#theframe
+    div#themouse
+        img(src="mouse_icon.svg", width="30px", height="25px")
+    iframe#theframe(scrolling="no")
     script(src='http://127.0.0.1:3000/requirejs/require.js', data-main='http://127.0.0.1:3000/build/bootstrap_replayer.js')

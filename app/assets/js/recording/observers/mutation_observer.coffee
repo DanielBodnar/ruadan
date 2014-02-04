@@ -11,7 +11,7 @@ define([
     constructor: ()->
       @serializer = new Serializer()
       MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver
-      @observer = new MutationObserver((mutations)=>@_onChange(mutations))
+      @observer = new MutationObserver(@_onChange.bind(@))
 
     initialize: (@element)->
       currentState = @serializer.serialize(@element, true)
@@ -38,20 +38,36 @@ define([
       @observer.disconnect()
 
     _onChange: (mutations)->
-      _.each(mutations, (mutation)=> @_handleMutation(mutation))
-#      @trigger('change', [mutations])
+      result = _(mutations).map(@_handleMutation.bind(@)).flatten().value()
+      @trigger('change', [result])
 
     _handleMutation: (mutation)->
-      console.log("mutation", mutation)
-#      @_handleAddedNodes(mutation.addedNodes) if @_hasAddedNodes(mutation)
+      result = {}
+      result.addedNodes = @_serializeNodes(mutation.addedNodes) if @_hasAddedNodes(mutation)
+      result.removedNodes = @_serializeNodes(mutation.removedNodes) if @_hasRemovedNodes(mutation)
+
+      result.nextSiblingId = @serializer.knownNodesMap.get(mutation.nextSibling).id if mutation.nextSibling
+      result.previousSiblingId = @serializer.knownNodesMap.get(mutation.previousSibling).id if mutation.previousSibling
+
+      result.type = mutation.type
+      result.oldValue = mutation.oldValue
+      result.attributeName = mutation.attributeName
+
+      result.targetNodeId = @serializer.knownNodesMap.get(mutation.target).id
+#      console.log(mutation, result)
+
+      result
 
     _hasAddedNodes: (mutation)->
-      mutation.addedNodes? && mutation.addedNodes.length > 0
 
-    _handleAddedNodes: (nodes)->
-      _.each(nodes, (node)=>
-        @_handleAddedNode(node))
+      mutation.addedNodes?.length > 0
 
-    _handleAddedNode: (node)->
-      serializedNode = @serializer.serialize(node, true)
+    _hasRemovedNodes: (mutation)->
+      mutation.removedNodes?.length > 0
+
+    _serializeNodes: (nodes)->
+      _.map(nodes, (node)=>
+        @serializer.serialize(node, true)
+      )
+
 )

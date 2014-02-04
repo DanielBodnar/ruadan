@@ -15,8 +15,9 @@ define([
     disconnect: ->
       @element.removeEventListener('mousemove', @_onChange.bind(@), false)
 
-    _onChange: (event)->
-      x = event.pageX
-      y = event.pageY
-      @trigger('mouseMoved', [{x: x, y:y, timestamp: event.timeStamp}])
+    _onChange: _.throttle(((event)->
+      x = event.clientX
+      y = event.clientY
+      @trigger('mouse_moved', [{x: x, y:y, timestamp: event.timeStamp}])
+    ), 300)
 )

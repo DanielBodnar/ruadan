@@ -6517,6 +6517,9 @@
               this._serializeLinkTag(node, data);
             }
             data.attributes = this._serializeAttributes(elm, data);
+            if (data.tagName.toLowerCase() === "img") {
+              data.attributes["src"] = elm.src;
+            }
             if (recursive && elm.childNodes.length) {
               this._serializeChildNodes(elm, data);
             }
@@ -6552,10 +6555,12 @@
       };
 
       Serialzier.prototype._serializeStyle = function(node) {
-        return _.chain(node.style).filter(function(value) {
-          return !_.isEmpty(node.style[value]);
+        var style;
+        style = getComputedStyle(node);
+        return _.chain(style).filter(function(value) {
+          return !_.isEmpty(style[value]);
         }).map(function(value) {
-          return [value, node.style[value]];
+          return [value, style[value]];
         }).compact().value();
       };
 
@@ -6586,12 +6591,9 @@
       __extends(MutationObserver, _super);
 
       function MutationObserver() {
-        var _this = this;
         this.serializer = new Serializer();
         MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
-        this.observer = new MutationObserver(function(mutations) {
-          return _this._onChange(mutations);
-        });
+        this.observer = new MutationObserver(this._onChange.bind(this));
       }
 
       MutationObserver.prototype.initialize = function(element) {
@@ -6629,30 +6631,48 @@
       };
 
       MutationObserver.prototype._onChange = function(mutations) {
-        var _this = this;
-        return _.each(mutations, function(mutation) {
-          return _this._handleMutation(mutation);
-        });
+        var result;
+        result = _(mutations).map(this._handleMutation.bind(this)).flatten().value();
+        return this.trigger('change', [result]);
       };
 
       MutationObserver.prototype._handleMutation = function(mutation) {
-        return console.log("mutation", mutation);
+        var result;
+        result = {};
+        if (this._hasAddedNodes(mutation)) {
+          result.addedNodes = this._serializeNodes(mutation.addedNodes);
+        }
+        if (this._hasRemovedNodes(mutation)) {
+          result.removedNodes = this._serializeNodes(mutation.removedNodes);
+        }
+        if (mutation.nextSibling) {
+          result.nextSiblingId = this.serializer.knownNodesMap.get(mutation.nextSibling).id;
+        }
+        if (mutation.previousSibling) {
+          result.previousSiblingId = this.serializer.knownNodesMap.get(mutation.previousSibling).id;
+        }
+        result.type = mutation.type;
+        result.oldValue = mutation.oldValue;
+        result.attributeName = mutation.attributeName;
+        result.targetNodeId = this.serializer.knownNodesMap.get(mutation.target).id;
+        return result;
       };
 
       MutationObserver.prototype._hasAddedNodes = function(mutation) {
-        return (mutation.addedNodes != null) && mutation.addedNodes.length > 0;
+        var _ref;
+        return ((_ref = mutation.addedNodes) != null ? _ref.length : void 0) > 0;
       };
 
-      MutationObserver.prototype._handleAddedNodes = function(nodes) {
+      MutationObserver.prototype._hasRemovedNodes = function(mutation) {
+        var _ref;
+        return ((_ref = mutation.removedNodes) != null ? _ref.length : void 0) > 0;
+      };
+
+      MutationObserver.prototype._serializeNodes = function(nodes) {
         var _this = this;
-        return _.each(nodes, function(node) {
-          return _this._handleAddedNode(node);
+        return _.map(nodes, function(node) {
+          return _this.serializer.serialize(node, true);
         });
-      };
-
-      MutationObserver.prototype._handleAddedNode = function(node) {
-        var serializedNode;
-        return serializedNode = this.serializer.serialize(node, true);
       };
 
       return MutationObserver;
@@ -6695,18 +6715,18 @@
         return this.element.removeEventListener('mousemove', this._onChange.bind(this), false);
       };
 
-      MouseObserver.prototype._onChange = function(event) {
+      MouseObserver.prototype._onChange = _.throttle((function(event) {
         var x, y;
-        x = event.pageX;
-        y = event.pageY;
-        return this.trigger('mouseMoved', [
+        x = event.clientX;
+        y = event.clientY;
+        return this.trigger('mouse_moved', [
           {
             x: x,
             y: y,
             timestamp: event.timeStamp
           }
         ]);
-      };
+      }), 300);
 
       return MouseObserver;
 
@@ -6807,7 +6827,61 @@
 }).call(this);
 
 (function() {
-  define('recording/recorder',['lodash', 'recording/observers/mutation_observer', 'recording/observers/mouse_observer', 'recording/observers/scroll_observer', 'recording/observers/viewport_observer'], function(_, MutationObserver, MouseObserver, ScrollObserver, ViewportObserver) {
+  var __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  define('recording/observers/text_selection_observer',['lodash', 'eventEmitter'], function(_, EventEmitter) {
+    var TextSelectionObserver, _ref;
+    return TextSelectionObserver = (function(_super) {
+      var EVENT_NAME;
+
+      __extends(TextSelectionObserver, _super);
+
+      function TextSelectionObserver() {
+        _ref = TextSelectionObserver.__super__.constructor.apply(this, arguments);
+        return _ref;
+      }
+
+      EVENT_NAME = 'selectionchange';
+
+      TextSelectionObserver.prototype.initialize = function(element) {
+        this.element = element;
+        return this.trigger("initialize", [this._getSelection()]);
+      };
+
+      TextSelectionObserver.prototype.observe = function() {
+        return this._listener = this.element.addEventListener(EVENT_NAME, this._onChange.bind(this), true);
+      };
+
+      TextSelectionObserver.prototype.disconnect = function() {
+        return this.element.removeEventListener(EVENT_NAME, this._onChange.bind(this), true);
+      };
+
+      TextSelectionObserver.prototype._getSelection = function(event) {
+        var selection;
+        selection = this.element.getSelection();
+        return {
+          anchorNode: selection.anchorNode,
+          anchorOffset: selection.anchorOffset,
+          focusNode: selection.focusNode,
+          focusOffset: selection.focusOffset,
+          timestamp: (event != null ? event.timeStamp : void 0) || (new Date().getTime())
+        };
+      };
+
+      TextSelectionObserver.prototype._onChange = _.throttle((function(event) {
+        return this.trigger('select', [this._getSelection(event)]);
+      }), 500);
+
+      return TextSelectionObserver;
+
+    })(EventEmitter);
+  });
+
+}).call(this);
+
+(function() {
+  define('recording/recorder',['lodash', 'recording/observers/mutation_observer', 'recording/observers/mouse_observer', 'recording/observers/scroll_observer', 'recording/observers/viewport_observer', 'recording/observers/text_selection_observer'], function(_, MutationObserver, MouseObserver, ScrollObserver, ViewportObserver, TextSelectionObserver) {
     var Recorder;
     return Recorder = (function() {
       function Recorder(options) {
@@ -6817,7 +6891,8 @@
           mutation: new MutationObserver(),
           mouse: new MouseObserver(),
           scrolling: new ScrollObserver(),
-          viewport: new ViewportObserver()
+          viewport: new ViewportObserver(),
+          selection: new TextSelectionObserver()
         };
         this._bindObserverEvents(this.observers);
         this.initialize();
@@ -6826,20 +6901,31 @@
       Recorder.prototype.initialize = function() {
         this.observers.scrolling.initialize(window);
         this.observers.mutation.initialize(this.rootElement);
-        this.observers.mouse.initialize(this.rootElement);
-        return this.observers.viewport.initialize(this.rootElement);
+        this.observers.mouse.initialize(window);
+        this.observers.viewport.initialize(this.rootElement);
+        return this.observers.selection.initialize(document);
       };
 
       Recorder.prototype.startRecording = function() {
-        return _.each(this.observers, function(v, k) {
+        return _.each(this.observers, function(v, _) {
           return v.observe();
         });
       };
 
       Recorder.prototype.stopRecording = function() {
-        return _.each(this.observers, function(v, k) {
+        return _.each(this.observers, function(v, _) {
           return v.disconnect();
         });
+      };
+
+      Recorder.prototype._processSelectionObject = function(data, fn) {
+        if (data.anchorNode) {
+          data.anchorNode = this.observers.mutation.serializer.knownNodesMap.get(data.anchorNode);
+        }
+        if (data.focusNode) {
+          data.focusNode = this.observers.mutation.serializer.knownNodesMap.get(data.focusNode);
+        }
+        return fn(data);
       };
 
       Recorder.prototype._bindObserverEvents = function(observers) {
@@ -6850,11 +6936,19 @@
         observers.scrolling.on('scroll', function(info) {
           return _this.client.onScroll(info);
         });
-        observers.mutation.on('initialize', function(info) {
-          return _this.client.setInitialMutationState(info);
-        });
-        return observers.viewport.on('initialize', function(info) {
+        observers.mutation.on('initialize', this.client.setInitialMutationState.bind(this.client));
+        observers.mutation.on('change', this.client.onMutation.bind(this.client));
+        observers.viewport.on('initialize', function(info) {
           return _this.client.setInitialViewportState(info);
+        });
+        observers.selection.on('initialize', function(data) {
+          return _this._processSelectionObject(data, _this.client.setInitialSelection.bind(_this.client));
+        });
+        observers.selection.on('select', function(data) {
+          return _this._processSelectionObject(data, _this.client.onSelect.bind(_this.client));
+        });
+        return observers.mouse.on('mouse_moved', function(position) {
+          return _this.client.onMouseMove(position);
         });
       };
 
@@ -15696,7 +15790,7 @@ if ( typeof window === "object" && typeof window.document === "object" ) {
 })( window );
 
 (function() {
-  define('recording/recorder_client',['lodash', 'jquery'], function(_, $, Serializer) {
+  define('recording/recorder_client',['jquery'], function($) {
     var RecorderClient;
     return RecorderClient = (function() {
       function RecorderClient(document, rootElement) {
@@ -15716,22 +15810,30 @@ if ( typeof window === "object" && typeof window.document === "object" ) {
         return this._record("initialViewportState", data);
       };
 
+      RecorderClient.prototype.setInitialSelection = function(selection) {
+        return this._record("initialSelectState", selection);
+      };
+
+      RecorderClient.prototype.onSelect = function(selection) {
+        return this._record("select", selection);
+      };
+
       RecorderClient.prototype.onMutation = function(data) {
-        return console.log("mutation happened", data);
+        return this._record("mutation", data);
       };
 
       RecorderClient.prototype.onMouseMove = function(data) {
-        return conosle.log("mouse moved", data);
+        return this._record("mouse", data);
       };
 
       RecorderClient.prototype.onScroll = function(data) {
-        return console.log("scroll", data);
+        return this._record("scroll", data);
       };
 
       RecorderClient.prototype._record = function(action, data) {
         return $.post("http://127.0.0.1:3000/record", {
           action: action,
-          data: data
+          data: JSON.stringify(data)
         });
       };
 

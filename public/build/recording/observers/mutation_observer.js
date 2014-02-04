@@ -8,12 +8,9 @@
       __extends(MutationObserver, _super);
 
       function MutationObserver() {
-        var _this = this;
         this.serializer = new Serializer();
         MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
-        this.observer = new MutationObserver(function(mutations) {
-          return _this._onChange(mutations);
-        });
+        this.observer = new MutationObserver(this._onChange.bind(this));
       }
 
       MutationObserver.prototype.initialize = function(element) {
@@ -51,30 +48,48 @@
       };
 
       MutationObserver.prototype._onChange = function(mutations) {
-        var _this = this;
-        return _.each(mutations, function(mutation) {
-          return _this._handleMutation(mutation);
-        });
+        var result;
+        result = _(mutations).map(this._handleMutation.bind(this)).flatten().value();
+        return this.trigger('change', [result]);
       };
 
       MutationObserver.prototype._handleMutation = function(mutation) {
-        return console.log("mutation", mutation);
+        var result;
+        result = {};
+        if (this._hasAddedNodes(mutation)) {
+          result.addedNodes = this._serializeNodes(mutation.addedNodes);
+        }
+        if (this._hasRemovedNodes(mutation)) {
+          result.removedNodes = this._serializeNodes(mutation.removedNodes);
+        }
+        if (mutation.nextSibling) {
+          result.nextSiblingId = this.serializer.knownNodesMap.get(mutation.nextSibling).id;
+        }
+        if (mutation.previousSibling) {
+          result.previousSiblingId = this.serializer.knownNodesMap.get(mutation.previousSibling).id;
+        }
+        result.type = mutation.type;
+        result.oldValue = mutation.oldValue;
+        result.attributeName = mutation.attributeName;
+        result.targetNodeId = this.serializer.knownNodesMap.get(mutation.target).id;
+        return result;
       };
 
       MutationObserver.prototype._hasAddedNodes = function(mutation) {
-        return (mutation.addedNodes != null) && mutation.addedNodes.length > 0;
+        var _ref;
+        return ((_ref = mutation.addedNodes) != null ? _ref.length : void 0) > 0;
       };
 
-      MutationObserver.prototype._handleAddedNodes = function(nodes) {
+      MutationObserver.prototype._hasRemovedNodes = function(mutation) {
+        var _ref;
+        return ((_ref = mutation.removedNodes) != null ? _ref.length : void 0) > 0;
+      };
+
+      MutationObserver.prototype._serializeNodes = function(nodes) {
         var _this = this;
-        return _.each(nodes, function(node) {
-          return _this._handleAddedNode(node);
+        return _.map(nodes, function(node) {
+          return _this.serializer.serialize(node, true);
         });
-      };
-
-      MutationObserver.prototype._handleAddedNode = function(node) {
-        var serializedNode;
-        return serializedNode = this.serializer.serialize(node, true);
       };
 
       return MutationObserver;

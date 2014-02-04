@@ -1,10 +1,7 @@
 define([
-  'lodash'
   'jquery'
 ], (
-  _
   $
-  Serializer
 )->
   class RecorderClient
     constructor: (@document, @rootElement)->
@@ -18,15 +15,23 @@ define([
     setInitialViewportState: (data)->
       @_record("initialViewportState", data)
 
+    setInitialSelection: (selection)->
+      @_record("initialSelectState", selection)
+
+    onSelect: (selection) ->
+      @_record("select", selection)
+
     onMutation: (data)->
-      console.log("mutation happened", data)
+      @_record("mutation", data)
+
+
 
     onMouseMove: (data)->
-      conosle.log("mouse moved", data)
+      @_record("mouse", data)
 
     onScroll: (data) ->
-      console.log("scroll", data)
+      @_record("scroll", data)
 
     _record: (action, data) ->
-      $.post("http://127.0.0.1:3000/record",{ action: action, data: data })
+      $.post("http://127.0.0.1:3000/record", { action: action, data: JSON.stringify(data) })
 )

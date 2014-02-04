@@ -9,6 +9,10 @@
         this.root = this.document.implementation.createHTMLDocument();
       }
 
+      Deserializer.prototype.deleteNode = function(nodeData) {
+        return delete this.idMap[nodeData.id];
+      };
+
       Deserializer.prototype.deserialize = function(nodeData, parent) {
         var child, href, node, _i, _len, _ref, _ref1;
         if (parent == null) {
@@ -21,7 +25,7 @@
         if (node != null) {
           return node;
         }
-        switch (nodeData.nodeType) {
+        switch ("" + nodeData.nodeType) {
           case "" + Node.COMMENT_NODE:
             node = this.root.createComment(nodeData.textContent);
             break;
@@ -59,11 +63,11 @@
             if (!node) {
               node = this._createElement(nodeData.tagName);
             }
-            if (nodeData.tagName !== "IFRAME") {
+            if (node.nodeType !== Node.COMMENT_NODE) {
               this._addAttributes(node, nodeData.attributes);
             }
         }
-        if (!(nodeData.nodeType === ("" + Node.ELEMENT_NODE) && nodeData.tagName === "IFRAME")) {
+        if (!(("" + nodeData.nodeType) === ("" + Node.ELEMENT_NODE) && node.nodeType === Node.COMMENT_NODE)) {
           this._addStyle(node, nodeData.styles);
         }
         if (!node) {
@@ -76,8 +80,8 @@
           case 'BODY':
             break;
           default:
-            if (parent) {
-              parent.appendChild(node);
+            if (parent && ("" + parent.nodeType) !== ("" + Node.COMMENT_NODE)) {
+              node = parent.appendChild(node);
             }
         }
         if (nodeData.childNodes != null) {

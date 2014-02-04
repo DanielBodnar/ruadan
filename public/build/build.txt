@@ -9,6 +9,7 @@ recording/observers/mutation_observer.js
 recording/observers/mouse_observer.js
 recording/observers/scroll_observer.js
 recording/observers/viewport_observer.js
+recording/observers/text_selection_observer.js
 recording/recorder.js
 /Users/danni/Dev/ruadan/bower_components/jquery/jquery.js
 recording/recorder_client.js

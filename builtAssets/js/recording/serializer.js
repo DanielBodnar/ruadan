@@ -54,6 +54,9 @@
               this._serializeLinkTag(node, data);
             }
             data.attributes = this._serializeAttributes(elm, data);
+            if (data.tagName.toLowerCase() === "img") {
+              data.attributes["src"] = elm.src;
+            }
             if (recursive && elm.childNodes.length) {
               this._serializeChildNodes(elm, data);
             }
@@ -89,10 +92,12 @@
       };
 
       Serialzier.prototype._serializeStyle = function(node) {
-        return _.chain(node.style).filter(function(value) {
-          return !_.isEmpty(node.style[value]);
+        var style;
+        style = getComputedStyle(node);
+        return _.chain(style).filter(function(value) {
+          return !_.isEmpty(style[value]);
         }).map(function(value) {
-          return [value, node.style[value]];
+          return [value, style[value]];
         }).compact().value();
       };
 
