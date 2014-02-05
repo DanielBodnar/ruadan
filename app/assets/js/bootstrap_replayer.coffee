@@ -72,6 +72,8 @@ define([
                     target.insertBefore(deserializedNode, sibling.nextSibling)
                   else
                     target.appendChild(deserializedNode)
+                else
+                  target.appendChild(deserializedNode)
               )
 
             if (data.removedNodes)
@@ -95,6 +97,8 @@ define([
   mousePointer = document.getElementById("themouse")
 
   iframe = document.getElementById("theframe")
+#  overlay = document.getElementById("overlay")
+
   destDocument = iframe.contentDocument
 
 
@@ -108,8 +112,13 @@ define([
     destDocument.replaceChild(newNode, destDocument.documentElement)
 
     iframe.contentWindow.scrollTo(data.initialScrollState.x, data.initialScrollState.y)
+
     iframe.setAttribute("width", "#{data.initialViewportState.width}")
     iframe.setAttribute("height", "#{data.initialViewportState.height}")
+
+#    overlay.setAttribute("width", "#{data.initialViewportState.width}")
+#    overlay.setAttribute("height", "#{data.initialViewportState.height}")
+
     iframe.setAttribute("frameborder", "0")
 
     iframe.style.width = "#{data.initialViewportState.width}px"
@@ -117,7 +126,8 @@ define([
 
     events = data.events
 
-    $(destDocument).ready(->
+    $(iframe).ready(->
+      console.log("load event")
       handleEvent(getNextEvent())
     )
   )

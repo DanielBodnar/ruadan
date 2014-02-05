@@ -6469,10 +6469,13 @@
         this.knownNodesMap = knownNodesMap != null ? knownNodesMap : new NodeMap();
       }
 
-      Serialzier.prototype.serialize = function(node, recursive) {
+      Serialzier.prototype.serialize = function(node, recursive, withStyle) {
         var data, docType, elm, id;
         if (recursive == null) {
           recursive = false;
+        }
+        if (withStyle == null) {
+          withStyle = true;
         }
         if (node == null) {
           return null;
@@ -6486,7 +6489,9 @@
           nodeType: node.nodeType,
           id: id
         };
-        data.styles = this._serializeStyle(node);
+        if (withStyle) {
+          data.styles = this._serializeStyle(node);
+        }
         switch (data.nodeType) {
           case Node.DOCUMENT_NODE:
             elm = node;
@@ -6543,25 +6548,41 @@
       };
 
       Serialzier.prototype._serializeChildNodes = function(node, data) {
-        var child, _results;
+        var child, serializeStyle, serialized, _results;
         data.childNodes = [];
         child = node.firstChild;
         _results = [];
         while (child) {
-          data.childNodes.push(this.serialize(child, true));
+          serializeStyle = node.tagName !== "HEAD";
+          serialized = this.serialize(child, true, serializeStyle);
+          data.childNodes.push(serialized);
           _results.push(child = child.nextSibling);
         }
         return _results;
       };
 
       Serialzier.prototype._serializeStyle = function(node) {
-        var style;
-        style = getComputedStyle(node);
-        return _.chain(style).filter(function(value) {
-          return !_.isEmpty(style[value]);
-        }).map(function(value) {
-          return [value, style[value]];
-        }).compact().value();
+        var computedStyle, inlineStyle, result;
+        computedStyle = this._serializeCSSStyleDeclaration(getComputedStyle(node));
+        inlineStyle = this._serializeCSSStyleDeclaration(node.style);
+        result = _.extend({}, computedStyle, inlineStyle);
+        return result;
+      };
+
+      Serialzier.prototype._serializeCSSStyleDeclaration = function(style) {
+        var i, key, result, value, _i, _ref;
+        if (!style) {
+          return {};
+        }
+        result = {};
+        for (i = _i = 0, _ref = style.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
+          key = style[i];
+          value = style[key];
+          if (!_.isEmpty(value)) {
+            result[key] = value;
+          }
+        }
+        return result;
       };
 
       Serialzier.prototype._serializeLinkTag = function(node, data) {
@@ -6655,6 +6676,7 @@
         result.oldValue = mutation.oldValue;
         result.attributeName = mutation.attributeName;
         result.targetNodeId = this.serializer.knownNodesMap.get(mutation.target).id;
+        result.timestamp = new Date().getTime();
         return result;
       };
 
@@ -15831,6 +15853,7 @@ if ( typeof window === "object" && typeof window.document === "object" ) {
       };
 
       RecorderClient.prototype._record = function(action, data) {
+        console.log("recording ", action);
         return $.post("http://127.0.0.1:3000/record", {
           action: action,
           data: JSON.stringify(data)

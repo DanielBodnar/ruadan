@@ -8,7 +8,7 @@ define([
   #comment
   class Serialzier
     constructor: (@knownNodesMap = new NodeMap()) ->
-    serialize: (node, recursive = false)->
+    serialize: (node, recursive = false, withStyle = true)->
       return null unless node?
 
       data = @knownNodesMap.get(node)
@@ -18,7 +18,9 @@ define([
         nodeType: node.nodeType
         id: id
       }
-      data.styles = @_serializeStyle(node)
+
+      data.styles = @_serializeStyle(node) if withStyle
+
       switch data.nodeType
         when Node.DOCUMENT_NODE
           elm = node
@@ -65,16 +67,29 @@ define([
 
       child = node.firstChild
       while child
-        data.childNodes.push @serialize(child, true)
+        serializeStyle = node.tagName != "HEAD"
+        serialized = @serialize(child, true, serializeStyle)
+        data.childNodes.push serialized
         child = child.nextSibling
 
     _serializeStyle: (node) ->
-      style = getComputedStyle(node)
-      _.chain(style)
-        .filter((value)-> !_.isEmpty(style[value]))
-        .map((value) -> [value, style[value]])
-        .compact()
-        .value()
+      # During a CSS transition, getComputedStyle returns the original property value in Firefox, but the final property value in WebKit.
+      computedStyle = @_serializeCSSStyleDeclaration(getComputedStyle(node))
+      inlineStyle = @_serializeCSSStyleDeclaration(node.style)
+
+      result = _.extend({}, computedStyle, inlineStyle)
+      result
+
+
+    _serializeCSSStyleDeclaration: (style)->
+      return {} unless style
+      result = {}
+
+      for i in [0...style.length]
+        key = style[i]
+        value = style[key]
+        result[key] = value if !_.isEmpty(value)
+      result
 
     _serializeLinkTag: (node, data)->
       return unless node.sheet?

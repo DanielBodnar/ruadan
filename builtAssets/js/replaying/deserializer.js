@@ -38,19 +38,15 @@
           case "" + Node.ELEMENT_NODE:
             switch (nodeData.tagName) {
               case 'HTML':
-                node = this.root.getElementsByTagName("html")[0];
-                break;
               case 'HEAD':
-                node = this.root.getElementsByTagName("head")[0];
-                break;
               case 'BODY':
-                node = this.root.getElementsByTagName("body")[0];
+                node = this.root.getElementsByTagName(nodeData.tagName)[0];
                 break;
               case 'LINK':
                 if (((_ref = nodeData.attributes["rel"]) != null ? _ref.toLowerCase() : void 0) !== "stylesheet") {
                   break;
                 }
-                node = this._createElement("style");
+                node = this.root.createElement("style");
                 href = nodeData.attributes["href"];
                 nodeData.attributes["xhref"] = href;
                 delete nodeData.attributes["href"];
@@ -59,21 +55,27 @@
               case 'IFRAME':
                 node = this.root.createComment('iframe');
                 break;
+              case 'SCRIPT':
+                node = this.root.createElement('NO-SCRIPT');
+                node.style.display = 'none';
+                break;
+              default:
+                node = this.root.createElement(nodeData.tagName);
+                break;
             }
             if (!node) {
-              node = this._createElement(nodeData.tagName);
+              node = this.root.createElement(nodeData.tagName);
             }
             if (node.nodeType !== Node.COMMENT_NODE) {
               this._addAttributes(node, nodeData.attributes);
             }
         }
-        if (!(("" + nodeData.nodeType) === ("" + Node.ELEMENT_NODE) && node.nodeType === Node.COMMENT_NODE)) {
+        if (node.nodeType !== Node.COMMENT_NODE) {
           this._addStyle(node, nodeData.styles);
         }
         if (!node) {
           throw "ouch";
         }
-        this.idMap[nodeData.id] = node;
         switch (nodeData.tagName) {
           case 'HTML':
           case 'HEAD':
@@ -84,27 +86,13 @@
               node = parent.appendChild(node);
             }
         }
+        this.idMap[nodeData.id] = node;
         if (nodeData.childNodes != null) {
           _ref1 = nodeData.childNodes;
           for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
             child = _ref1[_i];
             this.deserialize(child, node);
           }
-        }
-        return node;
-      };
-
-      Deserializer.prototype._createElement = function(tagName) {
-        var node;
-        switch (tagName) {
-          case 'SCRIPT':
-            node = this.root.createElement('NO-SCRIPT');
-            node.style.display = 'none';
-            break;
-            break;
-          default:
-            node = this.root.createElement(tagName);
-            break;
         }
         return node;
       };
@@ -120,7 +108,7 @@
 
       Deserializer.prototype._addStyle = function(node, styles) {
         return _.each(styles, function(value, key) {
-          return node.style[value[0]] = value[1];
+          return node.style[key] = value;
         });
       };
 

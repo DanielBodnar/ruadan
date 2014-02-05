@@ -33,5 +33,6 @@ define([
       @_record("scroll", data)
 
     _record: (action, data) ->
+      console.log("recording ",action)
       $.post("http://127.0.0.1:3000/record", { action: action, data: JSON.stringify(data) })
 )

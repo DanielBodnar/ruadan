@@ -72,6 +72,7 @@
         result.oldValue = mutation.oldValue;
         result.attributeName = mutation.attributeName;
         result.targetNodeId = this.serializer.knownNodesMap.get(mutation.target).id;
+        result.timestamp = new Date().getTime();
         return result;
       };
 

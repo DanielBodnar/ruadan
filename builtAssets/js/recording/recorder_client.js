@@ -40,6 +40,7 @@
       };
 
       RecorderClient.prototype._record = function(action, data) {
+        console.log("recording ", action);
         return $.post("http://127.0.0.1:3000/record", {
           action: action,
           data: JSON.stringify(data)

@@ -72,6 +72,8 @@
                     } else {
                       return target.appendChild(deserializedNode);
                     }
+                  } else {
+                    return target.appendChild(deserializedNode);
                   }
                 });
               }
@@ -112,7 +114,8 @@
       iframe.style.width = "" + data.initialViewportState.width + "px";
       iframe.style.height = "" + data.initialViewportState.height + "px";
       events = data.events;
-      return $(destDocument).ready(function() {
+      return $(iframe).ready(function() {
+        console.log("load event");
         return handleEvent(getNextEvent());
       });
     });

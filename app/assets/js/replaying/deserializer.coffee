@@ -32,43 +32,47 @@ define([
           break
         when "#{Node.ELEMENT_NODE}"
           switch nodeData.tagName
-            when 'HTML'
-              node = @root.getElementsByTagName("html")[0]
-              break
-            when 'HEAD'
-              node = @root.getElementsByTagName("head")[0]
-              break
-            when 'BODY'
-              node = @root.getElementsByTagName("body")[0]
+            when 'HTML', 'HEAD', 'BODY'
+              node = @root.getElementsByTagName(nodeData.tagName)[0]
               break
             when 'LINK'
-              break unless nodeData.attributes["rel"]?.toLowerCase() == "stylesheet"
+              break if nodeData.attributes["rel"]?.toLowerCase() != "stylesheet"
+
 #              node = @root.createComment('link')
-              node = @_createElement("style")
+              node = @root.createElement("style")
               href = nodeData.attributes["href"]
               nodeData.attributes["xhref"] = href
+
               delete nodeData.attributes["href"]
+
               node.innerHTML = nodeData.styleText
               break
             when 'IFRAME'
               node = @root.createComment('iframe')
               break
+            when 'SCRIPT'
+              node = @root.createElement('NO-SCRIPT')
+              node.style.display = 'none'
+              break
+            else
+              node = @root.createElement(nodeData.tagName)
+              break
 
-          node = @_createElement(nodeData.tagName) unless node
+          node = @root.createElement(nodeData.tagName) unless node
 
           @_addAttributes(node, nodeData.attributes) unless node.nodeType == Node.COMMENT_NODE
 
-      @_addStyle(node, nodeData.styles) unless "#{nodeData.nodeType}" == "#{Node.ELEMENT_NODE}" && node.nodeType == Node.COMMENT_NODE
+      @_addStyle(node, nodeData.styles) if node.nodeType != Node.COMMENT_NODE
 
       throw "ouch" unless node
-
-      @idMap[nodeData.id] = node
 
       switch nodeData.tagName
         when 'HTML', 'HEAD', 'BODY'
           break;
         else
           node = parent.appendChild(node) if parent && "#{parent.nodeType}" != "#{Node.COMMENT_NODE}"
+
+      @idMap[nodeData.id] = node
 
       if nodeData.childNodes?
         for child in nodeData.childNodes
@@ -78,23 +82,6 @@ define([
       node
 
 
-
-    _createElement: (tagName)->
-      switch tagName
-        when 'SCRIPT'
-          node = @root.createElement('NO-SCRIPT')
-          node.style.display = 'none'
-          break
-#        when 'HEAD'
-#          node = parent.createElement('HEAD')
-#         node.appendChild(document.createElement('BASE'))
-#         node.firstChild.href = base
-          break
-        else
-          node = @root.createElement(tagName)
-          break
-      node
-
     _addAttributes: (node, attributes)->
       _.each(attributes, (value, key)->
         node.setAttribute(key, value) unless _.isEmpty(value)
@@ -103,7 +90,7 @@ define([
 
     _addStyle: (node, styles)->
       _.each(styles, (value, key) ->
-        node.style[value[0]] = value[1]
+        node.style[key] = value
       )
 
 

@@ -34,6 +34,9 @@ define([
 
       @observer.observe(@element, _.extend(defaultOptions, options))
 
+#      setInterval((->
+#      ), 200)
+
     disconnect: ->
       @observer.disconnect()
 
@@ -54,7 +57,7 @@ define([
       result.attributeName = mutation.attributeName
 
       result.targetNodeId = @serializer.knownNodesMap.get(mutation.target).id
-#      console.log(mutation, result)
+      result.timestamp = new Date().getTime()
 
       result
 
