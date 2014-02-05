@@ -45,11 +45,13 @@ define([
           data.nodeTypeName = "ELEMENT_NODE"
           data.tagName = elm.tagName
 
-
-          @_serializeLinkTag(node, data) if elm.tagName.toLowerCase()=="link"
           data.attributes = @_serializeAttributes(elm, data)
           if data.tagName.toLowerCase() == "img"
             data.attributes["src"] = elm.src
+
+          if elm.tagName.toLowerCase()=="link"
+            data.attributes["href"] = elm.href
+
           @_serializeChildNodes(elm, data) if recursive && elm.childNodes.length
           break
 
@@ -74,11 +76,13 @@ define([
 
     _serializeStyle: (node) ->
       # During a CSS transition, getComputedStyle returns the original property value in Firefox, but the final property value in WebKit.
-      computedStyle = @_serializeCSSStyleDeclaration(getComputedStyle(node))
-      inlineStyle = @_serializeCSSStyleDeclaration(node.style)
+#      computedStyle = @_serializeCSSStyleDeclaration(getComputedStyle(node))
+#      inlineStyle = @_serializeCSSStyleDeclaration(node.style)
+      @_serializeCSSStyleDeclaration(node.style) #we only save inline stylesheets
 
-      result = _.extend({}, computedStyle, inlineStyle)
-      result
+#      result = _.extend({}, computedStyle, inlineStyle)
+#      result
+
 
 
     _serializeCSSStyleDeclaration: (style)->
@@ -91,9 +95,9 @@ define([
         result[key] = value if !_.isEmpty(value)
       result
 
-    _serializeLinkTag: (node, data)->
-      return unless node.sheet?
-      data.styleText = _.chain(node.sheet.rules).map((v) -> v.cssText).value().join("\n")
+#    _serializeLinkTag: (node, data)->
+#      return unless node.sheet?
+#      data.styleText = _.chain(node.sheet.rules).map((v) -> v.cssText).value().join("\n")
 
   Serialzier
 )

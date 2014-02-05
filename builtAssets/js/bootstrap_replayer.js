@@ -78,7 +78,7 @@
                 });
               }
               if (data.removedNodes) {
-                return data.removedNodes.forEach(function(node) {
+                data.removedNodes.forEach(function(node) {
                   var deserializedNode;
                   if (target) {
                     deserializedNode = deserializer.deserialize(node, target);
@@ -88,6 +88,9 @@
                     return console.log("no target", event);
                   }
                 });
+              }
+              if (data.attributeName) {
+                return target.setAttribute(data.attributeName, data.attributeValue);
               }
             });
           }), event.data.timestamp * 1);

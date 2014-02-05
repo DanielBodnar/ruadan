@@ -42,7 +42,7 @@
             timestamp: event.timeStamp
           }
         ]);
-      }), 300);
+      }), 100);
 
       return MouseObserver;
 

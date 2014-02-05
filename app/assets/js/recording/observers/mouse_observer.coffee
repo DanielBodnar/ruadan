@@ -19,5 +19,5 @@ define([
       x = event.clientX
       y = event.clientY
       @trigger('mouse_moved', [{x: x, y:y, timestamp: event.timeStamp}])
-    ), 300)
+    ), 100)
 )

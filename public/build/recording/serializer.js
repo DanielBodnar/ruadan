@@ -55,12 +55,12 @@
             elm = node;
             data.nodeTypeName = "ELEMENT_NODE";
             data.tagName = elm.tagName;
-            if (elm.tagName.toLowerCase() === "link") {
-              this._serializeLinkTag(node, data);
-            }
             data.attributes = this._serializeAttributes(elm, data);
             if (data.tagName.toLowerCase() === "img") {
               data.attributes["src"] = elm.src;
+            }
+            if (elm.tagName.toLowerCase() === "link") {
+              data.attributes["href"] = elm.href;
             }
             if (recursive && elm.childNodes.length) {
               this._serializeChildNodes(elm, data);
@@ -99,11 +99,7 @@
       };
 
       Serialzier.prototype._serializeStyle = function(node) {
-        var computedStyle, inlineStyle, result;
-        computedStyle = this._serializeCSSStyleDeclaration(getComputedStyle(node));
-        inlineStyle = this._serializeCSSStyleDeclaration(node.style);
-        result = _.extend({}, computedStyle, inlineStyle);
-        return result;
+        return this._serializeCSSStyleDeclaration(node.style);
       };
 
       Serialzier.prototype._serializeCSSStyleDeclaration = function(style) {
@@ -120,15 +116,6 @@
           }
         }
         return result;
-      };
-
-      Serialzier.prototype._serializeLinkTag = function(node, data) {
-        if (node.sheet == null) {
-          return;
-        }
-        return data.styleText = _.chain(node.sheet.rules).map(function(v) {
-          return v.cssText;
-        }).value().join("\n");
       };
 
       return Serialzier;

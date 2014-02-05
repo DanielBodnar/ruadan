@@ -30,12 +30,10 @@ define([
         characterDataOldValue: true
         cssProperties: true
         cssPropertyOldValue: true
-        attributeFilter: []
+        attributeFilter: null
 
-      @observer.observe(@element, _.extend(defaultOptions, options))
+      @observer.observe(@element, defaultOptions)
 
-#      setInterval((->
-#      ), 200)
 
     disconnect: ->
       @observer.disconnect()
@@ -55,6 +53,7 @@ define([
       result.type = mutation.type
       result.oldValue = mutation.oldValue
       result.attributeName = mutation.attributeName
+      result.attributeValue = mutation.target.getAttribute(result.attributeName) if result.attributeName?
 
       result.targetNodeId = @serializer.knownNodesMap.get(mutation.target).id
       result.timestamp = new Date().getTime()

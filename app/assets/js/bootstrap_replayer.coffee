@@ -85,6 +85,9 @@ define([
                 else
                   console.log("no target", event)
               )
+
+            if (data.attributeName)
+              target.setAttribute(data.attributeName, data.attributeValue)
           )
         ), event.data.timestamp * 1)
         break

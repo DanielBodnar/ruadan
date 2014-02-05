@@ -36,16 +36,19 @@ define([
               node = @root.getElementsByTagName(nodeData.tagName)[0]
               break
             when 'LINK'
-              break if nodeData.attributes["rel"]?.toLowerCase() != "stylesheet"
+              if nodeData.attributes["rel"]?.toLowerCase() != "stylesheet"
+                console.log(nodeData)
+                break
 
-#              node = @root.createComment('link')
-              node = @root.createElement("style")
-              href = nodeData.attributes["href"]
-              nodeData.attributes["xhref"] = href
+              if nodeData.styleText
+                node = @root.createElement("style")
+                href = nodeData.attributes["href"]
+                nodeData.attributes["xhref"] = href
+                delete nodeData.attributes["href"]
+                node.innerHTML = nodeData.styleText
+              else
+                node = @root.createElement('link')
 
-              delete nodeData.attributes["href"]
-
-              node.innerHTML = nodeData.styleText
               break
             when 'IFRAME'
               node = @root.createComment('iframe')

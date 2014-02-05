@@ -44,13 +44,18 @@
                 break;
               case 'LINK':
                 if (((_ref = nodeData.attributes["rel"]) != null ? _ref.toLowerCase() : void 0) !== "stylesheet") {
+                  console.log(nodeData);
                   break;
                 }
-                node = this.root.createElement("style");
-                href = nodeData.attributes["href"];
-                nodeData.attributes["xhref"] = href;
-                delete nodeData.attributes["href"];
-                node.innerHTML = nodeData.styleText;
+                if (nodeData.styleText) {
+                  node = this.root.createElement("style");
+                  href = nodeData.attributes["href"];
+                  nodeData.attributes["xhref"] = href;
+                  delete nodeData.attributes["href"];
+                  node.innerHTML = nodeData.styleText;
+                } else {
+                  node = this.root.createElement('link');
+                }
                 break;
               case 'IFRAME':
                 node = this.root.createComment('iframe');

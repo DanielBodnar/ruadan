@@ -38,9 +38,9 @@
           characterDataOldValue: true,
           cssProperties: true,
           cssPropertyOldValue: true,
-          attributeFilter: []
+          attributeFilter: null
         };
-        return this.observer.observe(this.element, _.extend(defaultOptions, options));
+        return this.observer.observe(this.element, defaultOptions);
       };
 
       MutationObserver.prototype.disconnect = function() {
@@ -71,6 +71,9 @@
         result.type = mutation.type;
         result.oldValue = mutation.oldValue;
         result.attributeName = mutation.attributeName;
+        if (result.attributeName != null) {
+          result.attributeValue = mutation.target.getAttribute(result.attributeName);
+        }
         result.targetNodeId = this.serializer.knownNodesMap.get(mutation.target).id;
         result.timestamp = new Date().getTime();
         return result;

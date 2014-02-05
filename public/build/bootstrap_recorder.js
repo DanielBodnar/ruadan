@@ -6518,12 +6518,12 @@
             elm = node;
             data.nodeTypeName = "ELEMENT_NODE";
             data.tagName = elm.tagName;
-            if (elm.tagName.toLowerCase() === "link") {
-              this._serializeLinkTag(node, data);
-            }
             data.attributes = this._serializeAttributes(elm, data);
             if (data.tagName.toLowerCase() === "img") {
               data.attributes["src"] = elm.src;
+            }
+            if (elm.tagName.toLowerCase() === "link") {
+              data.attributes["href"] = elm.href;
             }
             if (recursive && elm.childNodes.length) {
               this._serializeChildNodes(elm, data);
@@ -6562,11 +6562,7 @@
       };
 
       Serialzier.prototype._serializeStyle = function(node) {
-        var computedStyle, inlineStyle, result;
-        computedStyle = this._serializeCSSStyleDeclaration(getComputedStyle(node));
-        inlineStyle = this._serializeCSSStyleDeclaration(node.style);
-        result = _.extend({}, computedStyle, inlineStyle);
-        return result;
+        return this._serializeCSSStyleDeclaration(node.style);
       };
 
       Serialzier.prototype._serializeCSSStyleDeclaration = function(style) {
@@ -6583,15 +6579,6 @@
           }
         }
         return result;
-      };
-
-      Serialzier.prototype._serializeLinkTag = function(node, data) {
-        if (node.sheet == null) {
-          return;
-        }
-        return data.styleText = _.chain(node.sheet.rules).map(function(v) {
-          return v.cssText;
-        }).value().join("\n");
       };
 
       return Serialzier;
@@ -6642,9 +6629,9 @@
           characterDataOldValue: true,
           cssProperties: true,
           cssPropertyOldValue: true,
-          attributeFilter: []
+          attributeFilter: null
         };
-        return this.observer.observe(this.element, _.extend(defaultOptions, options));
+        return this.observer.observe(this.element, defaultOptions);
       };
 
       MutationObserver.prototype.disconnect = function() {
@@ -6675,6 +6662,9 @@
         result.type = mutation.type;
         result.oldValue = mutation.oldValue;
         result.attributeName = mutation.attributeName;
+        if (result.attributeName != null) {
+          result.attributeValue = mutation.target.getAttribute(result.attributeName);
+        }
         result.targetNodeId = this.serializer.knownNodesMap.get(mutation.target).id;
         result.timestamp = new Date().getTime();
         return result;
@@ -6748,7 +6738,7 @@
             timestamp: event.timeStamp
           }
         ]);
-      }), 300);
+      }), 100);
 
       return MouseObserver;
 
