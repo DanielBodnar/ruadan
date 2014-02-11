@@ -20,4 +20,8 @@ bootstrap_replayer.js
 /Users/danni/Dev/ruadan/bower_components/jquery/jquery.js
 /Users/danni/Dev/ruadan/bower_components/lodash/lodash.js
 replaying/deserializer.js
+replaying/select_event.js
+replaying/mouse_event.js
+replaying/scroll_event.js
+replaying/mutation_event.js
 bootstrap_replayer.js

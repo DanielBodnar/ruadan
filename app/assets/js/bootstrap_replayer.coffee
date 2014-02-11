@@ -1,9 +1,17 @@
 define([
   'jquery'
   'replaying/deserializer'
+  'replaying/select_event'
+  'replaying/mouse_event'
+  'replaying/scroll_event'
+  'replaying/mutation_event'
 ],(
   $
   Deserializer
+  SelectEvent
+  MouseEvent
+  ScrollEvent
+  MutationEvent
 )->
   lastTime = 0;
   currentEventId = 0;
@@ -26,81 +34,34 @@ define([
     if lastTime == 0
       lastTime = event.data.timestamp * 1
 
+    handler = null
+
     switch event.action
       when "scroll"
-        doEvent((->
-          iframe.contentWindow.scrollTo(event.data.x, event.data.y)
-        ), event.data.timestamp * 1)
+        handler = ScrollEvent.handle.bind(ScrollEvent, event, iframe)
         break
       when "mouse"
-        doEvent((->
-          mousePointer.style.left = "#{event.data.x}px";
-          mousePointer.style.top = "#{event.data.y}px";
-        ), event.data.timestamp * 1)
+        handler = MouseEvent.handle.bind(MouseEvent, event, mousePointer)
         break
       when "select"
-        doEvent((->
-          startNode = deserializer.idMap[event.data.anchorNode?.id]
-          endNode = deserializer.idMap[event.data.focusNode?.id]
-
-          return unless startNode && endNode
-
-          range = destDocument.createRange()
-
-          range.setStart(startNode, event.data.anchorOffset)
-          range.setEnd(endNode, event.data.focusOffset)
-          destDocument.getSelection().removeAllRanges()
-          destDocument.getSelection().addRange(range)
-
-        ), event.data.timestamp * 1)
+        handler = SelectEvent.handle.bind(SelectEvent, event, destDocument, deserializer)
         break
       when "mutation"
-        doEvent((->
-          event.data.forEach((data)->
-            target = deserializer.idMap[data.targetNodeId]
-            if (data.addedNodes)
-              data.addedNodes.forEach((node)->
-                deserializedNode = deserializer.deserialize(node, target)
-                destDocument.adoptNode(deserializedNode)
-
-                if data.nextSiblingId
-                  sibling = deserializer.idMap[data.nextSiblingId]
-                  target.insertBefore(deserializedNode, sibling)
-                else if data.previousSiblingId
-                  sibling = deserializer.idMap[data.previousSiblingId]
-                  if sibling.nextSibling
-                    target.insertBefore(deserializedNode, sibling.nextSibling)
-                  else
-                    target.appendChild(deserializedNode)
-                else
-                  target.appendChild(deserializedNode)
-              )
-
-            if (data.removedNodes)
-              data.removedNodes.forEach((node)->
-                if target
-                  deserializedNode = deserializer.deserialize(node, target)
-                  target.removeChild(deserializedNode)
-                  deserializer.deleteNode(node)
-                else
-                  console.log("no target", event)
-              )
-
-            if (data.attributeName)
-              target.setAttribute(data.attributeName, data.attributeValue)
-          )
-        ), event.data.timestamp * 1)
+        handler = MutationEvent.handle.bind(MutationEvent, event, deserializer, destDocument)
         break
       else
-        console.log("unhandled event", event)
-        handleEvent(getNextEvent())
-        break
+        handler = null
+
+    if handler
+      doEvent(handler, event.data.timestamp * 1)
+    else
+      console.log("unhandled event", event)
+      handleEvent(getNextEvent())
 
 
   mousePointer = document.getElementById("themouse")
 
   iframe = document.getElementById("theframe")
-#  overlay = document.getElementById("overlay")
 
   destDocument = iframe.contentDocument
 
@@ -118,9 +79,6 @@ define([
 
     iframe.setAttribute("width", "#{data.initialViewportState.width}")
     iframe.setAttribute("height", "#{data.initialViewportState.height}")
-
-#    overlay.setAttribute("width", "#{data.initialViewportState.width}")
-#    overlay.setAttribute("height", "#{data.initialViewportState.height}")
 
     iframe.setAttribute("frameborder", "0")
 
