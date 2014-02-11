@@ -130,7 +130,6 @@ define([
     events = data.events
 
     $(iframe).ready(->
-      console.log("load event")
       handleEvent(getNextEvent())
     )
   )

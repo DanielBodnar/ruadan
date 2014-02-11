@@ -15009,7 +15009,6 @@ if ( typeof window === "object" && typeof window.document === "object" ) {
       iframe.style.height = "" + data.initialViewportState.height + "px";
       events = data.events;
       return $(iframe).ready(function() {
-        console.log("load event");
         return handleEvent(getNextEvent());
       });
     });
