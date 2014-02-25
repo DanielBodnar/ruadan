@@ -1,0 +1,41 @@
+<html>
+<head>
+</head>
+<body>
+<button onclick="doSomething()">do something</button>
+<script>
+    function doSomething() {
+        for(var i=0;i<10;i++) {
+            addElement("outside")
+        }
+    }
+    function addElement(content) {
+        var iDiv = document.createElement('div');
+        iDiv.id = 'someID';
+        iDiv.className = 'myClass';
+        iDiv.innerHTML = content;
+        document.getElementsByTagName('body')[0].appendChild(iDiv);
+    }
+
+    var logMutations = function(mutations) {
+        console.log(mutations);
+    };
+    var listenToEvents = function() {
+        var observer = new MutationObserver(logMutations);
+
+        var options = {
+            childList: true,
+            attributes: true,
+            characterData: true,
+            subtree: true,
+            attributeOldValue: true,
+            characterDataOldValue: true,
+            attributeFilter: null
+        };
+
+        return observer.observe(document.getElementsByTagName("html")[0], options);
+    };
+    listenToEvents();
+</script>
+</body>
+</html>
