@@ -1,39 +1,38 @@
 <html>
 <head>
-    <script>
-        function addElement() {
-            var iDiv = document.createElement('div');
-            iDiv.id = 'someID';
-            iDiv.className = 'myClass';
-            iDiv.innerHTML = "aaaaaaaaaaaaaa";
-            document.getElementsByTagName('body')[0].appendChild(iDiv);
-        }
-
-        var logMutations = function(mutations) {
-            console.log(mutations);
-        };
-        var listenToEvents = function() {
-            var MutationObserver, observer, options;
-            MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
-            observer = new MutationObserver(logMutations);
-            options = {
-                childList: true,
-                attributes: true,
-                characterData: true,
-                subtree: true,
-                attributeOldValue: true,
-                characterDataOldValue: true,
-                cssProperties: true,
-                cssPropertyOldValue: true,
-                cssPropertyFilter: [],
-                attributeFilter: []
-            };
-            return observer.observe(document.getElementsByTagName("html")[0], options);
-        };
-        listenToEvents()
-    </script>
 </head>
 <body>
 <button onclick="addElement()">do something</button>
+<script>
+    function addElement() {
+        var iDiv = document.createElement('div');
+
+        iDiv.id = 'someID';
+        iDiv.className = 'myClass';
+        iDiv.innerHTML = "aaaaaaaaaaaaaa";
+        document.getElementsByTagName('body')[0].appendChild(iDiv);
+
+    }
+
+    var logMutations = function(mutations) {
+        console.log(mutations);
+    };
+    var listenToEvents = function() {
+        var observer = new MutationObserver(logMutations);
+
+        var options = {
+            childList: true,
+            attributes: true,
+            characterData: true,
+            subtree: true,
+            attributeOldValue: true,
+            characterDataOldValue: true,
+            attributeFilter: null
+        };
+
+        return observer.observe(document.getElementsByTagName("html")[0], options);
+    };
+    listenToEvents();
+</script>
 </body>
 </html>
