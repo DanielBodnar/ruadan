@@ -25,6 +25,7 @@
     "grunt-contrib-coffee": "*",
     "grunt-contrib-copy": "*",
     "grunt-develop": "*",
+    "grunt-requirejs": "*",
     "grunt-bower-requirejs": "~0.7.0"
   },
   "scripts": {
