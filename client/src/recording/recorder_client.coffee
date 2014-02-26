@@ -1,25 +1,25 @@
 class RecorderClient
-  constructor: (@document, @rootElement)->
+  constructor: (@document, @rootElement) ->
 
-  setInitialMutationState: (data)->
+  setInitialMutationState: (data) ->
     @_record("initialMutationState", data)
 
-  setInitialScrollState: (data)->
+  setInitialScrollState: (data) ->
     @_record("initialScrollState", data)
 
-  setInitialViewportState: (data)->
+  setInitialViewportState: (data) ->
     @_record("initialViewportState", data)
 
-  setInitialSelection: (selection)->
+  setInitialSelection: (selection) ->
     @_record("initialSelectState", selection)
 
   onSelect: (selection) ->
     @_record("select", selection)
 
-  onMutation: (data)->
+  onMutation: (data) ->
     @_record("mutation", data)
 
-  onMouseMove: (data)->
+  onMouseMove: (data) ->
     @_record("mouse", data)
 
   onScroll: (data) ->
@@ -28,10 +28,10 @@ class RecorderClient
   _record: (action, data) ->
     console.log("recording ",action)
 
-    request = new XMLHttpRequest();
+    request = new XMLHttpRequest()
     request.open('POST', "http://127.0.0.1:3000/record", true)
 
-    dataToSend = JSON.stringify({ action: action, data: data })
+    dataToSend = JSON.stringify({ sessionId: "gyBds3zO9", action: action, data: data })
 
     request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
 

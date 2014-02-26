@@ -50,7 +50,7 @@ app.configure ->
 
 
 app.configure 'development', ->
-  app.use express.errorHandler()
+  app.use express.errorHandler({showStack: true, dumpExceptions: true})
 
 
 # Routes

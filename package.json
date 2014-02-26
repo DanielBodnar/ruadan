@@ -11,7 +11,12 @@
     "requirejs": "*",
     "connect-assets-jsprimer": "*",
     "requirejs-middleware": "*",
-    "eventemitter": "^0.3.3"
+    "eventemitter": "^0.3.3",
+    "redis": "*",
+    "hiredis": "*",
+    "shortid": "*",
+    "bluebird": "*",
+    "lodash": "*"
   },
   "devDependencies": {
     "karma": "0.8",

@@ -19,6 +19,12 @@ We can serialize and see what exactly a user been doing on your website, to late
 
 # Using
 
+## Redis
+Ruadan uses [Redis](http://redis.io/) as a backend storage, so make sure you install it first.
+Currently, only the redis running on the local machine is supported.
+
+## Running
+
 Create a bookmarklet that begins recording:
 
 ```
