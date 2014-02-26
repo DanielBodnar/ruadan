@@ -25,15 +25,19 @@ app.configure ->
 
   app.use((req, res, next) ->
     res.header("Access-Control-Allow-Origin", "*")
-    res.header("Access-Control-Allow-Headers", "X-Requested-With")
+    res.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type,Accept")
     next()
   )
+
   app.use express.static(__dirname + '/../public')
   app.use express.static(__dirname + '/../bower_components')
 
-
   app.use express.logger()
-  app.use express.bodyParser({limit: '50mb'})
+
+  app.use express.json()
+  app.use express.urlencoded()
+  app.use express.multipart()
+
   app.use express.methodOverride()
 #  app.use((req, res, next) ->
 #    console.log("params: ",util.inspect(req.params), "query:", util.inspect(req.query),

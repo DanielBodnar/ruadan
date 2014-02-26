@@ -11,20 +11,22 @@ module.exports = (app) ->
       res.render 'index'
 
     @record = (req, res) ->
+#      console.log(req.body)
       switch req.body.action
         when "initialMutationState"
-          initialMutationState = JSON.parse(req.body.data)
+          initialMutationState = req.body.data[0]
           break
         when "initialScrollState"
-          initialScrollState = JSON.parse(req.body.data)
+          initialScrollState = req.body.data[0]
           break
         when "initialViewportState"
-          initialViewportState = JSON.parse(req.body.data)
+          initialViewportState = req.body.data[0]
           break
         else
-          val = {action: req.body.action, data: JSON.parse(req.body.data)}
+          val = {action: req.body.action, data: req.body.data[0]}
           events.push(val)
 
+#      console.log(req.body.data[0])
       res.json {}
 
     @view = (req, res) ->

@@ -1,8 +1,4 @@
-define([
-
-],(
-
-)->
+module.exports =
   class MutationEvent
     @handle: (event, deserializer, destDocument)->
       event.data.forEach(@handleSingleMutation.bind(@, deserializer, destDocument))
@@ -39,4 +35,3 @@ define([
 
       if (data.attributeName)
         target.setAttribute(data.attributeName, data.attributeValue)
-)

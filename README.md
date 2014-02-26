@@ -3,7 +3,7 @@
 
 # What/Why
 
-The main idea is to provide a website owner a new, easy, way to really track what a user has been doing on their website by providing a movie of the user interaction on the page.
+Provide a website owner a new, easy, way to really track what a user has been doing on their website by providing a movie of the user interaction on the page.
 
 # How
 
@@ -26,17 +26,16 @@ javascript:(function () {
 	var ga = document.createElement('script');  
 	ga.type = 'text/javascript';  
 	ga.async = true;  
-	ga.setAttribute('data-main', 'http://127.0.0.1:3000/build/bootstrap_recorder.js');  
-	ga.src = ('http://127.0.0.1:3000/requirejs/require.js');  
+	ga.src = ('http://127.0.0.1:3000/build/recorder.js');
 	document.getElementsByTagName("head")[0].appendChild(ga);
 })()
 ```
 
 
-Clone the project and initialize the server by simple running
+Clone the project and initialize the server by simply running
 
 ```
-> grunt
+> gulp
 ```
 
 Go to some site, preferebly a single page application site, and click the record bookmarklet.

@@ -1,6 +1,4 @@
-define([
-],(
-)->
+module.exports =
   class SelectEvent
     @handle: (event, destDocument, deserializer)->
       startNode = deserializer.idMap[event.data.anchorNode?.id]
@@ -14,4 +12,3 @@ define([
       range.setEnd(endNode, event.data.focusOffset)
       destDocument.getSelection().removeAllRanges()
       destDocument.getSelection().addRange(range)
-)

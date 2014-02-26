@@ -10,23 +10,20 @@
     "coffee-script": "*",
     "requirejs": "*",
     "connect-assets-jsprimer": "*",
-    "requirejs-middleware": "*"
+    "requirejs-middleware": "*",
+    "eventemitter": "^0.3.3"
   },
   "devDependencies": {
     "karma": "0.8",
     "chai": "*",
     "cheerio": "*",
-    "grunt": "~0.4.1",
-    "grunt-contrib-jshint": "~0.6.0",
-    "grunt-contrib-uglify": "~0.2.2",
-    "grunt-contrib-requirejs": "*",
-    "grunt-contrib-watch": "*",
-    "grunt-contrib-clean": "*",
-    "grunt-contrib-coffee": "*",
-    "grunt-contrib-copy": "*",
-    "grunt-develop": "*",
-    "grunt-requirejs": "*",
-    "grunt-bower-requirejs": "~0.7.0"
+    "browserify": "~3.31",
+    "gulp": "~3.5",
+    "gulp-browserify": "~0.4",
+    "watchify": "~0.6",
+    "vinyl-source-stream": "~0.1",
+    "coffeeify": "~0.6",
+    "gulp-nodemon": "~1.0"
   },
   "scripts": {
     "start": "node server.js",
