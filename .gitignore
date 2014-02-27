@@ -3,3 +3,4 @@ node_modules
 public/build
 builtAssets
 .DS_STORE
+bower_components
