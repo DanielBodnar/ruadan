@@ -56,6 +56,7 @@ class Recorder
     observers.selection.on('initialize', (data)=> @_processSelectionObject(data, => @client.setInitialSelection.apply(@client, arguments)))
     observers.selection.on('select', (data)=> @_processSelectionObject(data, => @client.onSelect.apply(@client, arguments)))
 
+    observers.mouse.on('mouse_clicked', (data)=> @client.onMouseClick(data))
     observers.mouse.on('mouse_moved', (position)=> @client.onMouseMove(position))
 
 

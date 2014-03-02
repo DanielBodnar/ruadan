@@ -19,14 +19,17 @@ class RecorderClient
   onMutation: (data) ->
     @_record("mutation", data)
 
-  onMouseMove: (data) ->
+  onMouseClick: (data)->
+    @_record("mouse", data)
+
+  onMouseMove: (data)->
     @_record("mouse", data)
 
   onScroll: (data) ->
     @_record("scroll", data)
 
   _record: (action, data) ->
-    console.log("recording ",action)
+    console.log("recording ",action, data)
 
     request = new XMLHttpRequest()
     request.open('POST', "http://127.0.0.1:3000/record", true)
