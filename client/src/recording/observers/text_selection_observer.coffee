@@ -7,10 +7,10 @@ class TextSelectionObserver extends EventEmitter
     @emit("initialize", [@_getSelection()])
 
   observe: ()->
-    @_listener = @element.addEventListener(EVENT_NAME, @_onChange.bind(@), true)
+    @element.addEventListener(EVENT_NAME, @_onChange, true)
 
   disconnect: ->
-    @element.removeEventListener(EVENT_NAME, @_onChange.bind(@), true)
+    @element.removeEventListener(EVENT_NAME, @_onChange, true)
 
   _getSelection: (event)->
     selection = @element.getSelection()
@@ -22,7 +22,7 @@ class TextSelectionObserver extends EventEmitter
       timestamp: event?.timeStamp || (new Date().getTime())
     }
 
-  _onChange: (event)->
+  _onChange: (event)=>
     @emit('select', [@_getSelection(event)])
 
 

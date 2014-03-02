@@ -5,12 +5,12 @@ class MouseObserver extends EventEmitter
     @emit("initialize", [x: 0, y: 0, timestamp: new Date().getTime()])
 
   observe: ->
-    @_listener = @element.addEventListener('mousemove', @_onChange.bind(@), false)
+    @element.addEventListener('mousemove', @_onChange, false)
 
   disconnect: ->
-    @element.removeEventListener('mousemove', @_onChange.bind(@), false)
+    @element.removeEventListener('mousemove', @_onChange, false)
 
-  _onChange: (event)->
+  _onChange: (event)=>
     x = event.clientX
     y = event.clientY
     @emit('mouse_moved', [{x: x, y:y, timestamp: event.timeStamp}])

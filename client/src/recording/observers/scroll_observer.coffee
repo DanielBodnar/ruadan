@@ -6,16 +6,19 @@ class ScrollObserver extends EventEmitter
     ])
 
   observe: ()->
-    @_listener = @element.addEventListener('scroll', @_onChange.bind(@), false)
+    @element.addEventListener('scroll', @_onChange, false)
 
   disconnect: ->
-    @element.removeEventListener('scroll', @_onChange.bind(@), false)
+    @element.removeEventListener('scroll', @_onChange, false)
 
-  _onChange: (event)->
+  _onChange: (event)=>
     x = @element.scrollX
     y = @element.scrollY
     @emit('scroll', [
-      {x: x, y: y, timestamp: event.timeStamp}
+      {
+        x: x,
+        y: y,
+        timestamp: event.timeStamp}
     ])
 
 
