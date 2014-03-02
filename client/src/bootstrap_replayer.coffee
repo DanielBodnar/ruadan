@@ -33,7 +33,7 @@ handleEvent = (event) ->
       handler = -> ScrollEvent.handle(event, iframe)
       break
     when "mouse"
-      handler = -> MouseEvent.handle(event, mousePointer)
+      handler = MouseEvent.handle.bind(MouseEvent, event, document, mousePointer)
       break
     when "select"
       handler = -> SelectEvent.handle(event, destDocument, deserializer)
