@@ -1,10 +1,12 @@
-EventEmitter = require('eventEmitter').EventEmitter
+EventEmitter = require('eventemitter').EventEmitter
 
 
 class MutationObserverObserver extends EventEmitter
   constructor: (@serializer)->
     MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver
-    @observer = new MutationObserver(@_onChange.bind(@))
+    @observer = new MutationObserver( (mutations) =>
+      @_onChange(mutations)
+    )
 
   initialize: (@element)->
     currentState = @serializer.serialize(@element, true)
@@ -32,7 +34,7 @@ class MutationObserverObserver extends EventEmitter
     @observer.disconnect()
 
   _onChange: (mutations)->
-    result = Array.prototype.map.call(mutations, @_handleMutation.bind(@))
+    result = Array.prototype.map.call(mutations, (mutation) => @_handleMutation(mutation))
     @emit('change', [result])
 
   _handleMutation: (mutation)->

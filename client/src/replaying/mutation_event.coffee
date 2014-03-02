@@ -1,7 +1,9 @@
 module.exports =
   class MutationEvent
     @handle: (event, deserializer, destDocument)->
-      event.data.forEach(@handleSingleMutation.bind(@, deserializer, destDocument))
+      event.data.forEach( (data) =>
+        @handleSingleMutation(deserializer, destDocument, data)
+      )
 
     @handleSingleMutation: (deserializer, destDocument, data)->
       target = deserializer.idMap[data.targetNodeId]

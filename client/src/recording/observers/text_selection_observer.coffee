@@ -1,16 +1,17 @@
-EventEmitter = require('eventEmitter').EventEmitter
+EventEmitter = require('eventemitter').EventEmitter
 
 class TextSelectionObserver extends EventEmitter
   EVENT_NAME = 'selectionchange'
   constructor: (@serializer)->
   initialize: (@element) ->
     @emit("initialize", [@_getSelection()])
+    @eventHandler = (event) => @_onChange(event)
 
   observe: ()->
-    @element.addEventListener(EVENT_NAME, @_onChange, true)
+    @element.addEventListener(EVENT_NAME, @eventHandler, true)
 
   disconnect: ->
-    @element.removeEventListener(EVENT_NAME, @_onChange, true)
+    @element.removeEventListener(EVENT_NAME, @eventHandler, true)
 
   _getSelection: (event)->
     selection = @element.getSelection()

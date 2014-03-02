@@ -48,13 +48,13 @@ class Recorder
     observers.scrolling.on('initialize', (info) => @client.setInitialScrollState(info))
     observers.scrolling.on('scroll', (info) => @client.onScroll(info))
 
-    observers.mutation.on('initialize', @client.setInitialMutationState.bind(@client))
-    observers.mutation.on('change', @client.onMutation.bind(@client))
+    observers.mutation.on('initialize', => @client.setInitialMutationState.apply(@client, arguments))
+    observers.mutation.on('change', => @client.onMutation.apply(@client, arguments))
 
     observers.viewport.on('initialize', (info) => @client.setInitialViewportState(info))
 
-    observers.selection.on('initialize', (data)=> @_processSelectionObject(data, @client.setInitialSelection.bind(@client)))
-    observers.selection.on('select', (data)=> @_processSelectionObject(data, @client.onSelect.bind(@client)))
+    observers.selection.on('initialize', (data)=> @_processSelectionObject(data, => @client.setInitialSelection.apply(@client, arguments)))
+    observers.selection.on('select', (data)=> @_processSelectionObject(data, => @client.onSelect.apply(@client, arguments)))
 
     observers.mouse.on('mouse_moved', (position)=> @client.onMouseMove(position))
 

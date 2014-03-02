@@ -1,4 +1,4 @@
-EventEmitter = require('eventEmitter').EventEmitter
+EventEmitter = require('eventemitter').EventEmitter
 
 class ViewportObserver extends EventEmitter
   initialize: (@element)->

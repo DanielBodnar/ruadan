@@ -30,16 +30,16 @@ handleEvent = (event) ->
 
   switch event.action
     when "scroll"
-      handler = ScrollEvent.handle.bind(ScrollEvent, event, iframe)
+      handler = -> ScrollEvent.handle(event, iframe)
       break
     when "mouse"
-      handler = MouseEvent.handle.bind(MouseEvent, event, mousePointer)
+      handler = -> MouseEvent.handle(event, mousePointer)
       break
     when "select"
-      handler = SelectEvent.handle.bind(SelectEvent, event, destDocument, deserializer)
+      handler = -> SelectEvent.handle(event, destDocument, deserializer)
       break
     when "mutation"
-      handler = MutationEvent.handle.bind(MutationEvent, event, deserializer, destDocument)
+      handler = -> MutationEvent.handle(event, deserializer, destDocument)
       break
     else
       handler = null
