@@ -7,6 +7,7 @@ html
             width: 12px;
             height: 20px;
         }
+
         #circle-animation
         {
           position: absolute;
@@ -22,6 +23,141 @@ html
         @-webkit-keyframes ripple {
           0% {opacity: 1; -webkit-transform: scale(1) translate(-12px, -12px); }
           100% {opacity: 0; -webkit-transform: scale(6); }
+        }
+
+        #player_wrapper {
+          position: fixed;
+          width: 100%;
+          bottom: 100px;
+          left: 0;
+          height: 50px;
+        }
+
+        #player_container {
+          margin: 0 auto;
+          width: 1000px;
+          height: 34px;
+          padding: 5px 10px;
+          border: 1px solid grey;
+          background-color: lightGrey;
+          border-radius: 10px;
+          opacity: 1;
+          transition: opacity 0.5s;
+        }
+
+        #player_container.hidden {
+          opacity: 0;
+        }
+
+        #player_container .button {
+          width: 28px;
+          height: 28px;
+          text-decoration: none;
+          border-top: 1px solid lightGrey;
+          border-left: 1px solid lightGrey;
+          border-right: 1px solid darkGrey;
+          border-bottom: 1px solid darkGrey;
+          background-color: white;
+          display: inline-block;
+          vertical-align: middle;
+          color: black;
+        }
+
+        #player_container .button:active {
+          border-top: 1px solid darkGrey;
+          border-left: 1px solid darkGrey;
+          border-right: 1px solid lightGrey;
+          border-bottom: 1px solid lightGrey;
+        }
+
+        #player_container .time_display, #player_container .total_time {
+          width: 40px;
+          height: 30px;
+          line-height: 30px;
+          margin: 0 10px;
+          vertical-align: middle;
+          display: inline-block;
+        }
+
+        #player_container .seek_container {
+          position: relative;
+          width: 760px;
+          height: 30px;
+          display: inline-block;
+        }
+
+        #player_container .seek_bar {
+          width: 760px;
+          height: 30px;
+          vertical-align: middle;
+          display: inline-block;
+        }
+
+        #player_container .markers_container {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 760px;
+          height: 30px;
+          pointer-events: none;
+        }
+
+        #player_container .marker {
+          position: absolute;
+          width: 1px;
+          height: 14px;
+          opacity: 0.3;
+          top: 10px;
+        }
+
+        #player_container .play_pause .play, #player_container .play_pause .pause,
+        #player_container .loop_state .noloop, #player_container .loop_state .loop {
+          display: none;
+        }
+
+        #player_container .play_pause.play .play {
+          display: inline-block;
+          vertical-align: middle;
+          font-size: 20px;
+          margin: 4px 7px;
+          width: 0;
+          height: 0;
+          border-top: 10px solid transparent;
+          border-bottom: 10px solid transparent;
+          border-left: 16px solid black;
+        }
+
+        #player_container .play_pause.pause .pause {
+          display: inline-block;
+          vertical-align: middle;
+          font-size: 35px;
+          margin: 4px 6px;
+          width: 6px;
+          height: 20px;
+          border-left: 5px solid black;
+          border-right: 5px solid black;
+        }
+
+        #player_container .loop_state.loop .loop {
+          display: inline-block;
+          vertical-align: middle;
+          font-size: 23px;
+          margin: 1px 5px;
+        }
+
+        #player_container .loop_state.loop .noloop {
+          display: none;
+        }
+
+        #player_container .loop_state .noloop {
+          display: inline-block;
+          vertical-align: middle;
+          font-size: 22px;
+          margin: 0.5px 4px;
+        }
+
+        #theframe {
+          pointer-events: none;
         }
 
   body(style="margin: 0;")

@@ -47,6 +47,7 @@ gulp.task('browserify_replayer', function () {
   bundler.transform("coffeeify");
   bundler.require('./client/lodash.custom.js', {expose: 'lodash'});
   bundler.on('update', rebundle);
+  bundler.on("error", console.log);
 
   function rebundle () {
     return bundler.bundle()

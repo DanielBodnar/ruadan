@@ -1,8 +1,30 @@
 extends layout
 block content
-    div#themouse
-      img(src="/mouse_icon.svg", width="12px", height="20px")
-    div#overlay
-    iframe#theframe(scrolling="no", data-session-id=sessionId)
-    script(src='http://127.0.0.1:3000/build/replayer.js')
-    script.
+  div#player_wrapper
+    div#player_container
+      a.button.play_pause(href="javascript:;")
+        div.play
+        div.pause
+      span.time_display
+      div.seek_container
+        input.seek_bar(type="range" min=0)
+        div.markers_container
+      span.total_time
+      a.button.loop_state(href="javascript:;")
+        div.noloop &#x279e;
+        div.loop &#x27F3;
+      select.speed
+        option(value="0.5") x0.5
+        option(value="1" selected) x1
+        option(value="1.5") x1.5
+        option(value="2") x2
+        option(value="3") x3
+
+  div#themouse
+    img(src="/mouse_icon.svg", width="12px", height="20px")
+  div#overlay
+  iframe#theframe(scrolling="no", data-session-id=sessionId)
+  script.
+    window.ruadanSessionId = "#{sessionId}";
+  script(src='http://127.0.0.1:3000/build/replayer.js')
+  script.
