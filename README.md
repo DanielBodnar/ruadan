@@ -21,6 +21,8 @@ We can serialize and see what exactly a user been doing on your website, to late
 
 ## Redis
 Ruadan uses [Redis](http://redis.io/) as a backend storage, so make sure you install it first.
+On Mac OS, `brew install redis` ought to do it. See more info [here](http://redis.io/download).
+
 Currently, only the redis running on the local machine is supported.
 
 ## Running
