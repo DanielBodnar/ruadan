@@ -1,5 +1,5 @@
 class RecorderClient
-  constructor: (@document, @rootElement) ->
+  constructor: (@document, @rootElement, @sessionId) ->
 
   setInitialMutationState: (data) ->
     @_record("initialMutationState", data)
@@ -28,13 +28,25 @@ class RecorderClient
   onScroll: (data) ->
     @_record("scroll", data)
 
+  startRecording: (callback) ->
+    request = new XMLHttpRequest()
+    request.open('POST', "http://127.0.0.1:3000/start", true)
+    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+
+    request.onload = (e) =>
+      @sessionId = JSON.parse(request.responseText).sessionId
+      console.log('starting session ' + @sessionId)
+      callback(@sessionId)
+
+    request.send()
+
   _record: (action, data) ->
     console.log("recording ",action, data)
 
     request = new XMLHttpRequest()
     request.open('POST', "http://127.0.0.1:3000/record", true)
 
-    dataToSend = JSON.stringify({ sessionId: "gyBds3zO9", action: action, data: data })
+    dataToSend = JSON.stringify({ sessionId: @sessionId, action: action, data: data })
 
     request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
 

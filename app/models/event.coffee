@@ -6,7 +6,7 @@ class Event
     @attributes =
       action: action
       timestamp: timestamp
-      eventData: eventData
+      data: eventData
 
   @eventsFromRequestJSON: (action, data) ->
     data = [data] unless _.isArray(data)

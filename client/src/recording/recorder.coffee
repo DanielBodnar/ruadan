@@ -6,7 +6,7 @@ ViewportObserver = require('./observers/viewport_observer.coffee')
 TextSelectionObserver = require('./observers/text_selection_observer.coffee')
 
 class Recorder
-  constructor: (options)->
+  constructor: (options) ->
     @serializer = new Serializer()
     @rootElement = options.rootElement
     @client = new options.Client(options.document, @rootElement)
@@ -19,9 +19,7 @@ class Recorder
       selection: new TextSelectionObserver(@serializer)
     }
 
-    @_bindObserverEvents(@observers)
 
-    @initialize()
 
   initialize: ->
     @observers.scrolling.initialize(window)
@@ -31,20 +29,25 @@ class Recorder
     @observers.selection.initialize(document) #seems to only be available on the document :-/
 
   startRecording: ->
-    for key, v of @observers
-      v.observe()
+    @client.startRecording( (sessionId) =>
+      @sessionId = sessionId
+      @_bindObserverEvents(@observers)
+      @initialize()
+      for key, v of @observers
+        v.observe()
+    )
 
   stopRecording: ->
     for key, v of @observers
       v.disconnect()
 
 
-  _processSelectionObject: (data, fn)->
+  _processSelectionObject: (data, fn) ->
     data.anchorNode = @observers.mutation.serializer.knownNodesMap.get(data.anchorNode) if data.anchorNode
     data.focusNode = @observers.mutation.serializer.knownNodesMap.get(data.focusNode) if data.focusNode
     fn(data)
 
-  _bindObserverEvents: (observers)->
+  _bindObserverEvents: (observers) ->
     observers.scrolling.on('initialize', (info) => @client.setInitialScrollState(info))
     observers.scrolling.on('scroll', (info) => @client.onScroll(info))
 

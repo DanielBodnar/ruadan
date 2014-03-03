@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  style.
+    body {
+      padding: 5px;
+    }
+    .sessionList {
+      border-collapse: collapse;
+    }
+    .sessionList td, th {
+      border: solid 1px;
+      padding: 5px;
+    }
+  table.sessionList
+    tr
+      th
+        | session id
+      th
+        | recorded at
+    each session in sessions
+      tr
+        td
+          a(href='/replay/' + session.attributes.id)
+            = session.attributes.id + ' '
+        td
+          = new Date(session.attributes.timestamp*1)

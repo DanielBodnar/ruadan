@@ -6,7 +6,8 @@ module.exports = (app) ->
   app.post '/record', app.EventController.record
   app.get '/view', app.EventController.view
 
-  app.get '/replay', app.ApplicationController.replay
+  app.get '/replay/:sessionId', app.ReplayController.replay
+  app.get '/replay', app.ReplayController.sessions
 
   # Error handling (No previous route found. Assuming it’s a 404)
   app.get '/*', (req, res) ->

@@ -59,32 +59,41 @@ iframe = document.getElementById("theframe")
 destDocument = iframe.contentDocument
 
 
+findFirstEvent = (data, action) ->
+  for ev in data.events
+    if ev.action == action
+      return ev.data
+  return null
 
 doReplay = (data) ->
 
   deserializer = new Deserializer(document)
-  res = deserializer.deserialize(data.initialMutationState.nodes)
+  res = deserializer.deserialize(findFirstEvent(data, 'initialMutationState').nodes)
 
   newNode = destDocument.adoptNode(res)
 
   destDocument.replaceChild(newNode, destDocument.documentElement)
 
-  iframe.contentWindow.scrollTo(data.initialScrollState.x, data.initialScrollState.y)
+  initialScrollState = findFirstEvent(data, 'initialScrollState')
+  initialViewportState = findFirstEvent(data, 'initialViewportState')
 
-  iframe.setAttribute("width", "#{data.initialViewportState.width}")
-  iframe.setAttribute("height", "#{data.initialViewportState.height}")
+  iframe.contentWindow.scrollTo(initialScrollState.x, initialScrollState.y)
+
+  iframe.setAttribute("width", "#{initialViewportState.width}")
+  iframe.setAttribute("height", "#{initialViewportState.height}")
 
   iframe.setAttribute("frameborder", "0")
 
-  iframe.style.width = "#{data.initialViewportState.width}px"
-  iframe.style.height = "#{data.initialViewportState.height}px"
+  iframe.style.width = "#{initialViewportState.width}px"
+  iframe.style.height = "#{initialViewportState.height}px"
 
   events = data.events
   handleEvent(getNextEvent()) #dont know how to get the event that the iframe finished loading :(
 
 replay = ->
   request = new XMLHttpRequest;
-  request.open('GET', "http://127.0.0.1:3000/view", true)
+  sessionId = iframe.getAttribute('data-session-id')
+  request.open('GET', "http://127.0.0.1:3000/view?sessionId=#{sessionId}", true)
 
   request.onload = ->
     if (request.status >= 200 && request.status < 400)
