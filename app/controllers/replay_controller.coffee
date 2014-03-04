@@ -8,6 +8,6 @@ module.exports = (app) ->
       res.render 'replay', sessionId: req.params.sessionId
 
     @sessions = (req, res) ->
-      Session.all().then((sessions) ->
+      Session.allValid().then((sessions) ->
         res.render 'sessions', sessions: sessions
       )

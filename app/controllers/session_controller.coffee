@@ -4,15 +4,17 @@ module.exports = (app) ->
 
   class app.SessionController
 
-
     @start = (req, res) ->
-      session = new Session()
-      res.json {
-        sessionId: session.attributes.id
-      }
+      Session.start().then((session) ->
+        res.json {
+          sessionId: session.attributes.id
+        }
+      ).catch( (error) ->
+        res.json {}
+      )
 
     @sessions = (req, res) ->
-      Session.all().then((sessions) ->
+      Session.allValid().then((sessions) ->
         res.json {
           sessions: sessions
         }
