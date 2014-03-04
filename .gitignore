@@ -5,3 +5,4 @@ builtAssets
 .DS_STORE
 bower_components
 public/build
+*.rdb
