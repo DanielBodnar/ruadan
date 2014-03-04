@@ -5,7 +5,7 @@ module.exports = (app) ->
   class app.ReplayController
 
     @replay = (req, res) ->
-      res.render 'replay', sessionId: req.params.session
+      res.render 'replay', sessionId: req.params.sessionId
 
     @sessions = (req, res) ->
       Session.all().then((sessions) ->
