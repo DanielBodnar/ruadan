@@ -14,15 +14,14 @@ html
           -webkit-animation: ripple 1.0s ease-out;
           border-radius: 100%;
           border: 3px solid red;
-          -webkit-transform-origin: 50% 50%;
-          -webkit-animation-fill-mode: forwards;
           width: 20px;
           height: 20px;
+          -webkit-transform: scale(1) translate(-12px, -12px);
         }
 
         @-webkit-keyframes ripple {
-          0% {opacity: 1; -webkit-transform: scale(1); }
-          100% {opacity: 0; -webkit-transform: scale(6);}
+          0% {opacity: 1; -webkit-transform: scale(1) translate(-12px, -12px); }
+          100% {opacity: 0; -webkit-transform: scale(6); }
         }
 
   body(style="margin: 0;")
