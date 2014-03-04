@@ -21,22 +21,28 @@
   },
   "devDependencies": {
     "karma": "0.8",
-    "chai": "*",
+    "chai": "^1.9.0",
     "cheerio": "*",
     "browserify": "~3.31",
+    "mocha": "~1.17",
     "gulp": "~3.5",
     "gulp-browserify": "~0.4",
+    "gulp-nodemon": "~1.0",
+    "gulp-mocha": "~0.4",
     "watchify": "~0.6",
     "vinyl-source-stream": "~0.1",
     "coffeeify": "~0.6",
-    "gulp-nodemon": "~1.0",
     "gulp-coffeelint": "~0.3",
     "coffeelint-stylish": "~0.0",
-    "gulp-watch": "~0.5"
+    "gulp-watch": "~0.5",
+    "sinon": "^1.8.2",
+    "gulp-coffee": "~1.4.1",
+    "gulp-plumber": "^0.5.6",
+    "dateformat": "^1.0.7-1.2.3"
   },
   "scripts": {
-    "start": "node server.js",
-    "test": "node node_modules/karma/bin/karma start config/karma.config.js"
+    "start": "gulp",
+    "test": "gulp test"
   },
   "engines": {
     "node": "0.10.x",
