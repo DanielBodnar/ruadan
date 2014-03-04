@@ -1,6 +1,6 @@
 module.exports =
   class SelectEvent
-    @handle: (event, destDocument, deserializer)->
+    @handle: (event, destDocument, deserializer) ->
       startNode = deserializer.idMap[event.data.anchorNode?.id]
       endNode = deserializer.idMap[event.data.focusNode?.id]
 

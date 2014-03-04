@@ -12,7 +12,7 @@ class NodeMap
     @_nodeMap = {}
 
   set: (node, value) ->
-    id = ensureId(node, @getNextId());
+    id = ensureId(node, @getNextId())
     @_nodeMap[getId(node)] =
       k: node
       v: value
@@ -37,17 +37,17 @@ class NodeMap
 
 #================PRIVATE========================================================
 #todo: move later on to a thin wrapper for node
-ensureId = (node, nextId)->
+ensureId = (node, nextId) ->
   setId(node, nextId) unless hasId(node)
   getId(node) #we return the id
 
-hasId = (node)->
+hasId = (node) ->
   getId(node)?
 
-getId = (node)->
+getId = (node) ->
   node[ID_PROP]
 
-setId = (node, id)->
+setId = (node, id) ->
   node[ID_PROP] = id
 
 

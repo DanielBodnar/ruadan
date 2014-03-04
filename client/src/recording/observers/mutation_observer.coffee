@@ -2,20 +2,20 @@ EventEmitter = require('eventemitter').EventEmitter
 
 
 class MutationObserverObserver extends EventEmitter
-  constructor: (@serializer)->
+  constructor: (@serializer) ->
     MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver
     @observer = new MutationObserver( (mutations) =>
       @_onChange(mutations)
     )
 
-  initialize: (@element)->
+  initialize: (@element) ->
     currentState = @serializer.serialize(@element, true)
     eventData =
       nodes: currentState,
       timestamp: new Date().getTime()
     @emit("initialize", eventData)
 
-  observe: (options = {})->
+  observe: (options = {}) ->
     defaultOptions =
       childList: true
       attributes: true
@@ -33,11 +33,11 @@ class MutationObserverObserver extends EventEmitter
   disconnect: ->
     @observer.disconnect()
 
-  _onChange: (mutations)->
+  _onChange: (mutations) ->
     result = Array.prototype.map.call(mutations, (mutation) => @_handleMutation(mutation))
     @emit('change', result)
 
-  _handleMutation: (mutation)->
+  _handleMutation: (mutation) ->
     result = {}
     result.addedNodes = @_serializeNodes(mutation.addedNodes) if @_hasAddedNodes(mutation)
     result.removedNodes = @_serializeNodes(mutation.removedNodes) if @_hasRemovedNodes(mutation)
@@ -55,14 +55,14 @@ class MutationObserverObserver extends EventEmitter
 
     result
 
-  _hasAddedNodes: (mutation)->
+  _hasAddedNodes: (mutation) ->
     mutation.addedNodes?.length > 0
 
-  _hasRemovedNodes: (mutation)->
+  _hasRemovedNodes: (mutation) ->
     mutation.removedNodes?.length > 0
 
-  _serializeNodes: (nodes)->
-    Array.prototype.map.call(nodes, (node)=>
+  _serializeNodes: (nodes) ->
+    Array.prototype.map.call(nodes, (node) =>
       @serializer.serialize(node, true)
     )
 

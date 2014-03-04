@@ -1,13 +1,13 @@
 _ = require('lodash')
 
 class Deserializer
-  constructor: (@document, @root = null, @idMap={}) ->
+  constructor: (@document, @root = null, @idMap = {}) ->
     @root = @document.implementation.createHTMLDocument()
 
-  deleteNode: (nodeData)->
+  deleteNode: (nodeData) ->
     delete @idMap[nodeData.id]
 
-  deserialize: (nodeData, parent = @root)->
+  deserialize: (nodeData, parent = @root) ->
     return null unless nodeData?
 
     node = @idMap[nodeData.id]
@@ -23,9 +23,9 @@ class Deserializer
         break
       when "#{Node.DOCUMENT_TYPE_NODE}"
         node = @root.implementation.createDocumentType(
-            nodeData.name,
-            nodeData.publicId,
-            nodeData.systemId)
+          nodeData.name,
+          nodeData.publicId,
+          nodeData.systemId)
         break
       when "#{Node.ELEMENT_NODE}"
         switch nodeData.tagName
@@ -64,11 +64,11 @@ class Deserializer
 
     @_addStyle(node, nodeData.styles) if node.nodeType != Node.COMMENT_NODE
 
-    throw "Unable to create node for some reason, THIS SHOULD NEVER HAPPEN" unless node
+    throw Error("Unable to create node for some reason, THIS SHOULD NEVER HAPPEN") unless node
 
     switch nodeData.tagName
       when 'HTML', 'HEAD', 'BODY'
-        break;
+        break
       else
         node = parent.appendChild(node) if parent && "#{parent.nodeType}" != "#{Node.COMMENT_NODE}"
 
@@ -82,13 +82,13 @@ class Deserializer
     node
 
 
-  _addAttributes: (node, attributes)->
-    _.each(attributes, (value, key)->
+  _addAttributes: (node, attributes) ->
+    _.each(attributes, (value, key) ->
       node.setAttribute(key, value) if value?
     )
     node
 
-  _addStyle: (node, styles)->
+  _addStyle: (node, styles) ->
     _.each(styles, (value, key) ->
       node.style[key] = value
     )

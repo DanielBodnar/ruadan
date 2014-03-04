@@ -19,10 +19,10 @@ class RecorderClient
   onMutation: (data) ->
     @_record("mutation", data)
 
-  onMouseClick: (data)->
+  onMouseClick: (data) ->
     @_record("mouse", data)
 
-  onMouseMove: (data)->
+  onMouseMove: (data) ->
     @_record("mouse", data)
 
   onScroll: (data) ->

@@ -1,6 +1,6 @@
 module.exports =
   class MouseEvent
-    @handle: (event, document, mousePointer)->
+    @handle: (event, document, mousePointer) ->
       if event.data.type == 'mousemove'
         mousePointer.style.left = "#{event.data.x}px"
         mousePointer.style.top = "#{event.data.y}px"

@@ -1,18 +1,17 @@
 EventEmitter = require('eventemitter').EventEmitter
 class ScrollObserver extends EventEmitter
-  initialize: (@element)->
+  initialize: (@element) ->
     @emit("initialize", [
       x: @element.scrollX, y: @element.scrollY, timestamp: new Date().getTime()
     ])
-    @eventHandler = (event) => @_onChange(event)
 
-  observe: ()->
-    @element.addEventListener('scroll', @eventHandler, false)
+  observe: ->
+    @element.addEventListener('scroll', @_onChange, false)
 
   disconnect: ->
-    @element.removeEventListener('scroll', @eventHandler, false)
+    @element.removeEventListener('scroll', @_onChange, false)
 
-  _onChange: (event)=>
+  _onChange: (event) =>
     x = @element.scrollX
     y = @element.scrollY
     @emit('scroll', [

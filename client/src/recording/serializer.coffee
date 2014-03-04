@@ -2,7 +2,7 @@ NodeMap = require('./node_map.coffee')
 
 class Serializer
   constructor: (@knownNodesMap = new NodeMap()) ->
-  serialize: (node, recursive = false, withStyle = true)->
+  serialize: (node, recursive = false, withStyle = true) ->
     return null unless node?
 
     data = @knownNodesMap.get(node)
@@ -43,7 +43,7 @@ class Serializer
         if data.tagName.toLowerCase() == "img"
           data.attributes["src"] = elm.src
 
-        if elm.tagName.toLowerCase()=="link"
+        if elm.tagName.toLowerCase() == "link"
           data.attributes["href"] = elm.href
 
         @_serializeChildNodes(elm, data) if recursive && elm.childNodes.length
@@ -52,13 +52,13 @@ class Serializer
     @knownNodesMap.set(node, data)
     data
 
-  _serializeAttributes: (node, data)->
+  _serializeAttributes: (node, data) ->
     attributes = {}
     for attrib in node.attributes
       attributes[attrib.name] = attrib.value if attrib.specified
     attributes
 
-  _serializeChildNodes: (node, data)->
+  _serializeChildNodes: (node, data) ->
     data.childNodes = []
 
     child = node.firstChild
@@ -69,17 +69,18 @@ class Serializer
       child = child.nextSibling
 
   _serializeStyle: (node) ->
-    # During a CSS transition, getComputedStyle returns the original property value in Firefox, but the final property value in WebKit.
-#      computedStyle = @_serializeCSSStyleDeclaration(getComputedStyle(node))
-#      inlineStyle = @_serializeCSSStyleDeclaration(node.style)
+    # During a CSS transition, getComputedStyle returns the original property value in Firefox,
+    # but the final property value in WebKit.
+    #      computedStyle = @_serializeCSSStyleDeclaration(getComputedStyle(node))
+    #      inlineStyle = @_serializeCSSStyleDeclaration(node.style)
     @_serializeCSSStyleDeclaration(node.style) #we only save inline stylesheets
 
-#      result = _.extend({}, computedStyle, inlineStyle)
-#      result
+    #      result = _.extend({}, computedStyle, inlineStyle)
+    #      result
 
 
 
-  _serializeCSSStyleDeclaration: (style)->
+  _serializeCSSStyleDeclaration: (style) ->
     return {} unless style
     result = {}
 

@@ -1,4 +1,4 @@
 module.exports =
   class ScrollEvent
-    @handle: (event, iframe)->
+    @handle: (event, iframe) ->
       iframe.contentWindow.scrollTo(event.data.x, event.data.y)

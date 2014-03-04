@@ -1,17 +1,17 @@
 EventEmitter = require('eventemitter').EventEmitter
 
 class ViewportObserver extends EventEmitter
-  initialize: (@element)->
+  initialize: (@element) ->
     @emit("initialize", [
       width: @element.clientWidth,
       height: @element.clientHeight,
       timestamp: new Date().getTime()
     ])
 
-  observe: ()->
+  observe: ->
 
   disconnect: ->
 
-  _onChange: (event)->
+  _onChange: (event) ->
 
 module.exports = ViewportObserver

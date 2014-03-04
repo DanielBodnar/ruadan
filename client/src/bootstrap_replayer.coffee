@@ -4,8 +4,8 @@ MouseEvent = require('./replaying/mouse_event.coffee')
 ScrollEvent = require('./replaying/scroll_event.coffee')
 MutationEvent = require('./replaying/mutation_event.coffee')
 
-lastTime = 0;
-currentEventId = 0;
+lastTime = 0
+currentEventId = 0
 events = null
 iframe = null
 mousePointer = null
@@ -15,7 +15,7 @@ getNextEvent = ->
   events[currentEventId++]
 
 doEvent = (func, timestamp) ->
-  setTimeout((=>
+  setTimeout((->
     func()
     handleEvent(getNextEvent())
   ), timestamp - lastTime)
@@ -91,13 +91,13 @@ doReplay = (data) ->
   handleEvent(getNextEvent()) #dont know how to get the event that the iframe finished loading :(
 
 replay = ->
-  request = new XMLHttpRequest;
+  request = new XMLHttpRequest()
   sessionId = iframe.getAttribute('data-session-id')
   request.open('GET', "http://127.0.0.1:3000/view?sessionId=#{sessionId}", true)
 
   request.onload = ->
     if (request.status >= 200 && request.status < 400)
-      data = JSON.parse(request.responseText);
+      data = JSON.parse(request.responseText)
       doReplay(data)
     else
       console.error("error requesting info from the server", request)

@@ -2,18 +2,17 @@ EventEmitter = require('eventemitter').EventEmitter
 
 class TextSelectionObserver extends EventEmitter
   EVENT_NAME = 'selectionchange'
-  constructor: (@serializer)->
+  constructor: (@serializer) ->
   initialize: (@element) ->
     @emit("initialize", [@_getSelection()])
-    @eventHandler = (event) => @_onChange(event)
 
-  observe: ()->
-    @element.addEventListener(EVENT_NAME, @eventHandler, true)
+  observe: ->
+    @element.addEventListener(EVENT_NAME, @_onChange, true)
 
   disconnect: ->
-    @element.removeEventListener(EVENT_NAME, @eventHandler, true)
+    @element.removeEventListener(EVENT_NAME, @_onChange, true)
 
-  _getSelection: (event)->
+  _getSelection: (event) ->
     selection = @element.getSelection()
     {
       anchorNode: @serializer.serialize(selection.anchorNode, false)
@@ -23,7 +22,7 @@ class TextSelectionObserver extends EventEmitter
       timestamp: event?.timeStamp || (new Date().getTime())
     }
 
-  _onChange: (event)=>
+  _onChange: (event) =>
     @emit('select', [@_getSelection(event)])
 
 

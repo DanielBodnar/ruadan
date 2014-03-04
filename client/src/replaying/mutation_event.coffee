@@ -1,10 +1,10 @@
 module.exports =
   class MutationEvent
-    @handle: (event, deserializer, destDocument)->
+    @handle: (event, deserializer, destDocument) ->
       data = event.data
       target = deserializer.idMap[data.targetNodeId]
       if (data.addedNodes)
-        data.addedNodes.forEach((node)->
+        data.addedNodes.forEach((node) ->
           deserializedNode = deserializer.deserialize(node, target)
           destDocument.adoptNode(deserializedNode)
 
@@ -22,7 +22,7 @@ module.exports =
         )
 
       if (data.removedNodes)
-        data.removedNodes.forEach((node)->
+        data.removedNodes.forEach((node) ->
           if target
             deserializedNode = deserializer.deserialize(node, target)
             target.removeChild(deserializedNode)

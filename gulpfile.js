@@ -2,12 +2,24 @@ var gulp = require('gulp');
 var source = require('vinyl-source-stream');
 var watchify = require('watchify');
 var nodemon = require('gulp-nodemon');
+var coffeelint = require('gulp-coffeelint');
+var watch = require('gulp-watch');
 
 const build_folder = './public/build/';
+
+
 gulp.task('develop', function() {
   nodemon({ script: 'server.js', ext: 'html js coffee', ignore: ['ignored.js'] })
 });
 
+
+gulp.task('lint', function () {
+  gulp.src('./client/src/**/*.coffee')
+      .pipe(watch())
+      .pipe(coffeelint())
+      .pipe(coffeelint.reporter('default'));
+
+});
 
 gulp.task('browserify_recorder', function () {
   var bundler = watchify(['./client/src/bootstrap_recorder.coffee']);
@@ -40,6 +52,6 @@ gulp.task('browserify_replayer', function () {
 
 
 
-gulp.task('default', ['browserify_replayer', 'browserify_recorder', 'develop'], function(){
+gulp.task('default', ['lint', 'browserify_replayer', 'browserify_recorder', 'develop'], function(){
   // place code for your default task here
 });
