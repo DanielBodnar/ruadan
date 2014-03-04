@@ -5,6 +5,12 @@
 
 Provide a website owner a new, easy, way to really track what a user has been doing on their website by providing a movie of the user interaction on the page.
 
+Lets say you have a user browsing your website:
+![](https://raw.github.com/iic-ninjas/ruadan/master/record.gif)
+
+You can later on see exactly what he was doing on your website(this is done with 0 integration or code change):
+![](https://raw.github.com/iic-ninjas/ruadan/master/replay.gif)
+
 # How
 
 By recording various user interactions, like:
