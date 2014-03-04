@@ -13,7 +13,7 @@ class MutationObserverObserver extends EventEmitter
     eventData =
       nodes: currentState,
       timestamp: new Date().getTime()
-    @emit("initialize", [eventData])
+    @emit("initialize", eventData)
 
   observe: (options = {})->
     defaultOptions =
@@ -35,7 +35,7 @@ class MutationObserverObserver extends EventEmitter
 
   _onChange: (mutations)->
     result = Array.prototype.map.call(mutations, (mutation) => @_handleMutation(mutation))
-    @emit('change', [result])
+    @emit('change', result)
 
   _handleMutation: (mutation)->
     result = {}
