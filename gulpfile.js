@@ -12,6 +12,13 @@ gulp.task('develop', function() {
   nodemon({ script: 'server.js', ext: 'html js coffee', ignore: ['ignored.js'] })
 });
 
+gulp.task('css', function(){
+  var less = require('gulp-less');
+  gulp.src('./app/assets/css/**/*.less')
+      .pipe(watch())
+      .pipe(less())
+      .pipe(gulp.dest('./public/css'));
+});
 
 gulp.task('lint', function () {
   gulp.src('./client/src/**/*.coffee')
@@ -52,6 +59,6 @@ gulp.task('browserify_replayer', function () {
 
 
 
-gulp.task('default', ['lint', 'browserify_replayer', 'browserify_recorder', 'develop'], function(){
+gulp.task('default', ['lint', 'browserify_replayer', 'browserify_recorder', 'css', 'develop'], function(){
   // place code for your default task here
 });
