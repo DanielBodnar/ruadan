@@ -28,7 +28,7 @@ class Recorder
     @observers.url.initialize(window)
     @observers.mutation.initialize(@rootElement)
     @observers.mouse.initialize(window)
-    @observers.viewport.initialize(@rootElement)
+    @observers.viewport.initialize(window)
     @observers.selection.initialize(document) #seems to only be available on the document :-/
 
   startRecording: ->
@@ -63,6 +63,7 @@ class Recorder
     observers.mutation.on('change', => @client.onMutation.apply(@client, arguments))
 
     observers.viewport.on('initialize', (info) => @client.setInitialViewportState(info))
+    observers.viewport.on('resize', (info) => @client.onWindowResize(info))
 
     observers.selection.on('initialize', (data)=> @_processSelectionObject(data, =>
       @client.setInitialSelection.apply(@client, arguments))

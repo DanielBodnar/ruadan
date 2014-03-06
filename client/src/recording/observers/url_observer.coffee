@@ -1,6 +1,6 @@
 EventEmitter = require('eventemitter').EventEmitter
 
-infoToJson = (oldURL, newURL, timestamp)->
+infoToJson = (oldURL, newURL, timestamp) ->
   oldURL: oldURL
   newURL: newURL
   timestamp: timestamp
@@ -17,7 +17,7 @@ class UrlObserver extends EventEmitter
     @window.removeEventListener(EVENT_NAME, @_onChange, true)
 
   _onChange: (event) =>
-    @emit('urlChanged', [infoToJson(event.oldURL, event.newURL, event.timestamp)])
+    @emit('urlChanged', [infoToJson(event.oldURL, event.newURL, event.timeStamp)])
 
 
 module.exports = UrlObserver

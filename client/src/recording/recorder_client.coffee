@@ -16,6 +16,9 @@ class RecorderClient
   setInitialViewportState: (data) ->
     @_record("initialViewportState", data)
 
+  onWindowResize: (data) ->
+    @_record("windowResize", data)
+
   setInitialSelection: (selection) ->
     @_record("initialSelectState", selection)
 
@@ -47,6 +50,7 @@ class RecorderClient
     request.send()
 
   _record: (action, data) ->
+
     console.log("recording ",action, data)
 
     request = new XMLHttpRequest()
