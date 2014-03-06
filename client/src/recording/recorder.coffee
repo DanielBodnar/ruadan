@@ -4,6 +4,7 @@ MouseObserver = require('./observers/mouse_observer.coffee')
 ScrollObserver = require('./observers/scroll_observer.coffee')
 ViewportObserver = require('./observers/viewport_observer.coffee')
 TextSelectionObserver = require('./observers/text_selection_observer.coffee')
+UrlObserver = require('./observers/url_observer.coffee')
 
 class Recorder
   constructor: (options) ->
@@ -16,6 +17,7 @@ class Recorder
       mouse: new MouseObserver()
       scrolling: new ScrollObserver()
       viewport: new ViewportObserver()
+      url: new UrlObserver()
       selection: new TextSelectionObserver(@serializer)
     }
 
@@ -23,6 +25,7 @@ class Recorder
 
   initialize: ->
     @observers.scrolling.initialize(window)
+    @observers.url.initialize(window)
     @observers.mutation.initialize(@rootElement)
     @observers.mouse.initialize(window)
     @observers.viewport.initialize(@rootElement)
@@ -48,6 +51,11 @@ class Recorder
     fn(data)
 
   _bindObserverEvents: (observers) ->
+
+    observers.url.on('initialize', (info)=>@client.setInitialURL(info))
+    observers.url.on('urlChanged', (info)=>@client.onURLChanged(info))
+
+
     observers.scrolling.on('initialize', (info) => @client.setInitialScrollState(info))
     observers.scrolling.on('scroll', (info) => @client.onScroll(info))
 

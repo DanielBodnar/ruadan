@@ -1,6 +1,12 @@
 class RecorderClient
   constructor: (@document, @rootElement, @sessionId) ->
 
+  setInitialURL: (data) ->
+    @_record("initialURL", data)
+
+  onURLChanged: (data) ->
+    @_record("urlChanged", data)
+
   setInitialMutationState: (data) ->
     @_record("initialMutationState", data)
 
