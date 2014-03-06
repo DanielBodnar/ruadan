@@ -1,16 +1,18 @@
 EventEmitter = require('eventemitter').EventEmitter
 
 class ViewportObserver extends EventEmitter
-  initialize: (@element) ->
+  initialize: (@document) ->
     @emit("initialize", [
-      width: @element.clientWidth,
-      height: @element.clientHeight,
+      width: @document.clientWidth,
+      height: @document.clientHeight,
       timestamp: new Date().getTime()
     ])
 
   observe: ->
+    @document.addEventListener('mouseup', @_onClick, false)
 
   disconnect: ->
+    @document.removeEventListener('mouseup', @_onClick, false)
 
   _onChange: (event) ->
 
