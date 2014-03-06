@@ -1,18 +1,17 @@
 EventEmitter = require('eventemitter').EventEmitter
+_ = require('lodash')
 
 class MouseObserver extends EventEmitter
   initialize: (@element) ->
-    @emit("initialize", [
-      x: 0, y: 0, timestamp: new Date().getTime()
-    ])
+    @_throttledOnChange = _.throttle(@_onChange, 100)
 
   observe: ->
     @element.addEventListener('mouseup', @_onClick, false)
-    @element.addEventListener('mousemove', @_onChange, false)
+    @element.addEventListener('mousemove', @_throttledOnChange, true)
 
   disconnect: ->
     @element.removeEventListener('mouseup', @_onClick, false)
-    @element.removeEventListener('mousemove', @_onChange, false)
+    @element.removeEventListener('mousemove', @_throttledOnChange, true)
 
   _onClick: (event) =>
     eventData =
