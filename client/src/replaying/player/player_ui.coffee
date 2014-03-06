@@ -22,7 +22,7 @@ class PlayerUI extends EventEmitter
 
   setCurrentTime: (time) ->
     @ui.seekBar.value = time
-    @ui.timeDisplay.innerHTML = time / 1000.0
+    @ui.timeDisplay.innerHTML = (time / 1000.0).toFixed(2)
 
   setLoopState: (loopState) ->
     if (loopState)
@@ -54,7 +54,7 @@ class PlayerUI extends EventEmitter
       markersContainer: container.querySelector(".markers_container")
     }
 
-    @ui.totalTime.innerHTML = @calculateTotalTime() / 1000.0
+    @ui.totalTime.innerHTML = (@calculateTotalTime() / 1000.0).toFixed(2)
     @ui.seekBar.min = 0
     @ui.seekBar.max = @calculateTotalTime()
     @ui.seekBar.step = 1
@@ -67,10 +67,11 @@ class PlayerUI extends EventEmitter
 
   createMarker: (event) ->
     containerWidth = parseInt(getComputedStyle(@ui.markersContainer)["width"], 10)
+    leftOffset = event.timestamp / @calculateTotalTime() * containerWidth
     element = @document.createElement("div")
     element.className = "marker"
-    element.style.left = event.timestamp / @calculateTotalTime() * containerWidth + "px"
-    element.style.backgroundColor = @actionColors[event.action] || "black"
+    element.style.left = "#{leftOffset}px"
+    element.classList.add(event.action)
     element
 
   bindUIEvents: ->

@@ -1,0 +1,204 @@
+@progress_height: 15px;
+@total_height: 50px;
+
+#player_wrapper {
+  position: fixed;
+  width: 100%;
+  left: 0px;
+  bottom: 0px;
+  transition: opacity 0.5s;
+
+  &.hidden {
+    opacity: 0;
+  }
+
+  .controllers {
+    width: 100%;
+    background: rgba(7,20,30,.7);
+    margin: 9px 0px 0px 0px;
+    height: @total_height - @progress_height;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    .speed_container {
+      display: flex;
+      flex-grow: 1;
+      justify-content: flex-end;
+      align-items: center;
+      margin-top: 7px;
+      margin-right: 10px;
+      .speed {
+
+      }
+    }
+
+    .button, .time_container {
+      height: 41px;
+      text-decoration: none;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .button {
+      width: 41px;
+      i {
+        transition:text-shadow 500ms;
+        &:hover {
+          text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.75);
+        }
+      }
+    }
+    .play_pause .play, .play_pause .pause,
+    .loop_state .noloop, .loop_state .loop {
+      display: none;
+    }
+
+    .play_pause.play {
+      .play {
+        display: flex;
+      }
+      .pause {
+        display: none;
+      }
+    }
+
+    .play_pause.pause .pause {
+      display: flex;
+    }
+
+
+    .loop_state {
+      &.loop {
+        .noloop {
+          display: block;
+        }
+        .loop {
+          display: none;
+        }
+      }
+      .noloop {
+        display: none;
+      }
+      .loop {
+        display: block;
+      }
+
+      .noloop {
+        vertical-align: middle;
+        font-size: 22px;
+        margin: 0.5px 4px;
+      }
+    }
+  }
+
+
+
+
+  .progress {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: @progress_height;
+
+    .time_display, .total_time {
+      width: 40px;
+      height: 30px;
+      line-height: 30px;
+      margin: 0 10px;
+      vertical-align: middle;
+      display: inline-block;
+    }
+
+    .seek_container {
+      position: absolute;
+      width: 100%;
+      left: 0;
+      right: 0;
+      height: @progress_height;
+      .background {
+
+      }
+      .seek_bar {
+        height: @progress_height;
+        width: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        -webkit-appearance: none;
+        background: none;
+        &::-webkit-slider-container {
+          background: none;
+        }
+        &::-webkit-slider-runnable-track {
+          background: none;
+        }
+
+        &::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          width: @progress_height;
+          height: @progress_height;
+          background-color: rgba(255, 255, 255, 1);
+          box-shadow: 0px 0px 2px 1px rgba(255,255,255,0.75);
+          border-radius: @progress_height;
+        }
+        &:focus {
+          outline: none;
+        }
+      }
+
+      .markers_container {
+        position: absolute;
+        width: 100%;
+        left: 0px;
+        top: 0px;
+        height: @progress_height;
+        pointer-events: none;
+        background-color: rgba(28, 47, 65, 0.95);
+        .marker {
+          position: absolute;
+          width: 2px;
+          height: @progress_height;
+          opacity: 0.5;
+          top: 0px;
+
+          &.initialURL {
+            background-color: rgb(255, 0, 223);
+          }
+          &.initialScrollState {
+            background-color: rgb(255, 250, 0);
+          }
+          &.scroll {
+            background-color: rgb(255, 253, 121);
+          }
+          &.initialMutationState {
+            background-color: rgb(0, 247, 255);
+          }
+          &.mutation {
+            background-color: rgb(78, 186, 191);
+          }
+          &.initialViewportState {
+            background-color: rgb(0, 204, 21);
+          }
+          &.initialSelectState {
+            background-color: rgb(0, 255, 27);
+          }
+          &.select {
+            background-color: rgb(114, 255, 119);
+          }
+          &.mouse {
+            background-color: rgb(255, 48, 48);
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+#theframe {
+  pointer-events: none;
+  user-select: none;
+}

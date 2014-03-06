@@ -1,24 +1,32 @@
 extends layout
+block head
+    link(href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css", rel="stylesheet")
 block content
-  div#player_wrapper
-    div#player_container
-      a.button.play_pause(href="javascript:;")
-        div.play
-        div.pause
-      span.time_display
-      div.seek_container
-        input.seek_bar(type="range" min=0)
-        div.markers_container
-      span.total_time
-      a.button.loop_state(href="javascript:;")
-        div.noloop &#x279e;
-        div.loop &#x27F3;
-      select.speed
-        option(value="0.5") x0.5
-        option(value="1" selected) x1
-        option(value="1.5") x1.5
-        option(value="2") x2
-        option(value="3") x3
+  #player_wrapper
+      .progress
+          .seek_container
+              .markers_container
+              input.seek_bar(type="range" min=0)
+      .controllers
+          a.button.play_pause(href="javascript:;")
+            i.play.fa.fa-play
+            i.pause.fa.fa-pause
+          a.button.loop_state(href="javascript:;")
+              i.fa.fa-long-arrow-right.noloop
+              i.fa.fa-undo.loop
+          .time_container
+              span.time_display
+              span /
+              span.total_time
+          .speed_container
+              select.speed
+                  option(value="0.5") x0.5
+                  option(value="1" selected) x1
+                  option(value="1.5") x1.5
+                  option(value="2") x2
+                  option(value="3") x3
+
+
 
   div#themouse
     img(src="/mouse_icon.svg", width="12px", height="20px")

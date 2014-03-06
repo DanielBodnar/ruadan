@@ -1,0 +1,33 @@
+#themouse {
+  position: fixed;
+  width: 12px;
+  height: 20px;
+}
+
+#circle-animation
+{
+  position: absolute;
+  z-index: 10000;
+  border-radius: 100%;
+  border: 3px solid red;
+  width: 20px;
+  height: 20px;
+  -webkit-animation: ripple 1.0s ease-out;
+  -webkit-transform: translate(-12px, -12px) translate3d(0, 0, 0);
+}
+
+@-webkit-keyframes ripple {
+  0% {
+    opacity: 1;
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
+  }
+  100% {
+    opacity: 0;
+    width: 60px;
+    height: 60px;
+    -webkit-transform: translate(-18px, -18px);
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
+  }
+}

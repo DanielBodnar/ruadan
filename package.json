@@ -16,8 +16,7 @@
     "hiredis": "*",
     "shortid": "*",
     "bluebird": "*",
-    "lodash": "*",
-    "gulp-less": "^1.2.2"
+    "lodash": "*"
   },
   "devDependencies": {
     "karma": "0.8",
@@ -37,8 +36,10 @@
     "gulp-watch": "~0.5",
     "sinon": "^1.8.2",
     "gulp-coffee": "~1.4.1",
-    "gulp-plumber": "^0.5.6",
-    "dateformat": "^1.0.7-1.2.3"
+    "dateformat": "^1.0.7-1.2.3",
+    "gulp-concat": "^2.1.7",
+    "gulp-less": "^1.2.2",
+    "browserify-shim": "^3.3.1"
   },
   "scripts": {
     "start": "gulp",
@@ -47,5 +48,15 @@
   "engines": {
     "node": "0.10.x",
     "npm": "1.1.x"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browser": {
+    "lodash": "./client/lodash.custom.js"
+  },
+  "browserify-shim": {
   }
 }

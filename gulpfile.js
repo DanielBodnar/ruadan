@@ -4,11 +4,10 @@ var watchify = require('watchify');
 var nodemon = require('gulp-nodemon');
 var coffeelint = require('gulp-coffeelint');
 var watch = require('gulp-watch');
-var plumber = require('gulp-plumber');
+var concat = require('gulp-concat');
 var mocha = require('gulp-mocha');
 
 const BUILD_FOLDER = './public/build/';
-const TEST_FOLDER = './test/specs/**/*_spec.{coffee,js}';
 
 gulp.task('develop', function () {
   nodemon({ script: 'server.js', ext: 'html js coffee', ignore: ['ignored.js'] })
@@ -17,8 +16,8 @@ gulp.task('develop', function () {
 gulp.task('css', function(){
   var less = require('gulp-less');
   gulp.src('./app/assets/css/**/*.less')
-      .pipe(watch())
       .pipe(less())
+      .pipe(concat('style.css'))
       .pipe(gulp.dest('./public/css'));
 });
 
@@ -62,18 +61,31 @@ gulp.task('browserify_recorder', function () {
 
 
 gulp.task('watch', function () {
-  return gulp.watch(['lib/**', 'test/**', 'app/**', 'client/**'], function () {
+  gulp.watch([
+    'app/controllers/**/*.*',
+    'app/helpers/**/*.*',
+    'app/models/**/*.*',
+    'app/routes/**/*.*',
+    'app/views/**/*.*',
+    'lib/**/*.*',
+    'test/**/*.*',
+    'client/**/*.*'
+  ], function () {
     gulp.run('mocha');
+  });
+
+  gulp.watch([
+    'app/assets/css/**/*.less'
+  ], function(){
+    gulp.run('css');
   });
 });
 
 
 gulp.task('browserify_replayer', function () {
-  var bundler = watchify(['./client/src/bootstrap_replayer.coffee']);
+  var bundler = watchify('./client/src/bootstrap_replayer.coffee');
   bundler.transform('coffeeify');
-  bundler.require('./client/lodash.custom.js', {expose: 'lodash'});
   bundler.on('update', rebundle);
-  bundler.on("error", console.log);
 
   function rebundle() {
     return bundler.bundle()
@@ -86,4 +98,4 @@ gulp.task('browserify_replayer', function () {
 
 
 
-gulp.task('default', ['lint', 'browserify_replayer', 'browserify_recorder', 'css', 'develop'], function(){});
+gulp.task('default', ['lint', 'browserify_replayer', 'browserify_recorder', 'css', 'develop', 'watch'], function(){});
