@@ -9,7 +9,6 @@
     "tests"
   ],
   "dependencies": {
-    "requirejs": "*",
     "jquery": "*",
     "lodash": "*",
     "eventEmitter": "*"

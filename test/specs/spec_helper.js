@@ -2,6 +2,10 @@ process.env.NODE_ENV = "test";
 chai = require('chai');
 sinon = require('sinon');
 path = require('path');
+chai = require('chai');
+require('mocha-as-promised')();
+chai.use(require('chai-as-promised'));
+chai.use(require('sinon-chai'));
 
 
 GLOBAL.rek = function (file, forceReload) {

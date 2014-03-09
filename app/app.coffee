@@ -5,9 +5,6 @@ app = express()
 util = require('util')
 
 assets = require 'connect-assets'
-jsPrimer = require 'connect-assets-jsprimer'
-
-#requirejsMiddleware = require 'requirejs-middleware'
 
 publicDir = __dirname + '/public'
 env = app.get 'env'

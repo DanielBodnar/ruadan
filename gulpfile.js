@@ -26,15 +26,10 @@ gulp.task('mocha', function () {
   require('./test/specs/spec_helper');
 
   gulp.src(['test/specs/**/*.{coffee,js}'], { read: false })
-    .pipe(mocha({reporter: 'spec',timeout: 200}))
-    .on('error', function(){});
-
+    .pipe(mocha({reporter: 'spec',timeout: 2000}));
 });
 
-gulp.task('test', function () {
-  gulp.run('mocha');
-  gulp.run('watch');
-});
+gulp.task('test', ['mocha']);
 
 
 gulp.task('lint', function () {

@@ -1,4 +1,3 @@
-#require("./requirejs_config")
 module.exports = (app) ->
   # Helpers
   app.helpers = require "#{__dirname}/../app/helpers"
