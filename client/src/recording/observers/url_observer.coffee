@@ -1,14 +1,9 @@
 EventEmitter = require('eventemitter').EventEmitter
-
-infoToJson = (oldURL, newURL, timestamp) ->
-  oldURL: oldURL
-  newURL: newURL
-  timestamp: timestamp
+UrlEvent = require('../events/url.coffee')
 
 class UrlObserver extends EventEmitter
   EVENT_NAME = "hashchange"
-  initialize: (@window) ->
-    @emit("initialize", [infoToJson(null, @window.location.href, Date.now())])
+  constructor: (@window) ->
 
   observe: ->
     @window.addEventListener(EVENT_NAME, @_onChange, true)
@@ -17,7 +12,7 @@ class UrlObserver extends EventEmitter
     @window.removeEventListener(EVENT_NAME, @_onChange, true)
 
   _onChange: (event) =>
-    @emit('urlChanged', [infoToJson(event.oldURL, event.newURL, event.timeStamp)])
+    @emit('urlChanged', new UrlEvent(event.oldURL, event.newURL, event.timeStamp))
 
 
 module.exports = UrlObserver

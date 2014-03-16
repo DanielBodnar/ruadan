@@ -10,10 +10,9 @@ module.exports = (app) ->
 
     # Record an event or a list of events
     @record = (req, res) ->
-      s = new Session(req.body.sessionId)
-      action = req.body.action
-      data = req.body.data
-      Event.eventsFromRequestJSON(action, data).forEach((e) -> s.recordEvent(e))
+      session = new Session(req.body.sessionId)
+      events = req.body.events
+      Event.eventsFromRequestJSON(events).forEach((e) -> session.recordEvent(e))
 
       res.json {}
 

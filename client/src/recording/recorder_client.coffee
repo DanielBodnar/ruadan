@@ -1,72 +1,45 @@
 class RecorderClient
-  constructor: (@document, @rootElement, @sessionId) ->
+  # this class is not static because it might be a good idea to add event queue management here.
+  newSession: (name, callback) ->
+    @_postRequest("start", { name: name }, (errorMessage, response) ->
+      if (errorMessage?)
+        errorMessage = "Error while creating session: " + errorMessage
+        callback(errorMessage) if callback
+      else
+        sessionId = JSON.parse(response).sessionId
+        if (sessionId?)
+          console.log('starting session ' + sessionId)
+          callback(null, sessionId) if callback
+        else
+          callback("Bad sessionId") if callback
+    )
 
-  setInitialURL: (data) ->
-    @_record("initialURL", data)
+  endSession: (sessionId, callback) ->
+    @_postRequest("end", { sessionId: sessionId }, (errorMessage, response) ->
+      errorMessage = "Error while ending callback: " + errorMessage if errorMessage?
+      callback(errorMessage) if callback
+    )
 
-  onURLChanged: (data) ->
-    @_record("urlChanged", data)
+  recordEvent: (sessionId, event, callback) ->
+    @_postRequest("record", { sessionId: sessionId, events: [event.toJson()] }, (errorMessage) ->
+      console.error("error recording event", errorMessage) if errorMessage?
+      callback(errorMessage)
+    )
 
-  setInitialMutationState: (data) ->
-    @_record("initialMutationState", data)
-
-  setInitialScrollState: (data) ->
-    @_record("initialScrollState", data)
-
-  setInitialViewportState: (data) ->
-    @_record("initialViewportState", data)
-
-  onWindowResize: (data) ->
-    @_record("windowResize", data)
-
-  setInitialSelection: (selection) ->
-    @_record("initialSelectState", selection)
-
-  onSelect: (selection) ->
-    @_record("select", selection)
-
-  onMutation: (data) ->
-    @_record("mutation", data)
-
-  onMouseClick: (data) ->
-    @_record("mouse", data)
-
-  onMouseMove: (data) ->
-    @_record("mouse", data)
-
-  onScroll: (data) ->
-    @_record("scroll", data)
-
-  startRecording: (callback) ->
+  _postRequest: (path, data, callback) ->
     request = new XMLHttpRequest()
-    request.open('POST', "http://127.0.0.1:3000/start", true)
+    request.open('POST', "http://127.0.0.1:3000/" + path, true)
     request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
 
-    request.onload = (e) =>
-      @sessionId = JSON.parse(request.responseText).sessionId
-      console.log('starting session ' + @sessionId)
-      callback(@sessionId)
-
-    request.send()
-
-  _record: (action, data) ->
-
-    console.log("recording ",action, data)
-
-    request = new XMLHttpRequest()
-    request.open('POST', "http://127.0.0.1:3000/record", true)
-
-    dataToSend = JSON.stringify({ sessionId: @sessionId, action: action, data: data })
-
-    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
-
-    request.onload = ->
-      if !(request.status >= 200 && request.status < 400)
-        console.error("error requesting info from the server", request)
+    request.onload = (e) ->
+      if (request.status == 200)
+        callback(null, request.responseText) if callback
+      else
+        callback(request.status) if callback
 
     request.onerror = ->
-      console.error("error requesting info from the server", request)
+      callback(request.status) if callback
 
-    request.send(dataToSend)
+    request.send(JSON.stringify(data))
 
 module.exports = RecorderClient

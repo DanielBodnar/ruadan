@@ -1,0 +1,36 @@
+How recording works:
+
+  Session:
+    A container for events. Each event (or collection of events) is sent with a sessionId param.
+    A session is a single recording. All the events in a session will be replayed together.
+    A session can also be associated with a userId and apiKey, which should be provided
+    in the recorder's constructor (not implemented yet).
+    Use cases:
+      1. Record a user's entire interaction with the application. Done by calling
+         startRecording without forceNewSession. The recorder will try to continue
+         a previous existing session until the session is manually stopped (endSession)
+         or the session expires. This will result in a single replay.
+         A session may expire if no events are received for some time (not implemented yet).
+         When a session expires a new session should start automatically when user interaction
+         is detected (not implemented yet).
+
+      2. Record a single activity. Done by manually calling startRecording with forceNewSession
+         at the beginning of the activity and stopRecording at the end. It is possible to record
+         several activities at the same time for different windows (not implemented yet) or
+         continue an activity across several windows (not implemented yet). A session can still
+         expire after some time with no interactions (not implemented yet).
+
+    Notes: We may need a flag that says if we should start a new session after the previous one
+           expired or just stop recording until we receive another startRecording call.
+
+  Window (not implemented yet):
+    Represents a window/tab. Each event (or collection of events) is sent with a windowId param.
+    Each window also has a special "focus" event that lets us know that the user is viewing that
+    page (not implemented yet). It is unclear how to maintain the windowId for the same window
+    between pages and request a new windowId for a new window. Windows should be able to receive
+    a sessionId from the windows that opened them (to maintain an activity across windows, but
+    still allow several activities at once for different window groups).
+
+  Page:
+    Pages are represented by a "newPage" event. It is handled in the same way as other events
+    with the difference that it may reset the NodeMap when it contains a full page snapshot.

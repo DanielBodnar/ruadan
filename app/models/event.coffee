@@ -8,10 +8,10 @@ class Event
       timestamp: timestamp
       data: eventData
 
-  @eventsFromRequestJSON: (action, data) ->
-    data = [data] unless _.isArray(data)
-    data.map((eData) ->
-      new Event(action, eData.timestamp, eData)
+  @eventsFromRequestJSON: (events) ->
+    events = [events] unless _.isArray(events)
+    events.map((eData) =>
+      @fromJSON(eData)
     )
 
   toJSON: ->

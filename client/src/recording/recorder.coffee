@@ -1,79 +1,107 @@
 MutationObserver = require('./observers/mutation_observer.coffee')
-Serializer = require('./serializer.coffee')
 MouseObserver = require('./observers/mouse_observer.coffee')
 ScrollObserver = require('./observers/scroll_observer.coffee')
 ViewportObserver = require('./observers/viewport_observer.coffee')
 TextSelectionObserver = require('./observers/text_selection_observer.coffee')
 UrlObserver = require('./observers/url_observer.coffee')
 
+NodeMap = require('./node_map.coffee')
+
+PageManager = require('./page_manager.coffee')
+SessionManager = require('./session_manager.coffee')
+BookmarkEvent = require('./events/bookmark.coffee')
+
 class Recorder
   constructor: (options) ->
-    @serializer = new Serializer()
+    @nodeMap = new NodeMap()
+    @window = options.window
+    @document = options.document
     @rootElement = options.rootElement
-    @client = new options.Client(options.document, @rootElement)
+    @client = new options.Client()
+    @isRecording = false
+    @sessionManager = new SessionManager(@client)
 
     @observers = {
-      mutation: new MutationObserver(@serializer)
-      mouse: new MouseObserver()
-      scrolling: new ScrollObserver()
-      viewport: new ViewportObserver()
-      url: new UrlObserver()
-      selection: new TextSelectionObserver(@serializer)
+      mutation: new MutationObserver(@rootElement, @nodeMap)
+      mouse: new MouseObserver(@window)
+      scrolling: new ScrollObserver(@window)
+      viewport: new ViewportObserver(@window)
+      url: new UrlObserver(@window)
+      selection: new TextSelectionObserver(@document, @nodeMap)
     }
 
+  startRecording: (pageName, sessionName, forceNewSession = false) ->
+    unless (@isRecording)
+      callback = ( (error) =>
+        if (error?)
+          console.error("Can't start recording: " + error)
+        else
+          @isRecording = true
+          @_startObservers()
+          @newPage(pageName)
+      )
 
-
-  initialize: ->
-    @observers.scrolling.initialize(window)
-    @observers.url.initialize(window)
-    @observers.mutation.initialize(@rootElement)
-    @observers.mouse.initialize(window)
-    @observers.viewport.initialize(window)
-    @observers.selection.initialize(document) #seems to only be available on the document :-/
-
-  startRecording: ->
-    @client.startRecording( (sessionId) =>
-      @sessionId = sessionId
-      @_bindObserverEvents(@observers)
-      @initialize()
-      for key, v of @observers
-        v.observe()
-    )
+      if (forceNewSession)
+        @sessionManager.startNewSession(sessionName, callback)
+      else
+        @sessionManager.continueSession(sessionName, callback)
 
   stopRecording: ->
+    if (@isRecording)
+      @sessionManager.endSession( (error) =>
+        console.error("Error when asking server to stop recording: " + error, "Stopping anyway") if error?
+        @_stopObservers()
+        @isRecording = false
+      )
+
+  newPage: (pageName, takeSnapshot = true) ->
+    throw new Exception("Can't capture new page before recording starts") unless (@isRecording)
+    newPageEvent = PageManager.newPage(@window, pageName, @nodeMap, @rootElement, takeSnapshot)
+    @_recordEvent(newPageEvent)
+
+  bookmark: (text) ->
+    throw new Exception("Can't bookmark before recording starts") unless (@isRecording)
+    @_recordEvent(new BookmarkEvent(text))
+
+  _startObservers: ->
+    @_bindObserverEvents(@observers)
     for key, v of @observers
+      v.observe()
+
+  _stopObservers: ->
+    @_unbindObserverEvents(@observers)
+    for key, v of observers
       v.disconnect()
 
-
-  _processSelectionObject: (data, fn) ->
-    data.anchorNode = @observers.mutation.serializer.knownNodesMap.get(data.anchorNode) if data.anchorNode
-    data.focusNode = @observers.mutation.serializer.knownNodesMap.get(data.focusNode) if data.focusNode
-    fn(data)
-
   _bindObserverEvents: (observers) ->
+    observers.url.on('urlChanged', (event) => @_recordEvent(event))
+    observers.scrolling.on('scroll', (event) => @_recordEvent(event))
+    observers.mutation.on('change', (event) => @_recordEvents(event))
+    observers.viewport.on('resize', (event) => @_recordEvent(event))
+    observers.selection.on('select', (event) => @_recordEvent(event))
+    observers.mouse.on('mouse_clicked', (event) => @_recordEvent(event))
+    observers.mouse.on('mouse_moved', (event) => @_recordEvent(event))
 
-    observers.url.on('initialize', (info)=>@client.setInitialURL(info))
-    observers.url.on('urlChanged', (info)=>@client.onURLChanged(info))
+  _unbindObserverEvents: (observers) ->
+    observers.url.off('urlChanged')
+    observers.scrolling.off('scroll')
+    observers.mutation.off('change')
+    observers.viewport.off('resize')
+    observers.selection.off('select')
+    observers.mouse.off('mouse_clicked')
+    observers.mouse.off('mouse_moved')
 
-
-    observers.scrolling.on('initialize', (info) => @client.setInitialScrollState(info))
-    observers.scrolling.on('scroll', (info) => @client.onScroll(info))
-
-    observers.mutation.on('initialize', => @client.setInitialMutationState.apply(@client, arguments))
-    observers.mutation.on('change', => @client.onMutation.apply(@client, arguments))
-
-    observers.viewport.on('initialize', (info) => @client.setInitialViewportState(info))
-    observers.viewport.on('resize', (info) => @client.onWindowResize(info))
-
-    observers.selection.on('initialize', (data)=> @_processSelectionObject(data, =>
-      @client.setInitialSelection.apply(@client, arguments))
+  _recordEvents: (events) ->
+    events.forEach( (event) =>
+      @_recordEvent(event)
     )
-    observers.selection.on('select', (data)=> @_processSelectionObject(data, =>
-      @client.onSelect.apply(@client, arguments))
+
+  _recordEvent: (event) ->
+    @client.recordEvent(@sessionManager.getCurrentSession(), event, (error) ->
+      if (error?)
+        console.error("Recording failed: " + error, event.toJson())
+      else
+        console.log("Recorded", event.toJson())
     )
-
-    observers.mouse.on('mouse_clicked', (data)=> @client.onMouseClick(data))
-    observers.mouse.on('mouse_moved', (position)=> @client.onMouseMove(position))
-
 
 module.exports = Recorder

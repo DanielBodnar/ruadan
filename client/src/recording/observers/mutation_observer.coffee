@@ -1,19 +1,18 @@
 EventEmitter = require('eventemitter').EventEmitter
+Serializer = require('../../node/serializer.coffee')
+AttributeMutationEvent = require('../events/mutation/attribute.coffee')
+CharacterDataMutationEvent = require('../events/mutation/character_data.coffee')
+AddNodesMutationEvent = require('../events/mutation/add_nodes.coffee')
+RemoveNodesMutationEvent = require('../events/mutation/remove_nodes.coffee')
+Window = require('../../helpers/window.coffee')
 
 
 class MutationObserverObserver extends EventEmitter
-  constructor: (@serializer) ->
-    MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver
+  constructor: (@element, @nodeMap) ->
+    MutationObserver = Window.MutationObserver || Window.WebKitMutationObserver || Window.MozMutationObserver
     @observer = new MutationObserver( (mutations) =>
       @_onChange(mutations)
     )
-
-  initialize: (@element) ->
-    currentState = @serializer.serialize(@element, true)
-    eventData =
-      nodes: currentState,
-      timestamp: new Date().getTime()
-    @emit("initialize", eventData)
 
   observe: (options = {}) ->
     defaultOptions =
@@ -29,7 +28,6 @@ class MutationObserverObserver extends EventEmitter
 
     @observer.observe(@element, defaultOptions)
 
-
   disconnect: ->
     @observer.disconnect()
 
@@ -38,32 +36,37 @@ class MutationObserverObserver extends EventEmitter
     @emit('change', result)
 
   _handleMutation: (mutation) ->
-    result = {}
-    result.addedNodes = @_serializeNodes(mutation.addedNodes) if @_hasAddedNodes(mutation)
-    result.removedNodes = @_serializeNodes(mutation.removedNodes) if @_hasRemovedNodes(mutation)
-
-    result.nextSiblingId = @serializer.knownNodesMap.get(mutation.nextSibling).id if mutation.nextSibling
-    result.previousSiblingId = @serializer.knownNodesMap.get(mutation.previousSibling).id if mutation.previousSibling
-
-    result.type = mutation.type
-    result.oldValue = mutation.oldValue
-    result.attributeName = mutation.attributeName
-    result.attributeValue = mutation.target.getAttribute(result.attributeName) if result.attributeName?
-
-    result.targetNodeId = @serializer.knownNodesMap.get(mutation.target).id
-    result.timestamp = new Date().getTime()
-
-    result
-
-  _hasAddedNodes: (mutation) ->
-    mutation.addedNodes?.length > 0
-
-  _hasRemovedNodes: (mutation) ->
-    mutation.removedNodes?.length > 0
-
-  _serializeNodes: (nodes) ->
-    Array.prototype.map.call(nodes, (node) =>
-      @serializer.serialize(node, true)
-    )
+    switch(mutation.type)
+      when "attributes"
+        return new AttributeMutationEvent(
+          @nodeMap.getNodeId(mutation.target),
+          mutation.attributeName,
+          mutation.attributeNamespace,
+          mutation.oldValue,
+          mutation.target.getAttribute(mutation.attributeName)
+        )
+      when "characterData"
+        return new CharacterDataMutationEvent(
+          @nodeMap.getNodeId(mutation.target),
+          mutation.oldValue,
+          mutation.target.data
+        )
+      when "childList"
+        if (mutation.addedNodes.length > 0)
+          return new AddNodesMutationEvent(
+            Array.prototype.map.call(mutation.addedNodes, (node) => Serializer.serializeSubTree(node, @nodeMap)),
+            @nodeMap.getNodeId(mutation.target),
+            @nodeMap.getNodeId(mutation.previousSibling),
+            @nodeMap.getNodeId(mutation.nextSibling)
+          )
+        else if (mutation.removedNodes.length > 0)
+          return new RemoveNodesMutationEvent(
+            Array.prototype.map.call(mutation.removedNodes, (node) => @nodeMap.getNodeId(node))
+          )
+        else
+          console.error("Weird childlist mutation event", mutation)
+      else
+        console.error("Weird mutation event", mutation)
+        null
 
 module.exports = MutationObserverObserver

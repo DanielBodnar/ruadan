@@ -1,34 +1,24 @@
 EventEmitter = require('eventemitter').EventEmitter
 _ = require('lodash')
+MouseClickEvent = require('../events/mouse/click.coffee')
+MousePositionEvent = require('../events/mouse/position.coffee')
 
 class MouseObserver extends EventEmitter
-  initialize: (@element) ->
+  constructor: (@window) ->
     @_throttledOnChange = _.throttle(@_onChange, 100)
 
   observe: ->
-    @element.addEventListener('mouseup', @_onClick, false)
-    @element.addEventListener('mousemove', @_throttledOnChange, true)
+    @window.addEventListener('mouseup', @_onClick, false)
+    @window.addEventListener('mousemove', @_throttledOnChange, true)
 
   disconnect: ->
-    @element.removeEventListener('mouseup', @_onClick, false)
-    @element.removeEventListener('mousemove', @_throttledOnChange, true)
+    @window.removeEventListener('mouseup', @_onClick, false)
+    @window.removeEventListener('mousemove', @_throttledOnChange, true)
 
   _onClick: (event) =>
-    eventData =
-      x: event.clientX
-      y: event.clientY
-      timestamp: event.timeStamp
-      whichButton: event.which
-      type: 'mouseclick'
-    @emit('mouse_clicked', [eventData])
+    @emit('mouse_clicked', new MouseClickEvent(event.clientX, event.clientY, event.which, event.timeStamp))
 
   _onChange: (event) =>
-    eventData =
-      x: event.clientX
-      y: event.clientY
-      timestamp: event.timeStamp
-      type: 'mousemove'
-    @emit('mouse_moved', [eventData])
-
+    @emit('mouse_moved', new MousePositionEvent(event.clientX, event.clientY, event.timeStamp))
 
 module.exports = MouseObserver
