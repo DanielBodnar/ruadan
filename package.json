@@ -22,7 +22,6 @@
     "chai-as-promised": "^4.1.1",
     "sinon": "^1.8.2",
     "sinon-chai": "^2.5.0",
-
     "gulp": "~3.5",
     "gulp-browserify": "~0.4",
     "gulp-nodemon": "~1.0",
@@ -57,6 +56,5 @@
   "browser": {
     "lodash": "./client/lodash.custom.js"
   },
-  "browserify-shim": {
-  }
+  "browserify-shim": {}
 }
