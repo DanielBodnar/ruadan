@@ -40,4 +40,5 @@ class Node
     node.setId(json.nodeId)
     node
 
+
 module.exports = Node

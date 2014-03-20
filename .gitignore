@@ -6,4 +6,5 @@ builtAssets
 bower_components
 public/build
 public/css/**/*
+./coverage/
 *.rdb
