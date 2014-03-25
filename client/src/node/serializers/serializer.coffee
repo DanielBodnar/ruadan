@@ -3,7 +3,7 @@ DocumentTypeNode = require("./document_type_node.coffee")
 CommentNode = require("./comment_node.coffee")
 TextNode = require("./text_node.coffee")
 ElementNode = require("./element_node.coffee")
-Window = require("../helpers/window.coffee")
+Window = require("../../helpers/window.coffee")
 
 class Serializer
 

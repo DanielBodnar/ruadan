@@ -14,9 +14,12 @@ class NodeMap
     return null unless node
     unless (@getNode(@getNodeId(node)))
       id = @getNextId()
-      NodeId.setId(node, id)
-      @_nodeMap[id] = node
+      @setNode(node, id)
     @getNodeId(node)
+
+  setNode: (node, id) ->
+    NodeId.setId(node, id)
+    @_nodeMap[id] = node
 
   getNodeId: (node) ->
     return null unless node

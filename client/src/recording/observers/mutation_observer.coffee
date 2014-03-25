@@ -1,9 +1,9 @@
 EventEmitter = require('eventemitter').EventEmitter
-Serializer = require('../../node/serializer.coffee')
-AttributeMutationEvent = require('../events/mutation/attribute.coffee')
-CharacterDataMutationEvent = require('../events/mutation/character_data.coffee')
-AddNodesMutationEvent = require('../events/mutation/add_nodes.coffee')
-RemoveNodesMutationEvent = require('../events/mutation/remove_nodes.coffee')
+Serializer = require('../../node/serializers/serializer.coffee')
+AttributeMutationEvent = require('../../events/mutation/attribute.coffee')
+CharacterDataMutationEvent = require('../../events/mutation/character_data.coffee')
+AddNodesMutationEvent = require('../../events/mutation/add_nodes.coffee')
+RemoveNodesMutationEvent = require('../../events/mutation/remove_nodes.coffee')
 Window = require('../../helpers/window.coffee')
 
 
@@ -61,6 +61,7 @@ class MutationObserverObserver extends EventEmitter
           )
         else if (mutation.removedNodes.length > 0)
           return new RemoveNodesMutationEvent(
+            @nodeMap.getNodeId(mutation.target),
             Array.prototype.map.call(mutation.removedNodes, (node) => @nodeMap.getNodeId(node))
           )
         else

@@ -1,7 +1,7 @@
 EventEmitter = require('eventemitter').EventEmitter
 _ = require('lodash')
-MouseClickEvent = require('../events/mouse/click.coffee')
-MousePositionEvent = require('../events/mouse/position.coffee')
+MouseClickEvent = require('../../events/mouse/click.coffee')
+MousePositionEvent = require('../../events/mouse/position.coffee')
 
 class MouseObserver extends EventEmitter
   constructor: (@window) ->

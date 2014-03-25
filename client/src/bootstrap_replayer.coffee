@@ -1,6 +1,10 @@
 Player = require('./replaying/player/player.coffee')
+EventDeserializer = require('./events/deserializer.coffee')
 
 doReplay = (events) ->
+  events = events.map( (event) ->
+    EventDeserializer.deserialize(event)
+  )
   firstEventTimestamp = events[0].timestamp
   events.forEach((event) ->
     event.timestamp -= firstEventTimestamp

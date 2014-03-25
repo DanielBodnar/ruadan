@@ -5,16 +5,16 @@ ViewportObserver = require('./observers/viewport_observer.coffee')
 TextSelectionObserver = require('./observers/text_selection_observer.coffee')
 UrlObserver = require('./observers/url_observer.coffee')
 
-NodeMap = require('./node_map.coffee')
+NodeMap = require('../node/node_map.coffee')
 
 PageManager = require('./page_manager.coffee')
 SessionManager = require('./session_manager.coffee')
-BookmarkEvent = require('./events/bookmark.coffee')
+BookmarkEvent = require('../events/bookmark.coffee')
 
 class Recorder
   constructor: (options) ->
     @nodeMap = new NodeMap()
-    @window = options.window
+    @window = options.document.defaultView
     @document = options.document
     @rootElement = options.rootElement
     @client = new options.Client()
@@ -70,7 +70,7 @@ class Recorder
 
   _stopObservers: ->
     @_unbindObserverEvents(@observers)
-    for key, v of observers
+    for key, v of @observers
       v.disconnect()
 
   _bindObserverEvents: (observers) ->
@@ -83,13 +83,13 @@ class Recorder
     observers.mouse.on('mouse_moved', (event) => @_recordEvent(event))
 
   _unbindObserverEvents: (observers) ->
-    observers.url.off('urlChanged')
-    observers.scrolling.off('scroll')
-    observers.mutation.off('change')
-    observers.viewport.off('resize')
-    observers.selection.off('select')
-    observers.mouse.off('mouse_clicked')
-    observers.mouse.off('mouse_moved')
+    observers.url.removeAllListeners('urlChanged')
+    observers.scrolling.removeAllListeners('scroll')
+    observers.mutation.removeAllListeners('change')
+    observers.viewport.removeAllListeners('resize')
+    observers.selection.removeAllListeners('select')
+    observers.mouse.removeAllListeners('mouse_clicked')
+    observers.mouse.removeAllListeners('mouse_moved')
 
   _recordEvents: (events) ->
     events.forEach( (event) =>

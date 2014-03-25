@@ -2,6 +2,7 @@ module.exports = (app) ->
 
   app.get  '/sessions', app.SessionController.sessions
   app.post '/start',    app.SessionController.start
+  app.post '/end',      app.SessionController.end
 
   app.post '/record', app.EventController.record
   app.get '/view', app.EventController.view

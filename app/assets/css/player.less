@@ -163,32 +163,29 @@
           opacity: 0.5;
           top: 0px;
 
-          &.initialURL {
-            background-color: rgb(255, 0, 223);
-          }
-          &.initialScrollState {
-            background-color: rgb(255, 250, 0);
+          &.newPage {
+            background-color: #ff00df;
           }
           &.scroll {
-            background-color: rgb(255, 253, 121);
+            background-color: #ffdf79;
           }
-          &.initialMutationState {
-            background-color: rgb(0, 247, 255);
-          }
-          &.mutation {
-            background-color: rgb(78, 186, 191);
-          }
-          &.initialViewportState {
-            background-color: rgb(0, 204, 21);
-          }
-          &.initialSelectState {
-            background-color: rgb(0, 255, 27);
+          &.addNodesMutation, &.removeNodesMutation, &.characterDataMutation, &.attributeMutation {
+            background-color: #4ebabf;
           }
           &.select {
-            background-color: rgb(114, 255, 119);
+            background-color: #72ff77;
           }
-          &.mouse {
-            background-color: rgb(255, 48, 48);
+          &.mousePosition, &.mouseClick {
+            background-color: #ff3030;
+          }
+          &.bookmark {
+            background-color: #ffffff;
+          }
+          &.url {
+            background-color: #808080;
+          }
+          &.viewport {
+            background-color: #ff8000;
           }
         }
       }

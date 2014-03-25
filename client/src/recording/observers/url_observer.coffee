@@ -1,5 +1,5 @@
 EventEmitter = require('eventemitter').EventEmitter
-UrlEvent = require('../events/url.coffee')
+UrlEvent = require('../../events/url.coffee')
 
 class UrlObserver extends EventEmitter
   EVENT_NAME = "hashchange"

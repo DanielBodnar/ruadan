@@ -2,16 +2,6 @@ EventEmitter = require('eventemitter').EventEmitter
 
 class PlayerUI extends EventEmitter
 
-  actionColors: {
-    "mouse": "yellow"
-    "scroll": "green"
-    "select": "blue"
-    "mutation": "red"
-    "initialMutationState": "magenta"
-    "initialScrollState": "lime"
-    "initialViewportState": "navy"
-  }
-
   constructor: (@events, @document) ->
     @progress = 0
     @loopState = false

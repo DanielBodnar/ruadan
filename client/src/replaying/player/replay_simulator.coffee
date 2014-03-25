@@ -1,24 +1,29 @@
 EventEmitter = require('eventemitter').EventEmitter
-Deserializer = require('../deserializer.coffee')
-SelectEvent = require('../select_event.coffee')
-MouseEvent = require('../mouse_event.coffee')
-ScrollEvent = require('../scroll_event.coffee')
-MutationEvent = require('../mutation_event.coffee')
-InitialMutationStateEvent = require('../initial_mutation_state_event.coffee')
-InitialScrollStateEvent = require('../initial_scroll_state_event.coffee')
-InitialViewportStateEvent = require('../initial_viewport_state_event.coffee')
+NodeMap = require('../../node/node_map.coffee')
 
+NewPageHandler = require('../event_handlers/new_page.coffee')
+ScrollHandler = require('../event_handlers/scroll.coffee')
+AddNodesHandler = require('../event_handlers/mutation/add_nodes.coffee')
+RemoveNodesHandler = require('../event_handlers/mutation/remove_nodes.coffee')
+CharacterDataHandler = require('../event_handlers/mutation/character_data.coffee')
+AttributeHandler = require('../event_handlers/mutation/attribute.coffee')
+SelectionHandler = require('../event_handlers/selection.coffee')
+MousePositionHandler = require('../event_handlers/mouse/position.coffee')
+MouseClickHandler = require('../event_handlers/mouse/click.coffee')
+BookmarkHandler = require('../event_handlers/bookmark.coffee')
+UrlHandler = require('../event_handlers/url.coffee')
+ViewportHandler = require('../event_handlers/viewport.coffee')
 
 class ReplaySimulator extends EventEmitter
   constructor: (@events, @document) ->
+    @nodeMap = new NodeMap()
     @initUI()
+    @initEventHandlers();
     @resetDocument()
 
   resetDocument: ->
-    @lastPlayedTimestamp = 0
+    @lastPlayedTimestamp = null
     @emit("reset")
-
-    @deserializer = new Deserializer(@simulationDocument)
 
   runToTimestamp: (targetTimestamp) ->
     if (targetTimestamp < @lastPlayedTimestamp)
@@ -36,7 +41,7 @@ class ReplaySimulator extends EventEmitter
   getEventsInRange: (start, end) ->
     result = []
     for event in @events
-      if (event.timestamp > start && event.timestamp <= end)
+      if ((start == null || event.timestamp > start) && (end == null || event.timestamp <= end))
         result.push(event)
     result
 
@@ -46,28 +51,12 @@ class ReplaySimulator extends EventEmitter
     )
 
   runEvent: (event) ->
-    switch (event.action)
-      when "scroll"
-        ScrollEvent.handle(event, @ui.iframe)
-        break
-      when "mouse"
-        MouseEvent.handle(event, @document, @ui.mousePointer)
-        break
-      when "select"
-        SelectEvent.handle(event, @simulationDocument, @deserializer)
-        break
-      when "mutation"
-        MutationEvent.handle(event, @deserializer, @simulationDocument)
-        break
-      when "initialMutationState"
-        InitialMutationStateEvent.handle(event, @deserializer, @simulationDocument)
-        break
-      when "initialScrollState"
-        InitialScrollStateEvent.handle(event, @ui.iframe)
-        break
-      when "initialViewportState"
-        InitialViewportStateEvent.handle(event, @ui.iframe)
-        break
+    handler = @eventHandlers.filter( (h) -> h.canHandle(event) )[0]
+    if (handler)
+      handler.handle(event)
+    else
+      console.error("No event handler found for event", event)
+      throw new Exception("No event handler for event: " + event.action)
 
   initUI: ->
     @ui = {
@@ -76,5 +65,23 @@ class ReplaySimulator extends EventEmitter
     }
     @simulationDocument = @ui.iframe.contentDocument
 
+  initEventHandlers: ->
+    @eventHandlers = [
+      new MouseClickHandler(@document)
+      new MousePositionHandler(@ui.mousePointer)
+      new AddNodesHandler(@simulationDocument, @nodeMap)
+      new AttributeHandler(@nodeMap)
+      new CharacterDataHandler(@nodeMap)
+      new RemoveNodesHandler(@nodeMap)
+      new BookmarkHandler()
+      new SelectionHandler(@simulationDocument, @nodeMap)
+    ]
+
+    url = new UrlHandler()
+    scroll = new ScrollHandler(@ui.iframe)
+    viewport = new ViewportHandler(@ui.iframe)
+    newPage = new NewPageHandler(url, scroll, viewport, @simulationDocument, @nodeMap)
+
+    @eventHandlers = @eventHandlers.concat(url, scroll, viewport, newPage)
 
 module.exports = ReplaySimulator

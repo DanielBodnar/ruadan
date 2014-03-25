@@ -91,6 +91,11 @@ gulp.task('browserify_replayer', function () {
   return rebundle();
 });
 
+gulp.task('clear_redis', function() {
+  var Redis = require('redis')
+  Redis.createClient().flushdb()
+});
+
 
 
 gulp.task('default', ['lint', 'browserify_replayer', 'browserify_recorder', 'css', 'develop', 'watch'], function(){});

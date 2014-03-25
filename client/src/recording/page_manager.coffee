@@ -1,9 +1,8 @@
-Serializer = require('../node/serializer.coffee')
-NewPageEvent = require('./events/new_page.coffee')
-UrlEvent = require('./events/url.coffee')
-ScrollEvent = require('./events/scroll.coffee')
-ViewportEvent = require('./events/viewport.coffee')
-SelectionEvent = require('./events/scroll.coffee')
+Serializer = require('../node/serializers/serializer.coffee')
+NewPageEvent = require('../events/new_page.coffee')
+UrlEvent = require('../events/url.coffee')
+ScrollEvent = require('../events/scroll.coffee')
+ViewportEvent = require('../events/viewport.coffee')
 
 class PageManager
   @newPage: (window, pageName, nodeMap, rootElement, takeSnapshot) ->
@@ -12,11 +11,11 @@ class PageManager
       serializedNodes = @_takeDOMSnapshot(nodeMap, rootElement)
 
     new NewPageEvent(
+      pageName,
       serializedNodes,
       @_getUrlEvent(window),
       @_getScrollPositionEvent(window),
-      @_getViewportSizeEvent(window),
-      @_getSelectionEvent(nodeMap, window.document)
+      @_getViewportSizeEvent(window)
     )
 
   @_getUrlEvent: (window) ->
@@ -31,14 +30,5 @@ class PageManager
 
   @_getViewportSizeEvent: (window) ->
     new ViewportEvent(window.document.documentElement.clientWidth, window.document.documentElement.clientHeight)
-
-  @_getSelectionEvent: (nodeMap, document) ->
-    selection = document.getSelection()
-    new SelectionEvent(
-      nodeMap.getNodeId(selection.anchorNode),
-      selection.anchorOffset,
-      nodeMap.getNodeId(selection.focusNode),
-      selection.focusOffset
-    )
 
 module.exports = PageManager

@@ -3,8 +3,9 @@ Event = require('../event.coffee')
 class RemoveNodes extends Event
   action: "removeNodesMutation"
 
-  constructor: (removedNodeIds, timestamp) ->
+  constructor: (parentId, removedNodeIds, timestamp) ->
     super({
+      parentId: parentId,
       removedNodeIds: removedNodeIds
     }, timestamp)
 

@@ -1,5 +1,4 @@
 _ = require('lodash')
-SerializationHelpers = require('./helpers.coffee')
 Window = require('../helpers/window.coffee')
 
 # Base class for specific node serializers
@@ -20,7 +19,13 @@ class Node
   addChild: (child) ->
     @childNodes.push(child)
 
+  getChildren: ->
+    @childNodes
+
   setId: (@nodeId) ->
+
+  getId: ->
+    @nodeId
 
   toJson: ->
     {
@@ -30,17 +35,9 @@ class Node
       childNodes: @childNodes.map( (child) -> child.toJson() )
     }
 
-  @serialize: (domNode) ->
-    new this(_.extend(@_getDefaultNodeData(domNode), @_getNodeData(domNode)))
-
-  #override this in subclasses and return the data specific to your node type
-  @_getNodeData: (domNode) ->
-    {}
-
-  @_getDefaultNodeData: (domNode, withAttributes = true, withStyle = true) ->
-    data = {}
-    data.attributes = SerializationHelpers.serializeAttributes(domNode) if withAttributes
-    data.style = SerializationHelpers.serializeStyle(domNode) if withStyle
-    data
+  @fromJson: (json) ->
+    node = new this(json.data)
+    node.setId(json.nodeId)
+    node
 
 module.exports = Node

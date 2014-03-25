@@ -1,5 +1,5 @@
 EventEmitter = require('eventemitter').EventEmitter
-SelectionEvent = require('../events/selection.coffee')
+SelectionEvent = require('../../events/selection.coffee')
 
 class TextSelectionObserver extends EventEmitter
   EVENT_NAME = 'selectionchange'

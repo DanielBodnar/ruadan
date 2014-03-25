@@ -38,10 +38,13 @@ class Session
 
     )
 
-  @start: ->
-    EventStore.startSession().then((newId) ->
+  @start: (name) ->
+    EventStore.startSession(name).then((newId) ->
       new Session(newId)
     )
+
+  @end: (sessionId) ->
+    Promise.resolve()
 
   getTimestamp: ->
     @attributes.timestamp = EventStore.getSessionForId(@attributes.id)
@@ -51,7 +54,7 @@ class Session
 
   recordEvent: (event) ->
     EventStore.recordEvent(@attributes.id, event.attributes.timestamp, event).then( =>
-      if event.attributes.action == 'initialMutationState'
+      if event.attributes.action == 'newPage'
         EventStore.markDOMInitialized(@attributes.id)
     )
 

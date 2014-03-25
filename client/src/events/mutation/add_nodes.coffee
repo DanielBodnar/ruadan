@@ -1,4 +1,5 @@
 Event = require('../event.coffee')
+Deserializer = require('../../node/deserializers/deserializer.coffee')
 
 class AddNodes extends Event
   action: "addNodesMutation"
@@ -18,5 +19,9 @@ class AddNodes extends Event
       previousSiblingId: @data.previousSiblingId,
       nextSiblingId: @data.nextSiblingId
     }
+
+  @_deserializeData: (data) ->
+    data.addedNodes = data.addedNodes.map( (node) -> Deserializer.nodeTreeFromJson(node) )
+    data
 
 module.exports = AddNodes

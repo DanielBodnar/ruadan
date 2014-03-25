@@ -39,7 +39,10 @@ class SessionManager
     )
 
   _setSessionId: (sessionId) ->
-    localStorage.setItem(SessionManager.sessionIdKey, sessionId)
+    if (sessionId?)
+      localStorage.setItem(SessionManager.sessionIdKey, sessionId)
+    else
+      localStorage.removeItem(SessionManager.sessionIdKey)
 
   _getSessionId: ->
     localStorage.getItem(SessionManager.sessionIdKey)

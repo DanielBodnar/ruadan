@@ -1,6 +1,6 @@
 EventEmitter = require('eventemitter').EventEmitter
 _ = require('lodash')
-ScrollEvent = require('../events/scroll.coffee')
+ScrollEvent = require('../../events/scroll.coffee')
 
 class ScrollObserver extends EventEmitter
   constructor: (@window) ->

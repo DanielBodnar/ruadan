@@ -1,6 +1,6 @@
 EventEmitter = require('eventemitter').EventEmitter
 _ = require('lodash')
-ViewportEvent = require('../events/viewport.coffee')
+ViewportEvent = require('../../events/viewport.coffee')
 
 getWidth= (win) ->
   win.document.documentElement.clientWidth
