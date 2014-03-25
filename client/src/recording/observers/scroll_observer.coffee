@@ -1,5 +1,5 @@
 EventEmitter = require('eventemitter').EventEmitter
-_ = require('lodash')
+_ = require('lodash.custom')
 ScrollEvent = require('../../events/scroll.coffee')
 
 class ScrollObserver extends EventEmitter

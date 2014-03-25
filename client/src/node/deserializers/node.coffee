@@ -1,6 +1,9 @@
+_ = require('lodash')
 BaseNode = require("../node.coffee")
 
 class Node extends BaseNode
+  INVALID_ATTRIBUTES = ["@role"]
+
   toDomNode: (document) ->
     domNode = @_createDomNode(document)
     Node._addAttributes(domNode, @data.attributes) if @data.attributes
@@ -13,12 +16,13 @@ class Node extends BaseNode
   @_addAttributes: (domNode, attributes) ->
     return unless domNode.setAttribute?
 
-    for key, value of attributes
+    _(attributes).omit( (v, k) -> INVALID_ATTRIBUTES.indexOf(k) > -1 ).forIn( (value, key) ->
       try
         domNode.setAttribute(key, value)
       catch ex
-        console.error("Could not set attribute", key, value, ex)
+        console.error("Could not set attribute", domNode, key, value)
         throw ex
+    )
 
     switch(domNode.tagName?.toLowerCase())
       when "img"

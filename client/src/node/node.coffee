@@ -1,4 +1,4 @@
-_ = require('lodash')
+_ = require('lodash.custom')
 Window = require('../helpers/window.coffee')
 
 # Base class for specific node serializers

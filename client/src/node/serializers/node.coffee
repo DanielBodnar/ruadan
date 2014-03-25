@@ -1,6 +1,6 @@
 BaseNode = require('../node.coffee')
 SerializationHelpers = require('./helpers.coffee')
-_ = require('lodash')
+_ = require('lodash.custom')
 
 class Node extends BaseNode
   @serialize: (domNode) ->

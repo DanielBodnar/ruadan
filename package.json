@@ -16,6 +16,7 @@
     "lodash": "*"
   },
   "devDependencies": {
+    "karma": "^0.12.1",
     "mocha": "~1.17",
     "mocha-as-promised": "^2.0.0",
     "chai": "^1.9.0",
@@ -64,7 +65,7 @@
     ]
   },
   "browser": {
-    "lodash": "./client/lodash.custom.js"
+    "lodash.custom": "./client/lodash.custom.js"
   },
   "browserify-shim": {}
 }

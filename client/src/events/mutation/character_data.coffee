@@ -5,7 +5,7 @@ class CharacterData extends Event
 
   constructor: (nodeId, oldData, newData, timestamp) ->
     super({
-      node: nodeId,
+      nodeId: nodeId,
       oldData: oldData,
       newData: newData
     }, timestamp)

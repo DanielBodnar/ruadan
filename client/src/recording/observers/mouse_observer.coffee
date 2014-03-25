@@ -1,5 +1,5 @@
 EventEmitter = require('eventemitter').EventEmitter
-_ = require('lodash')
+_ = require('lodash.custom')
 MouseClickEvent = require('../../events/mouse/click.coffee')
 MousePositionEvent = require('../../events/mouse/position.coffee')
 

@@ -1,5 +1,5 @@
 EventEmitter = require('eventemitter').EventEmitter
-_ = require('lodash')
+_ = require('lodash.custom')
 ViewportEvent = require('../../events/viewport.coffee')
 
 getWidth= (win) ->
