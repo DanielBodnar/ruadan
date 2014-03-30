@@ -14,31 +14,37 @@ class RecorderClient
           callback("Bad sessionId")
     )
 
-  endSession: (sessionId, callback=->) ->
+  continueSession: (sessionId, callback = ->) ->
+    @_postRequest("continue", { sessionId: sessionId }, (errorMessage, response) ->
+      errorMessage = "Error continuing session: " + errorMessage if errorMessage?
+      callback(errorMessage, JSON.parse(response))
+    )
+
+  endSession: (sessionId, callback = ->) ->
     @_postRequest("end", { sessionId: sessionId }, (errorMessage, response) ->
       errorMessage = "Error while ending callback: #{errorMessage}" if errorMessage?
       callback(errorMessage)
     )
 
-  recordEvent: (sessionId, event, callback) ->
+  recordEvent: (sessionId, event, callback = ->) ->
     @_postRequest("record", { sessionId: sessionId, events: [event.toJson()] }, (errorMessage) ->
       console.error("error recording event", errorMessage) if errorMessage?
       callback(errorMessage)
     )
 
-  _postRequest: (path, data, callback) ->
+  _postRequest: (path, data, callback = ->) ->
     request = new XMLHttpRequest()
-    request.open('POST', "http://127.0.0.1:3000/" + path, true)
+    request.open('POST', "//rlocal.giftsproject.com/" + path, true)
     request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
 
     request.onload = (e) ->
       if (request.status == 200)
-        callback(null, request.responseText) if callback
+        callback(null, request.responseText)
       else
-        callback(request.status) if callback
+        callback(request.status)
 
     request.onerror = ->
-      callback(request.status) if callback
+      callback(request.status)
 
     request.send(JSON.stringify(data))
 

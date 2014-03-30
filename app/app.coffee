@@ -1,6 +1,7 @@
 # Modules
 express = require 'express'
 http = require 'http'
+https = require 'https'
 app = express()
 util = require('util')
 
@@ -51,5 +52,6 @@ app.configure 'development', ->
 require("#{__dirname}/routes")(app)
 
 # Server
-http.createServer(app).listen app.get('port'), ->
-  console.log "Express server listening on port #{app.get 'port'} in #{app.settings.env} mode"
+http.createServer(app).listen(3100, ->
+  console.log "Express server listening on port 3100 in #{app.settings.env} mode"
+)

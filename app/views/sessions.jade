@@ -13,15 +13,20 @@ block content
       padding: 5px;
     }
   table.sessionList
-    tr
-      th
-        | session id
-      th
-        | recorded at
-    each session in sessions
+    thead
       tr
-        td
-          a(href='/replay/' + session.attributes.id)
-            = session.attributes.id + ' '
-        td
-          = new Date(session.attributes.timestamp*1)
+        th name
+        th start time
+        th end time
+        th session id
+    tbody
+      each session in sessions
+        tr
+          td
+            a(href='/replay/' + session.id)= session.name
+          td
+            = session.start
+          td
+            = session.end
+          td
+            = session.id

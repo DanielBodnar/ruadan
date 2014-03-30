@@ -1,62 +1,61 @@
 Redis = require('redis')
 ShortId = require('shortid')
 Promise = require('bluebird')
-_ = require('lodash')
 
 class EventStore
-
   REDIS_POSITIVE_INFINITY = '+inf'
   REDIS_NEGATIVE_INFINITY = '-inf'
 
   # return a promise which returns a new session id
-  @startSession: ->
+  @startSession: (name, timestamp) ->
     newId = ShortId.generate()
     saddAsync = _promisifyRedisCommand('sadd')
-    saddAsync('sessions', newId).then(->
-      newId
+    hmsetAsync = _promisifyRedisCommand('hmset')
+    saddAsync('sessions', newId).then( ->
+      hmsetAsync(_redisSessionId(newId), {
+        id: newId,
+        name: name,
+        startTimestamp: timestamp,
+      }).then( ->
+        newId
+      )
     )
+
+  @endSession: (sessionId, timestamp) ->
+    hsetAsync = _promisifyRedisCommand('hset')
+    hsetAsync(_redisSessionId(sessionId), "endTimestamp", timestamp)
+
+  @getSession: (sessionId) ->
+    hgetallAsync = _promisifyRedisCommand('hgetall')
+    hgetallAsync(_redisSessionId(sessionId))
 
   # returns a promise for a list of sessions
   @getSessions: ->
     smembersAsync = _promisifyRedisCommand('smembers')
-    smembersAsync("sessions").then( (keys) ->
-      EventStore.getSessionsForIds(keys)
+    smembersAsync("sessions").then( (keys) =>
+      @_getSessionsForIds(keys)
     )
-
-  # returns a promise for a list of sessions matching to the given session keys
-  # (basically, just get the timestamp for each session)
-  @getSessionsForIds: (sessionIds) ->
-    promises = []
-
-    sessionIds.forEach((sessionId) ->
-      promises.push(_getSessionForKey(_redisSessionId(sessionId)))
-    )
-
-    Promise.all(promises)
-
-  @getSessionForId: (sessionId) ->
-    _getSessionForKey(_redisSessionId(sessionId))
 
   # record an event for session, return a completion promise
   @recordEvent: (sessionId, timestamp, event) ->
-    return Promise.reject("No timestamp for event") unless event.attributes.timestamp
+    return Promise.reject("No timestamp for event") unless event?.attributes?.timestamp
     zaddAsync = _promisifyRedisCommand('zadd')
-    zaddAsync(_redisSessionId(sessionId), timestamp, JSON.stringify(event))
+    zaddAsync(_redisSessionEventsId(sessionId), timestamp, JSON.stringify(event))
 
   @getEvents: (sessionId) ->
     zrangebyscoreAsync = _promisifyRedisCommand('zrangebyscore')
-    zrangebyscoreAsync(_redisSessionId(sessionId), 0, REDIS_POSITIVE_INFINITY)
+    zrangebyscoreAsync(_redisSessionEventsId(sessionId), 0, REDIS_POSITIVE_INFINITY)
 
-  @isDOMInitialized: (sessionId) ->
-    getAsync = _promisifyRedisCommand('get')
-    getAsync(_getDOMInitKey(sessionId)).then( (result) ->
-      result == 'true'
+  # returns a promise for a list of sessions matching to the given session keys
+  # (basically, just get the timestamp for each session)
+  @_getSessionsForIds: (sessionIds) ->
+    promises = []
+
+    sessionIds.forEach((sessionId) =>
+      promises.push(@getSession(sessionId))
     )
 
-  @markDOMInitialized: (sessionId) ->
-    setAsync = _promisifyRedisCommand('set')
-    setAsync(_getDOMInitKey(sessionId), true)
-
+    Promise.all(promises)
 
 
   #### PRIVATES #####################################################################
@@ -78,23 +77,10 @@ class EventStore
   _promisifyRedisCommand = (command) ->
     _promisifyMethod(_getClient(), command)
 
+  _redisSessionEventsId = (sessionId) ->
+    "session:#{sessionId}:events"
+
   _redisSessionId = (sessionId) ->
     "session:#{sessionId}"
-
-  _sessionIdFromRedisSessionId = (redisSessionId) ->
-    redisSessionId.split(':')[1]
-
-  _getSessionForKey = (key) ->
-    # This redis command gets the timestamp of the first event in the session
-    zrangebyscoreAsync = _promisifyRedisCommand('zrangebyscore')
-    zrangebyscoreAsync(key, 0, REDIS_POSITIVE_INFINITY, 'withscores', 'limit', 0, 1)
-      .then((keyAndScore) ->
-        sessionId: _sessionIdFromRedisSessionId(key)
-        timestamp: keyAndScore[1]
-    )
-
-  _getDOMInitKey = (sessionId) ->
-    "#{_redisSessionId(sessionId)}:domInited"
-
 
 module.exports = EventStore
