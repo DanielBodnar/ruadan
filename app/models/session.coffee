@@ -1,67 +1,46 @@
 EventStore = require_app("lib/redis_event_store")
 Event = require_app("app/models/event")
-Promise = require('bluebird')
 
 class Session
-
-  _recordEventInternal = (session, event) ->
-
-
-  constructor: (id, timestamp) ->
+  constructor: (id, name, startTimestamp, endTimestamp) ->
     @attributes = {
       id: id
-      timestamp: timestamp
+      name: name
+      startTimestamp: startTimestamp
+      endTimestamp: endTimestamp
     }
 
   @all: ->
-    EventStore.getSessions().then((data) ->
-      data.map((sessionData) ->
-        new Session(sessionData.sessionId, sessionData.timestamp)
+    EventStore.getSessions().then((sessions) ->
+      sessions.sort( (a, b) -> b.startTimestamp - a.startTimestamp ).map((session) ->
+        new Session(session.id, session.name, session.startTimestamp, session.endTimestamp)
       )
     )
 
-  @allValid: ->
-    # first, get all sessions,
-    Session.all().then( (sessions) ->
-
-      # then, create promises which check each session for validity
-      promises = sessions.map((session) ->
-        session.isValid()
-      )
-
-      # then, wait for the validation checks to finish, and then,
-      Promise.all(promises).then((results) ->
-
-        # filter out the invalid sessions!
-        session for session, i in sessions when results[i]
-      )
-
+  @get: (sessionId) ->
+    EventStore.getSession(sessionId).then( (session) ->
+      new Session(session.id, session.name, session.startTimestamp, session.endTimestamp)
     )
 
-  @start: (name) ->
-    EventStore.startSession(name).then((newId) ->
-      new Session(newId)
+  @start: (name, timestamp = new Date().getTime()) ->
+    EventStore.startSession(name, timestamp).then((newId) ->
+      new Session(newId, name, timestamp)
     )
 
-  @end: (sessionId) ->
-    Promise.resolve()
+  @end: (sessionId, timestamp = new Date().getTime()) ->
+    EventStore.endSession(sessionId, timestamp)
 
-  getTimestamp: ->
-    @attributes.timestamp = EventStore.getSessionForId(@attributes.id)
-
-  isValid: ->
-    EventStore.isDOMInitialized(@attributes.id)
+  canContinue: ->
+    !@attributes.endTimestamp
 
   recordEvent: (event) ->
-    EventStore.recordEvent(@attributes.id, event.attributes.timestamp, event).then( =>
-      if event.attributes.action == 'newPage'
-        EventStore.markDOMInitialized(@attributes.id)
-    )
+    throw new Error("Can't add events to an ended session") if @attributes.endTimestamp*1
+    EventStore.recordEvent(@attributes.id, event.attributes.timestamp, event)
 
   getEvents: ->
-    EventStore.getEvents(@attributes.id).then((results) ->
-      results.map((json) ->
-        Event.fromJSON(JSON.parse(json))
+    EventStore.getEvents(@attributes.id).then((events) ->
+      events.map((eventJson) ->
+        Event.fromJSON(JSON.parse(eventJson))
       )
     )
 

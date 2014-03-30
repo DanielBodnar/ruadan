@@ -13,13 +13,21 @@ module.exports = (app) ->
         res.json {}
       )
 
+    @continue = (req, res) ->
+      Session.get(req.body.sessionId).then( (session) ->
+        res.json {
+          canContinue: session.canContinue()
+          session: session.toJSON()
+        }
+      )
+
     @end = (req, res) ->
       Session.end(req.body.sessionId).then( ->
         res.json {}
       )
 
     @sessions = (req, res) ->
-      Session.allValid().then((sessions) ->
+      Session.all().then((sessions) ->
         res.json {
           sessions: sessions
         }

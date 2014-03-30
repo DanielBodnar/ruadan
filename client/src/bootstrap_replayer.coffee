@@ -20,7 +20,7 @@ doReplay = (events, document) ->
 
 getEvents = (session, document, cb)->
   request = new XMLHttpRequest()
-  request.open('GET', "http://127.0.0.1:3000/view?sessionId=#{session}", true)
+  request.open('GET', "//rlocal.giftsproject.com/view?sessionId=#{session}", true)
 
   request.onload = ->
     if (request.status >= 200 && request.status < 400)

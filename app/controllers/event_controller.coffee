@@ -10,9 +10,10 @@ module.exports = (app) ->
 
     # Record an event or a list of events
     @record = (req, res) ->
-      session = new Session(req.body.sessionId)
-      events = req.body.events
-      Event.eventsFromRequestJSON(events).forEach((e) -> session.recordEvent(e))
+      Session.get(req.body.sessionId).then( (session) ->
+        events = req.body.events
+        Event.eventsFromRequestJSON(events).forEach((e) -> session.recordEvent(e))
+      )
 
       res.json {}
 
@@ -20,8 +21,10 @@ module.exports = (app) ->
     @view = (req, res) ->
       sessionId = req.query.sessionId
       return res.json {} unless sessionId
-      new Session(sessionId).getEvents().done( (events) ->
-        res.json {
-          events: events
-        }
+      Session.get(sessionId).then( (session) ->
+        session.getEvents().then( (events) ->
+          res.json {
+            events: events
+          }
+        )
       )
