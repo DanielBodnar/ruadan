@@ -49,7 +49,8 @@
     "gulp-plumber": "^0.5.6",
     "gulp-karma": "0.0.4",
     "karma-chrome-launcher": "^0.1.2",
-    "js-fixtures": "^1.5.1"
+    "js-fixtures": "^1.5.1",
+    "gulp-util": "^2.2.14"
   },
   "scripts": {
     "start": "gulp",

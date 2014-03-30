@@ -31,6 +31,9 @@ class MutationObserverObserver extends EventEmitter
   disconnect: ->
     @observer.disconnect()
 
+  flush: ->
+    @_onChange(@observer.takeRecords())
+
   _onChange: (mutations) ->
     result = Array.prototype.map.call(mutations, (mutation) => @_handleMutation(mutation))
     @emit('change', result)

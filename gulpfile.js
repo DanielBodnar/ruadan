@@ -8,6 +8,7 @@ var concat = require('gulp-concat');
 var plumber = require('gulp-plumber');
 var mocha = require('gulp-mocha');
 var karma = require('gulp-karma');
+var gutil = require('gulp-util');
 
 
 const BUILD_FOLDER = './public/build/';
@@ -96,6 +97,7 @@ gulp.task('browserify_replayer', function () {
   var bundler = watchify(PATHS.client + '/src/bootstrap_replayer.coffee');
   bundler.transform('coffeeify');
   bundler.on('update', rebundle);
+  bundler.on('error', gutil.log);
 
   function rebundle() {
     return bundler.bundle()
@@ -107,11 +109,13 @@ gulp.task('browserify_replayer', function () {
 });
 
 gulp.task('clear_redis', function() {
-  var Redis = require('redis')
-  Redis.createClient().flushdb()
+  var Redis = require('redis');
+  Redis.createClient().flushdb();
 });
 
 
-gulp.task('default', ['lint', 'browserify_replayer', 'browserify_recorder', 'css', 'develop', 'watch'], function () {
-});
+gulp.task('build', ['lint', 'browserify_replayer', 'browserify_recorder', 'css'], function(){});
 gulp.task('test', ['mocha', 'watch']);
+gulp.task('test-client', ['karma']);
+
+gulp.task('default', ['build', 'develop', 'watch'], function () {});

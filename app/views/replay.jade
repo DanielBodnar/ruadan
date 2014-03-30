@@ -25,14 +25,8 @@ block content
                   option(value="1.5") x1.5
                   option(value="2") x2
                   option(value="3") x3
-
-
-
-  div#themouse
-    img(src="/mouse_icon.svg", width="12px", height="20px")
-  div#overlay
-  iframe#theframe(scrolling="no", data-session-id=sessionId, sandbox='allow-same-origin')
   script.
     window.ruadanSessionId = "#{sessionId}";
   script(src='http://127.0.0.1:3000/build/replayer.js')
   script.
+      window.bootstrapReplayer.start("#{window.ruadanSessionId}", window.document)

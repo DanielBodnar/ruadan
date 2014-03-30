@@ -14,7 +14,40 @@ BookmarkHandler = require('../event_handlers/bookmark.coffee')
 UrlHandler = require('../event_handlers/url.coffee')
 ViewportHandler = require('../event_handlers/viewport.coffee')
 
+
+
+MOUSE_ELEMENT_ID= "themouse"
+IFRAME_ELEMENT_ID = "theframe"
+
+
+createIframe = (document)->
+  iframe = document.createElement('iframe')
+  iframe.setAttribute('id', IFRAME_ELEMENT_ID)
+  iframe.setAttribute('scrolling', 'no')
+  iframe.setAttribute('sandbox', 'allow-same-origin')
+  iframe
+
+
+createMouse = (document)->
+  mouse = document.createElement('div')
+  mouse.setAttribute('id', MOUSE_ELEMENT_ID)
+  mouse.innerHTML = '<img src="//mouse_icon.svg" width="12px" height="20px"/>'
+  mouse
+
+createUIElements = (document) ->
+  iframe = createIframe(document)
+  mouse = createMouse(document)
+
+  document.body.appendChild(iframe)
+  document.body.appendChild(mouse)
+
+  iframe: iframe
+  mouse: mouse
+
+
+
 class ReplaySimulator extends EventEmitter
+
   constructor: (@events, @document) ->
     @nodeMap = new NodeMap()
     @initUI()
@@ -59,9 +92,10 @@ class ReplaySimulator extends EventEmitter
       throw new Exception("No event handler for event: " + event.action)
 
   initUI: ->
+    result = createUIElements(@document)
     @ui = {
-      mousePointer: @document.getElementById("themouse")
-      iframe: @document.getElementById("theframe")
+      mousePointer: result.mouse
+      iframe: result.iframe
     }
     @simulationDocument = @ui.iframe.contentDocument
 

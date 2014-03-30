@@ -10,7 +10,10 @@ class AddNodes extends EventHandler
   handle: (event) ->
     parent = @nodeMap.getNode(event.data.parentId)
     event.data.addedNodes.forEach((node) =>
-      deserializedNode = Deserializer.deserializeSubTree(@document, node, @nodeMap)
+      deserializedNode = @nodeMap.getNode(node.getId()) #we try to get it from the nodeMap, if it is already there
+      unless deserializedNode #it's a new node, so create it.
+        deserializedNode = Deserializer.deserializeSubTree(@document, node, @nodeMap)
+
       @document.adoptNode(deserializedNode)
 
       if event.data.nextSiblingId

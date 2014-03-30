@@ -1,5 +1,6 @@
 EventEmitter = require('eventemitter').EventEmitter
 
+
 class PlayerUI extends EventEmitter
 
   constructor: (@events, @document) ->
