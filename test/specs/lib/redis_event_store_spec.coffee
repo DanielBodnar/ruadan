@@ -41,31 +41,6 @@ describe 'RedisEventStore', ->
       promise = startSession()
       expect(promise).to.eventually.equal(sessionId)
 
-  describe 'endSession', ->
-    it_should_return_a_promise(RedisEventStore.endSession)
-    it 'should add endTimestamp to session', ->
-      promise = startSession()
-      promise.then( (sessionId) ->
-        Promise.all([
-          expect(RedisEventStore.getSession(sessionId)).to.eventually.not.have.property("endTimestamp")
-          RedisEventStore.endSession(sessionId, new Date().getTime()).then( ->
-            expect(RedisEventStore.getSession(sessionId)).to.eventually.have.property("endTimestamp")
-          )
-        ])
-      )
-
-  describe 'getSession', ->
-    it_should_return_a_promise(RedisEventStore.getSession)
-    it 'should return a previously started session', ->
-      startTimestamp = new Date().getTime()
-      startSession("name", startTimestamp).then( (sessionId) ->
-        expect(RedisEventStore.getSession(sessionId)).to.eventually.deep.equal({
-          id: sessionId,
-          name: "name",
-          startTimestamp: startTimestamp.toString()
-        })
-      )
-
   describe 'getSessions', ->
     it_should_return_a_promise(RedisEventStore.getSessions)
     it 'should return all sessions', ->
@@ -81,30 +56,53 @@ describe 'RedisEventStore', ->
         expect(promise).to.eventually.contain("session1").and.contain("session2")
       )
 
-  describe 'recordEvent', ->
-    it_should_return_a_promise(RedisEventStore.recordEvent)
-    it "should add the event to the session's event list", ->
-      event = { attributes: { timestamp: "1234", action: "test" } }
-      startSession("session1").then( (sessionId) ->
-        RedisEventStore.recordEvent(sessionId, event.attributes.timestamp, event).then( ->
-          expect(RedisEventStore.getEvents(sessionId).then( (results) -> results.map( (result) -> JSON.parse(result) ) )).to.eventually.deep.equal([event])
-        )
-      )
+  context 'when given a sessionId', ->
+    beforeEach ->
+      @sessionName = "name"
+      @sessionTimestamp = new Date().getTime()
+      startSession(@sessionName, @sessionTimestamp).then( (@sessionId) =>)
 
-  describe 'getEvents', ->
-    it_should_return_a_promise(RedisEventStore.getEvents)
-    it "should return all events that belong to a session", ->
-      event1 = { attributes: { timestamp: "1234", action: "test" } }
-      event2 = { attributes: { timestamp: "1235", action: "test" } }
-      event3 = { attributes: { timestamp: "1236", action: "test" } }
-      event4 = { attributes: { timestamp: "1237", action: "test" } }
-      startSession("session1").then( (sessionId) ->
-        Promise.all([
-          RedisEventStore.recordEvent(sessionId, event1.attributes.timestamp, event1)
-          RedisEventStore.recordEvent(sessionId, event2.attributes.timestamp, event2)
-          RedisEventStore.recordEvent(sessionId, event3.attributes.timestamp, event3)
-          RedisEventStore.recordEvent(sessionId, event4.attributes.timestamp, event4)
-        ]).then( ->
-          expect(RedisEventStore.getEvents(sessionId)).to.eventually.have.length(4)
+    describe 'endSession', ->
+      it_should_return_a_promise(RedisEventStore.endSession)
+      it 'should add endTimestamp to session', ->
+        expect(RedisEventStore.getSession(@sessionId)).to.eventually.not.have.property("endTimestamp").then( =>
+          RedisEventStore.endSession(@sessionId, new Date().getTime()).then( =>
+            expect(RedisEventStore.getSession(@sessionId)).to.eventually.have.property("endTimestamp")
+          )
         )
-      )
+
+    describe 'getSession', ->
+      it_should_return_a_promise(RedisEventStore.getSession)
+      it 'should return a previously started session', ->
+        expect(RedisEventStore.getSession(@sessionId)).to.eventually.deep.equal({
+          id: @sessionId,
+          name: @sessionName,
+          startTimestamp: @sessionTimestamp.toString()
+        })
+
+    describe 'recordEvent', ->
+      it_should_return_a_promise(RedisEventStore.recordEvent)
+      it "should add the event to the session's event list", ->
+        event = { attributes: { timestamp: "1234", action: "test" } }
+        RedisEventStore.recordEvent(@sessionId, event.attributes.timestamp, event).then( =>
+          promise = RedisEventStore.getEvents(@sessionId).then( (results) -> results.map(JSON.parse) )
+          expect(promise).to.eventually.deep.equal([event])
+        )
+
+    describe 'getEvents', ->
+      it_should_return_a_promise(RedisEventStore.getEvents)
+      it "should return all events that belong to a session", ->
+        event1 = { attributes: { timestamp: "1234", action: "test" } }
+        event2 = { attributes: { timestamp: "1235", action: "test" } }
+        event3 = { attributes: { timestamp: "1236", action: "test" } }
+        event4 = { attributes: { timestamp: "1237", action: "test" } }
+        startSession("session1").then( (sessionId) ->
+          Promise.all([
+            RedisEventStore.recordEvent(sessionId, event1.attributes.timestamp, event1)
+            RedisEventStore.recordEvent(sessionId, event2.attributes.timestamp, event2)
+            RedisEventStore.recordEvent(sessionId, event3.attributes.timestamp, event3)
+            RedisEventStore.recordEvent(sessionId, event4.attributes.timestamp, event4)
+          ]).then( ->
+            expect(RedisEventStore.getEvents(sessionId)).to.eventually.have.length(4)
+          )
+        )
