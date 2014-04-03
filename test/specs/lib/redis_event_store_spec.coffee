@@ -81,13 +81,14 @@ describe 'RedisEventStore', ->
         })
 
     describe 'recordEvent', ->
+      beforeEach ->
+        @event = { attributes: { timestamp: "1234", action: "test" } }
+        RedisEventStore.recordEvent(@sessionId, @event.attributes.timestamp, @event)
+
       it_should_return_a_promise(RedisEventStore.recordEvent)
       it "should add the event to the session's event list", ->
-        event = { attributes: { timestamp: "1234", action: "test" } }
-        RedisEventStore.recordEvent(@sessionId, event.attributes.timestamp, event).then( =>
-          promise = RedisEventStore.getEvents(@sessionId).then( (results) -> results.map(JSON.parse) )
-          expect(promise).to.eventually.deep.equal([event])
-        )
+        promise = RedisEventStore.getEvents(@sessionId).then( (results) -> results.map(JSON.parse) )
+        expect(promise).to.eventually.deep.equal([@event])
 
     describe 'getEvents', ->
       it_should_return_a_promise(RedisEventStore.getEvents)

@@ -6,57 +6,69 @@ class SessionManager
   getCurrentSession: ->
     @_getSessionId()
 
-  continueSession: (name, callback) ->
+  continueSession: (name, callback = ->) ->
     currentSessionId = @_getSessionId()
     if (currentSessionId)
       @_continueCurrentSession(currentSessionId, (error, canContinue) =>
+        return callback(error) if error
         if (canContinue)
-          console.log('continuing session ' + currentSessionId) unless error?
-          callback(error, currentSessionId) if callback
+          console.info('continuing session ' + currentSessionId)
+          callback(error, currentSessionId)
         else
           @startNewSession(name, callback)
       )
     else
       @startNewSession(name, callback)
 
-  startNewSession: (name, callback) ->
+  startNewSession: (name, callback = ->) ->
     if (@_getSessionId())
       # only allow one session at a time.
       @endSession((error) =>
         if (error?)
-          callback(error) if callback
+          callback(error)
         else
           @_startSession(name, callback)
       )
     else
       @_startSession(name, callback)
 
-  endSession: (callback) ->
-    @client.endSession(@_getSessionId(), (error) =>
-      console.log('ending session ' + @_getSessionId()) unless error?
-      @_setSessionId(null) unless error?
-      callback(error) if callback
+  useSessionId: (sessionId, callback = ->) ->
+    @_continueCurrentSession(sessionId, (error, canContinue) =>
+      return callback(error) if error
+      if (canContinue)
+        @_setSessionId(sessionId)
+        callback(null)
+      else
+        callback("Can't continue session: " + sessionId)
     )
 
-  _continueCurrentSession: (sessionId, callback) ->
+  endSession: (callback = ->) ->
+    @client.endSession(@_getSessionId(), (error) =>
+      console.info('ending session ' + @_getSessionId()) unless error?
+      @_setSessionId(null) unless error?
+      callback(error)
+    )
+
+  _continueCurrentSession: (sessionId, callback = ->) ->
     @client.continueSession(sessionId, (error, result) =>
       callback(error, result?.canContinue)
     )
 
-  _startSession: (name, callback) ->
+  _startSession: (name, callback = ->) ->
     @client.newSession(name, (error, sessionId) =>
-      @_setSessionId(sessionId) unless error?
-      console.log('starting session ' + sessionId) unless error?
-      callback(error, sessionId) if callback
+      return callback(error) if error
+      @_setSessionId(sessionId)
+      console.info('starting session ' + sessionId)
+      callback(error, sessionId)
     )
 
   _setSessionId: (sessionId) ->
     if (sessionId?)
-      localStorage.setItem(SessionManager.sessionIdKey, sessionId)
+      sessionStorage.setItem(SessionManager.sessionIdKey, sessionId)
     else
-      localStorage.removeItem(SessionManager.sessionIdKey)
+      sessionStorage.removeItem(SessionManager.sessionIdKey)
 
   _getSessionId: ->
-    localStorage.getItem(SessionManager.sessionIdKey)
+    sessionStorage.getItem(SessionManager.sessionIdKey)
 
 module.exports = SessionManager

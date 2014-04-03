@@ -3,6 +3,7 @@
 
 #player_wrapper {
   position: fixed;
+  z-index: 100;
   width: 100%;
   left: 0px;
   bottom: 0px;
@@ -92,9 +93,6 @@
       }
     }
   }
-
-
-
 
   .progress {
     position: absolute;
@@ -187,15 +185,117 @@
           &.viewport {
             background-color: #ff8000;
           }
+          &.visibility, &.focus {
+            background-color: #6060f0;
+          }
+          &.window_close {
+            background-color: #000000;
+          }
         }
       }
     }
   }
 }
 
+.desktop {
+  position: relative;
 
+  .windows_container {
+    .chrome {
+      position: absolute;
+      z-index: 5;
+      padding: 2px;
+      background-color: #d3d3d3;
+      pointer-events: none;
+      user-select: none;
 
-#theframe {
-  pointer-events: none;
-  user-select: none;
+      &.hidden {
+        display: none;
+      }
+
+      &.nofocus {
+        z-index: 3;
+      }
+
+      &.nofocus .nofocus_overlay {
+        display: block;
+      }
+
+      .nofocus_overlay {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #000;
+        opacity: 0.5;
+        z-index: 10;
+      }
+
+      .addressBar {
+        overflow: hidden;
+        height: 20px;
+        padding: 3px;
+        display: block;
+        margin-bottom: 2px;
+        background-color: #fff;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        line-height: 11px;
+        font-size: 16px;
+      }
+
+      .viewport {
+        line-height: 0px;
+        position: relative;
+
+        iframe {
+          pointer-events: none;
+          user-select: none;
+          background-color: #fff;
+        }
+
+        .mouse_container {
+          .pointer {
+            position: absolute;
+
+            &.invisible {
+              display: none;
+            }
+          }
+
+          .clicks_container {
+            .click {
+              position: absolute;
+              border-radius: 100%;
+              border: 3px solid red;
+              width: 20px;
+              height: 20px;
+              -webkit-animation: ripple 1.0s ease-out;
+              -webkit-transform: translate(-12px, -12px) translate3d(0, 0, 0);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@-webkit-keyframes ripple {
+  0% {
+    opacity: 1;
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
+  }
+  100% {
+    opacity: 0;
+    width: 60px;
+    height: 60px;
+    -webkit-transform: translate(-18px, -18px);
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
+  }
 }

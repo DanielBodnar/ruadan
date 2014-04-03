@@ -1,4 +1,5 @@
 Session = require_app("app/models/session")
+TimeHelpers = require_app("app/helpers/time.coffee")
 
 module.exports = (app) ->
 
@@ -8,34 +9,12 @@ module.exports = (app) ->
 
     @sessions = (req, res) ->
       Session.all().then((sessions) ->
-        pad = (number) ->
-          if (number < 10)
-            "0" + number
-          else
-            number
-
-        printTime = (timestamp) ->
-          return "N/A" unless timestamp*1
-          date = new Date(timestamp*1)
-          [
-            [
-              pad(date.getDate()),
-              pad(date.getMonth()),
-              date.getFullYear()
-            ].join("/"),
-            [
-              pad(date.getHours()),
-              pad(date.getMinutes()),
-              pad(date.getSeconds())
-            ].join(":")
-          ].join(" ")
-
         sessionViewData = sessions.map( (session) ->
           {
             id: session.attributes.id,
             name: session.attributes.name,
-            start: printTime(session.attributes.startTimestamp)
-            end: printTime(session.attributes.endTimestamp)
+            start: TimeHelpers.printTime(session.attributes.startTimestamp)
+            end: TimeHelpers.printTime(session.attributes.endTimestamp)
           }
         )
         res.render 'sessions', sessions: sessionViewData

@@ -3,11 +3,17 @@ class Event
 
   constructor: (@data, @timestamp = new Date().getTime()) ->
 
+  setWindowId: (@windowId) ->
+
+  getWindowId: ->
+    @windowId
+
   toJson: ->
     {
       action: @action,
       data: @_serializeData(),
-      timestamp: @timestamp
+      timestamp: @timestamp,
+      windowId: @windowId
     }
 
   @fromJson: (json) ->
@@ -15,6 +21,7 @@ class Event
     event.action = json.action
     event.data = @_deserializeData(json.data)
     event.timestamp = json.timestamp
+    event.setWindowId(json.windowId)
     event
 
   _serializeData: ->

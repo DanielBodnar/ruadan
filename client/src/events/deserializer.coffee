@@ -12,6 +12,9 @@ ScrollEvent = require('./scroll.coffee')
 SelectionEvent = require('./selection.coffee')
 UrlEvent = require('./url.coffee')
 ViewportEvent = require('./viewport.coffee')
+VisibilityEvent = require('./visibility.coffee')
+FocusEvent = require('./focus.coffee')
+WindowCloseEvent = require('./window_close.coffee')
 
 class Deserializer
 
@@ -30,6 +33,9 @@ class Deserializer
   @EVENTS[SelectionEvent::action] = SelectionEvent
   @EVENTS[UrlEvent::action] = UrlEvent
   @EVENTS[ViewportEvent::action] = ViewportEvent
+  @EVENTS[VisibilityEvent::action] = VisibilityEvent
+  @EVENTS[FocusEvent::action] = FocusEvent
+  @EVENTS[WindowCloseEvent::action] = WindowCloseEvent
 
   @deserialize: (eventJson) ->
     @EVENTS[eventJson.action].fromJson(eventJson) if (@EVENTS[eventJson.action])

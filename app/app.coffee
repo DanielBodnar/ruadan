@@ -1,7 +1,6 @@
 # Modules
 express = require 'express'
 http = require 'http'
-https = require 'https'
 app = express()
 util = require('util')
 
@@ -15,7 +14,7 @@ require("#{__dirname}/../config/boot")(app)
 
 # Configuration
 app.configure ->
-  port = process.env.PORT || 3000
+  port = process.env.PORT || 3100
   port = process.argv[process.argv.indexOf('-p') + 1] if process.argv.indexOf('-p') >= 0
   app.set 'port', port
   app.set 'views', "#{__dirname}/views"
@@ -52,6 +51,6 @@ app.configure 'development', ->
 require("#{__dirname}/routes")(app)
 
 # Server
-http.createServer(app).listen(3100, ->
-  console.log "Express server listening on port 3100 in #{app.settings.env} mode"
+http.createServer(app).listen(app.get('port'), ->
+  console.log "Express server listening on port #{app.get('port')} in #{app.settings.env} mode"
 )

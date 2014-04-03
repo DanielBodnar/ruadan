@@ -11,15 +11,15 @@ class Session
     }
 
   @all: ->
-    EventStore.getSessions().then((sessions) ->
-      sessions.sort( (a, b) -> b.startTimestamp - a.startTimestamp ).map((session) ->
-        new Session(session.id, session.name, session.startTimestamp, session.endTimestamp)
+    EventStore.getSessions().then((sessions) =>
+      sessions.sort( (a, b) -> b.startTimestamp - a.startTimestamp ).map((session) =>
+        @fromSessionData(session)
       )
     )
 
   @get: (sessionId) ->
-    EventStore.getSession(sessionId).then( (session) ->
-      new Session(session.id, session.name, session.startTimestamp, session.endTimestamp)
+    EventStore.getSession(sessionId).then( (session) =>
+      @fromSessionData(session)
     )
 
   @start: (name, timestamp = new Date().getTime()) ->
@@ -30,11 +30,14 @@ class Session
   @end: (sessionId, timestamp = new Date().getTime()) ->
     EventStore.endSession(sessionId, timestamp)
 
+  @fromSessionData: (sessionData) ->
+    new Session(sessionData.id, sessionData.name, sessionData.startTimestamp, sessionData.endTimestamp)
+
   canContinue: ->
     !@attributes.endTimestamp
 
   recordEvent: (event) ->
-    throw new Error("Can't add events to an ended session") if @attributes.endTimestamp*1
+    Promise.reject("Can't add events to an ended session") if @attributes.endTimestamp*1
     EventStore.recordEvent(@attributes.id, event.attributes.timestamp, event)
 
   getEvents: ->

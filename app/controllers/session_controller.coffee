@@ -4,6 +4,7 @@ module.exports = (app) ->
 
   class app.SessionController
 
+    # start a new session. return sessionId if successfuly.
     @start = (req, res) ->
       Session.start(req.body.name).then((session) ->
         res.json {
@@ -13,6 +14,8 @@ module.exports = (app) ->
         res.json {}
       )
 
+    # continue a running session. returns session data and
+    # canContinue param that indicates if the session can continue
     @continue = (req, res) ->
       Session.get(req.body.sessionId).then( (session) ->
         res.json {
@@ -21,11 +24,13 @@ module.exports = (app) ->
         }
       )
 
+    # end a running session
     @end = (req, res) ->
       Session.end(req.body.sessionId).then( ->
         res.json {}
       )
 
+    # returns session data for all sessions
     @sessions = (req, res) ->
       Session.all().then((sessions) ->
         res.json {

@@ -36,11 +36,13 @@ class MutationObserverObserver extends EventEmitter
 
   _onChange: (mutations) ->
     result = Array.prototype.map.call(mutations, (mutation) => @_handleMutation(mutation))
-    @emit('change', result)
+    @emit('change', result.filter( (mutation) -> mutation? )) # we remove nulls since handleMutation may return null
 
+  # returns mutation event or null if event is not applicable.
   _handleMutation: (mutation) ->
     switch(mutation.type)
       when "attributes"
+        return null unless @nodeMap.getNodeId(mutation.target)
         return new AttributeMutationEvent(
           @nodeMap.getNodeId(mutation.target),
           mutation.attributeName,
@@ -49,6 +51,7 @@ class MutationObserverObserver extends EventEmitter
           mutation.target.getAttribute(mutation.attributeName)
         )
       when "characterData"
+        return null unless @nodeMap.getNodeId(mutation.target)
         return new CharacterDataMutationEvent(
           @nodeMap.getNodeId(mutation.target),
           mutation.oldValue,

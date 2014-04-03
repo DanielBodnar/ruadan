@@ -16,9 +16,9 @@ class EventStore
         id: newId,
         name: name,
         startTimestamp: timestamp,
-      }).then( ->
-        newId
-      )
+      })
+    ).then( ->
+      newId
     )
 
   @endSession: (sessionId, timestamp) ->
