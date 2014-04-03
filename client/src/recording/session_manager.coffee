@@ -10,8 +10,9 @@ class SessionManager
     currentSessionId = @_getSessionId()
     if (currentSessionId)
       @_continueCurrentSession(currentSessionId, (error, canContinue) =>
+        return callback(error) if error
         if (canContinue)
-          console.log('continuing session ' + currentSessionId) unless error?
+          console.info('continuing session ' + currentSessionId) unless error?
           callback(error, currentSessionId) if callback
         else
           @startNewSession(name, callback)
@@ -31,9 +32,19 @@ class SessionManager
     else
       @_startSession(name, callback)
 
+  useSessionId: (sessionId, callback) ->
+    @_continueCurrentSession(sessionId, (error, canContinue) =>
+      return callback(error) if error
+      if (canContinue)
+        @_setSessionId(sessionId)
+        callback(null)
+      else
+        callback("Can't continue session: " + sessionId)
+    )
+
   endSession: (callback) ->
     @client.endSession(@_getSessionId(), (error) =>
-      console.log('ending session ' + @_getSessionId()) unless error?
+      console.info('ending session ' + @_getSessionId()) unless error?
       @_setSessionId(null) unless error?
       callback(error) if callback
     )
@@ -46,17 +57,17 @@ class SessionManager
   _startSession: (name, callback) ->
     @client.newSession(name, (error, sessionId) =>
       @_setSessionId(sessionId) unless error?
-      console.log('starting session ' + sessionId) unless error?
+      console.info('starting session ' + sessionId) unless error?
       callback(error, sessionId) if callback
     )
 
   _setSessionId: (sessionId) ->
     if (sessionId?)
-      localStorage.setItem(SessionManager.sessionIdKey, sessionId)
+      sessionStorage.setItem(SessionManager.sessionIdKey, sessionId)
     else
-      localStorage.removeItem(SessionManager.sessionIdKey)
+      sessionStorage.removeItem(SessionManager.sessionIdKey)
 
   _getSessionId: ->
-    localStorage.getItem(SessionManager.sessionIdKey)
+    sessionStorage.getItem(SessionManager.sessionIdKey)
 
 module.exports = SessionManager

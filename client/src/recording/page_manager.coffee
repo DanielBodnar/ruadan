@@ -29,6 +29,11 @@ class PageManager
     new ScrollEvent(window.scrollX, window.scrollY)
 
   @_getViewportSizeEvent: (window) ->
-    new ViewportEvent(window.document.documentElement.clientWidth, window.document.documentElement.clientHeight)
+    new ViewportEvent(
+      window.screenLeft,
+      window.screenTop,
+      window.document.documentElement.clientWidth,
+      window.document.documentElement.clientHeight
+    )
 
 module.exports = PageManager

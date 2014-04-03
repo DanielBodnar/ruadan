@@ -3,8 +3,10 @@ Event = require('./event.coffee')
 class Viewport extends Event
   action: "viewport"
 
-  constructor: (width, height, timestamp) ->
+  constructor: (x, y, width, height, timestamp) ->
     super({
+      x: x,
+      y: y,
       width: width,
       height: height
     }, timestamp)

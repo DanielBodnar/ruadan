@@ -12,7 +12,6 @@ class NewPage extends EventHandler
     if (subEvents.domSnapshot)
       @_handleSnapshot(subEvents.domSnapshot)
 
-
     @urlHandler.handle(subEvents.url)
     @scrollHandler.handle(subEvents.scrollPosition)
     @viewportHandler.handle(subEvents.viewport)

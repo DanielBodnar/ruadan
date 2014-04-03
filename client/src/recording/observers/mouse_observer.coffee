@@ -5,7 +5,7 @@ MousePositionEvent = require('../../events/mouse/position.coffee')
 
 class MouseObserver extends EventEmitter
   constructor: (@window) ->
-    @_throttledOnChange = _.throttle(@_onChange, 100)
+    @_throttledOnChange = _.throttle(@_onChange, 10)
 
   observe: ->
     @window.addEventListener('mouseup', @_onClick, false)
