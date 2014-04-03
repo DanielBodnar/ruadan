@@ -16,9 +16,11 @@ class ViewportObserver extends EventEmitter
   observe: ->
     @window.addEventListener('resize', @_debouncedOnChange, true)
     @interval = setInterval( ( =>
-      if (@windowX != @window.screenLeft || @windowY != @window.screenTop)
-        @windowX = @window.screenLeft - @window.screen.availLeft
-        @windowY = @window.screenTop - @window.screen.availTop
+      newX = @window.screenLeft - @window.screen.availLeft
+      newY = @window.screenTop - @window.screen.availTop
+      if (@windowX != newX || @windowY != newY)
+        @windowX = newX
+        @windowY = newY
         @_debouncedOnChange()
     ), 100)
 

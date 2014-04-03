@@ -3,6 +3,7 @@
 
 #player_wrapper {
   position: fixed;
+  z-index: 100;
   width: 100%;
   left: 0px;
   bottom: 0px;
@@ -202,6 +203,7 @@
   .windows_container {
     .chrome {
       position: absolute;
+      z-index: 5;
       padding: 2px;
       background-color: #d3d3d3;
       pointer-events: none;
@@ -209,6 +211,10 @@
 
       &.hidden {
         display: none;
+      }
+
+      &.nofocus {
+        z-index: 3;
       }
 
       &.nofocus .nofocus_overlay {

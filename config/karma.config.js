@@ -40,7 +40,7 @@ exclude = [
 ];
 
 proxies = {
-  '/': 'http://localhost:3000/'
+  '/': 'http://rlocal.giftsproject.com/'
 };
 
 // test results reporter to use

@@ -21,6 +21,7 @@ fixturesDocument = ->
 describe 'recording replaying integration tests', ->
 
   beforeEach ->
+    events = []
     fixtures.load('basic.html')
     @sandbox = sinon.sandbox.create()
 
@@ -55,4 +56,17 @@ describe 'recording replaying integration tests', ->
       expect(->simulator.runEvents(events)).to.not.throw()
       expect(father.innerHTML).to.equal('<div class="b"></div><div class="c"></div>')
 
-
+  describe "attribute on removed node", ->
+    it "should replay the state correctly", ->
+      parent = fixturesDocument().createElement('div')
+      child = fixturesDocument().createElement('div')
+      parent.appendChild(child)
+      fixturesDocument().body.appendChild(parent)
+      child.setAttribute('test', 'value')
+      parent.removeChild(child)
+      @recorder.observers.mutation.flush()
+      fixtures.cleanUp()
+      fixtures.load('basic_replayer.html')
+      events = Replayer.prepareEvents(events)
+      simulator = new ReplaySimulator(events, fixturesDocument())
+      expect(->simulator.runEvents(events)).to.not.throw()

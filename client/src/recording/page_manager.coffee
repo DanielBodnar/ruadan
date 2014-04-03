@@ -30,8 +30,8 @@ class PageManager
 
   @_getViewportSizeEvent: (window) ->
     new ViewportEvent(
-      window.screenLeft,
-      window.screenTop,
+      window.screenLeft - window.screen.availLeft,
+      window.screenTop - window.screen.availTop,
       window.document.documentElement.clientWidth,
       window.document.documentElement.clientHeight
     )
