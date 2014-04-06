@@ -20,12 +20,14 @@ class NodeMap
   setNode: (node, id) ->
     NodeId.setId(node, id)
     @_nodeMap[id] = node
+    node
 
   getNodeId: (node) ->
-    return null unless node
+    return null unless node?
     NodeId.getId(node)
 
   getNode: (id) ->
+    return null unless id? and id>=0
     @_nodeMap[id]
 
   getNextId: ->
