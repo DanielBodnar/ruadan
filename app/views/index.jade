@@ -3,8 +3,10 @@ block content
   //-script(src='http://127.0.0.1:3000/build/recorder.js')
   a(href=bookmarkletSource) Ruadan - Load
   br
-  a(href="javascript: window.ruadanRecorder.startRecording(document.title, window.location.hostname, true);") Ruadan - Record
+  a(href="javascript: window.ruadanRecorder.startRecording(document.title, window.location.hostname, true, function() { console.log.apply(console, arguments); });") Ruadan - Record
   br
-  a(href="javascript: window.ruadanRecorder.startRecording(document.title, window.location.hostname, false);") Ruadan - Continue
+  a(href="javascript: window.ruadanRecorder.startRecording(document.title, window.location.hostname, false, function() { console.log.apply(console, arguments); });") Ruadan - Continue
   br
   a(href="javascript: window.ruadanRecorder.stopRecording();") Ruadan - Stop
+  br
+  a(href="javascript: window.ruadanRecorder.startRecordingWithSessionId(document.title, prompt('Enter SessionId'), function() { console.log.apply(console, arguments); });") Ruadan - SessionId

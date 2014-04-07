@@ -41,7 +41,7 @@ class Recorder
   # Tries to record to a given sessionId
   startRecordingWithSessionId: (pageName, sessionId, callback = ->) ->
     unless (@isRecording)
-      callback = ( (error) =>
+      start = ( (error) =>
         if (error?)
           console.error("Can't start recording", error)
           callback(error)
@@ -51,13 +51,13 @@ class Recorder
           @newPage(pageName)
           callback(null, @sessionManager.getCurrentSession())
       )
-      @sessionManager.useSessionId(sessionId, callback)
+      @sessionManager.useSessionId(sessionId, start)
 
 
   # Tries to record to an existing sessionId or starts a new session
   startRecording: (pageName, sessionName, forceNewSession = false, callback = ->) ->
     unless (@isRecording)
-      callback = ( (error) =>
+      start = ( (error) =>
         if (error?)
           console.error("Can't start recording", error)
           callback(error)
@@ -69,9 +69,9 @@ class Recorder
       )
 
       if (forceNewSession)
-        @sessionManager.startNewSession(sessionName, callback)
+        @sessionManager.startNewSession(sessionName, start)
       else
-        @sessionManager.continueSession(sessionName, callback)
+        @sessionManager.continueSession(sessionName, start)
 
   stopRecording: ->
     if (@isRecording)

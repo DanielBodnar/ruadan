@@ -59,16 +59,21 @@ class MutationObserverObserver extends EventEmitter
         )
       when "childList"
         if (mutation.addedNodes.length > 0)
+          parentId = @nodeMap.getNodeId(mutation.target)
+          return null unless parent?
           return new AddNodesMutationEvent(
             Array.prototype.map.call(mutation.addedNodes, (node) => Serializer.serializeSubTree(node, @nodeMap)),
-            @nodeMap.getNodeId(mutation.target),
+            parentId,
             @nodeMap.getNodeId(mutation.previousSibling),
             @nodeMap.getNodeId(mutation.nextSibling)
           )
         else if (mutation.removedNodes.length > 0)
+          removedNodeIds = Array.prototype.map.call(mutation.removedNodes, (node) => @nodeMap.getNodeId(node)).filter( (nodeId) -> nodeId? )
+          parent = @nodeMap.getNodeId(mutation.target)
+          return null if removedNodeIds.length == 0 || !parent
           return new RemoveNodesMutationEvent(
-            @nodeMap.getNodeId(mutation.target),
-            Array.prototype.map.call(mutation.removedNodes, (node) => @nodeMap.getNodeId(node))
+            parent,
+            removedNodeIds
           )
         else
           console.error("Weird childlist mutation event", mutation)

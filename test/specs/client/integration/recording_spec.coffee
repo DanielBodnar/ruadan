@@ -70,3 +70,20 @@ describe 'recording replaying integration tests', ->
       events = Replayer.prepareEvents(events)
       simulator = new ReplaySimulator(events, fixturesDocument())
       expect(->simulator.runEvents(events)).to.not.throw()
+
+  describe "add node to removed parent", ->
+    it "should replay the state correctly", ->
+      n1 = fixturesDocument().createElement('div')
+      n2 = fixturesDocument().createElement('div')
+      n3 = fixturesDocument().createElement('div')
+      n1.appendChild(n2)
+      fixturesDocument().body.appendChild(n1)
+      n2.appendChild(n3)
+      n1.removeChild(n2)
+      @recorder.observers.mutation.flush()
+      fixtures.cleanUp()
+      fixtures.load('basic_replayer.html')
+      events = Replayer.prepareEvents(events)
+      simulator = new ReplaySimulator(events, fixturesDocument())
+      expect(->simulator.runEvents(events)).to.not.throw()
+
