@@ -10,6 +10,18 @@ var mocha = require('gulp-mocha');
 var karma = require('gulp-karma');
 var gutil = require('gulp-util');
 
+require('./lib/tasks');
+
+function setupAliasify() {
+  //require('aliasify').configure({
+    //aliases: {
+      //"window": ".client/src/helpers/window.coffee"
+    //},
+    //configDir: __dirname,
+    //verbose: true,
+    //appliesTo: { includeExtensions: [".js", ".coffee"] }
+  //});
+}
 
 const BUILD_FOLDER = './public/build/';
 
@@ -53,6 +65,14 @@ gulp.task('mocha', function () {
       .pipe(mocha({reporter: 'spec', timeout: 200}));
 });
 
+gulp.task('stress_test', function() {
+  require('coffee-script/register');
+  require(PATHS.tests + '/spec_helper');
+  gulp.src(PATHS.tests + '/server/stress_test.coffee', { read: false })
+      //.pipe(plumber())
+      .pipe(mocha({reporter: 'spec', timeout: 1000}));
+});
+
 
 gulp.task('lint', function () {
   gulp.src(PATHS.client + '/src/**/*.coffee')
@@ -61,6 +81,7 @@ gulp.task('lint', function () {
 });
 
 gulp.task('browserify_recorder', function () {
+  setupAliasify();
   var bundler = watchify([PATHS.client + '/src/bootstrap_recorder.coffee']);
   bundler.transform('coffeeify');
   bundler.on('update', rebundle);
@@ -94,6 +115,7 @@ gulp.task('watch', function () {
 
 
 gulp.task('browserify_replayer', function () {
+  setupAliasify();
   var bundler = watchify(PATHS.client + '/src/bootstrap_replayer.coffee');
   bundler.transform('coffeeify');
   bundler.on('update', rebundle);

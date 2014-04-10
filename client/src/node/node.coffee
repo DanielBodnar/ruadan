@@ -1,5 +1,4 @@
-_ = require('lodash.custom')
-Window = require('../helpers/window.coffee')
+Window = require('window')
 
 # Base class for specific node serializers
 class Node

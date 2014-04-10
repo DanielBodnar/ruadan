@@ -1,4 +1,6 @@
 class RecorderClient
+  constructor: (@endpoint = "//rlocal.giftsproject.com/") ->
+
   # this class is not static because it might be a good idea to add event queue management here.
   newSession: (name, callback = ->) ->
     @_postRequest("start", { name: name }, (errorMessage, response) ->
@@ -34,7 +36,7 @@ class RecorderClient
 
   _postRequest: (path, data, callback = ->) ->
     request = new XMLHttpRequest()
-    request.open('POST', "//rlocal.giftsproject.com/" + path, true)
+    request.open('POST', @endpoint + path, true)
     request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
 
     request.onload = (e) ->

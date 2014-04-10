@@ -4,7 +4,7 @@ AttributeMutationEvent = require('../../events/mutation/attribute.coffee')
 CharacterDataMutationEvent = require('../../events/mutation/character_data.coffee')
 AddNodesMutationEvent = require('../../events/mutation/add_nodes.coffee')
 RemoveNodesMutationEvent = require('../../events/mutation/remove_nodes.coffee')
-Window = require('../../helpers/window.coffee')
+Window = require('window')
 
 
 class MutationObserverObserver extends EventEmitter
