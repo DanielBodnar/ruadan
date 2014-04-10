@@ -46,6 +46,16 @@ class EventStore
     zrangebyscoreAsync = _promisifyRedisCommand('zrangebyscore')
     zrangebyscoreAsync(_redisSessionEventsId(sessionId), 0, REDIS_POSITIVE_INFINITY)
 
+  @deleteSession: (sessionId) ->
+    sremAsync = _promisifyRedisCommand('srem')
+    delAsync = _promisifyRedisCommand('del')
+
+    Promise.all([
+      sremAsync('sessions', sessionId), # remove from list of sessions
+      sdelAsync(_redisSessionId(sessionId)), # delete session data
+      sdelAsync(_redisSessionEventsId(sessionId)) # delete session events
+    ])
+
   # returns a promise for a list of sessions matching to the given session keys
   # (basically, just get the timestamp for each session)
   @_getSessionsForIds: (sessionIds) ->
