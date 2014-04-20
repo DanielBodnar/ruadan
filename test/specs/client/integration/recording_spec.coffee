@@ -16,8 +16,12 @@ class RecorderClient
     callback(null)
 
 
+fixturesWindow = ->
+  fixtures.window()
+
 fixturesDocument = ->
-  fixtures.window().document
+  fixturesWindow().document
+
 describe 'recording replaying integration tests', ->
 
   beforeEach ->
@@ -26,7 +30,7 @@ describe 'recording replaying integration tests', ->
     @sandbox = sinon.sandbox.create()
 
     @recorder = new Recorder(
-      document: fixturesDocument()
+      window: fixturesWindow()
       rootElement: fixturesDocument().getElementsByTagName("html")[0]
       Client: RecorderClient
     )
@@ -48,7 +52,7 @@ describe 'recording replaying integration tests', ->
 
       son = son.parentNode.removeChild(son)
       father.appendChild(son)
-      @recorder.observers.mutation.flush()
+      @recorder.observersManager.stop()
       fixtures.cleanUp()
       fixtures.load('basic_replayer.html')
       events = Replayer.prepareEvents(events)
@@ -64,7 +68,7 @@ describe 'recording replaying integration tests', ->
       fixturesDocument().body.appendChild(parent)
       child.setAttribute('test', 'value')
       parent.removeChild(child)
-      @recorder.observers.mutation.flush()
+      @recorder.observersManager.stop()
       fixtures.cleanUp()
       fixtures.load('basic_replayer.html')
       events = Replayer.prepareEvents(events)
@@ -80,7 +84,7 @@ describe 'recording replaying integration tests', ->
       fixturesDocument().body.appendChild(n1)
       n2.appendChild(n3)
       n1.removeChild(n2)
-      @recorder.observers.mutation.flush()
+      @recorder.observersManager.stop()
       fixtures.cleanUp()
       fixtures.load('basic_replayer.html')
       events = Replayer.prepareEvents(events)

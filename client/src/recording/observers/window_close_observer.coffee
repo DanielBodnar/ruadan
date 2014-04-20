@@ -1,10 +1,10 @@
-EventEmitter = require('eventemitter').EventEmitter
+BaseObserver = require('./base_observer.coffee')
 WindowCloseEvent = require('../../events/visibility.coffee')
 
-class WindowCloseObserver extends EventEmitter
-  constructor: (@window) ->
-
-  WINDOW_CLOSED_EVENT: "window_closed"
+class WindowCloseObserver extends BaseObserver
+  EVENTS: {
+    WINDOW_CLOSED: "window_closed"
+  }
 
   observe: ->
     @window.addEventListener('beforeunload', @_onUnload, false)
@@ -13,7 +13,7 @@ class WindowCloseObserver extends EventEmitter
     @window.removeEventListener('beforeunload', @_onUnload, false)
 
   _onUnload: =>
-    @emit(@WINDOW_CLOSED_EVENT, new WindowCloseEvent())
+    @emit(@EVENTS.WINDOW_CLOSED, new WindowCloseEvent())
     null # prevents dialog box from opening
 
 module.exports = WindowCloseObserver

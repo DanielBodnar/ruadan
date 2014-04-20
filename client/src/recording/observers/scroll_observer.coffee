@@ -1,20 +1,21 @@
-EventEmitter = require('eventemitter').EventEmitter
 _ = require('lodash.custom')
+BaseObserver = require('./base_observer.coffee')
 ScrollEvent = require('../../events/scroll.coffee')
 
-class ScrollObserver extends EventEmitter
-  constructor: (@window) ->
-    @_throttledOnChange = _.throttle(@_onChange, 100)
+class ScrollObserver extends BaseObserver
+  EVENTS: {
+    SCROLL: 'scroll'
+  }
 
   observe: ->
-    @window.addEventListener('scroll', @_throttledOnChange, false)
+    @window.addEventListener(@EVENTS.SCROLL, @_onChange, false)
 
   disconnect: ->
-    @window.removeEventListener('scroll', @_throttledOnChange, false)
+    @window.removeEventListener(@EVENTS.SCROLL, @_onChange, false)
 
-  _onChange: (event) =>
-    @emit('scroll', new ScrollEvent(@window.scrollX, @window.scrollY, event.timeStamp))
-
+  _onChange: _.throttle((event) =>
+    @emit(@EVENTS.SCROLL, new ScrollEvent(@window.scrollX, @window.scrollY, event.timeStamp))
+  , 100)
 
 
 module.exports = ScrollObserver
