@@ -1,4 +1,4 @@
-EventEmitter = require('eventemitter').EventEmitter
+BaseObserver = require('./base_observer.coffee')
 Serializer = require('../../node/serializers/serializer.coffee')
 AttributeMutationEvent = require('../../events/mutation/attribute.coffee')
 CharacterDataMutationEvent = require('../../events/mutation/character_data.coffee')
@@ -7,14 +7,17 @@ RemoveNodesMutationEvent = require('../../events/mutation/remove_nodes.coffee')
 Window = require('../../helpers/window.coffee')
 
 
-class MutationObserverObserver extends EventEmitter
-  constructor: (@element, @nodeMap) ->
-    MutationObserver = Window.MutationObserver || Window.WebKitMutationObserver || Window.MozMutationObserver
+class MutationObserverObserver extends BaseObserver
+  EVENTS: {
+    CHANGE: 'change'
+  }
+
+  observe: ->
+    MutationObserver = @window.MutationObserver || @window.WebKitMutationObserver || @window.MozMutationObserver
     @observer = new MutationObserver( (mutations) =>
       @_onChange(mutations)
     )
 
-  observe: (options = {}) ->
     defaultOptions =
       childList: true
       attributes: true
@@ -36,7 +39,7 @@ class MutationObserverObserver extends EventEmitter
 
   _onChange: (mutations) ->
     result = Array.prototype.map.call(mutations, (mutation) => @_handleMutation(mutation))
-    @emit('change', result.filter( (mutation) -> mutation? )) # we remove nulls since handleMutation may return null
+    @emit(@EVENTS.CHANGE, result.filter( (mutation) -> mutation? )) # we remove nulls since handleMutation may return null
 
   # returns mutation event or null if event is not applicable.
   _handleMutation: (mutation) ->

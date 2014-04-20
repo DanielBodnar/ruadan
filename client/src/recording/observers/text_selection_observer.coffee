@@ -1,15 +1,16 @@
-EventEmitter = require('eventemitter').EventEmitter
+BaseObserver = require('./base_observer.coffee')
 SelectionEvent = require('../../events/selection.coffee')
 
-class TextSelectionObserver extends EventEmitter
-  EVENT_NAME = 'selectionchange'
-  constructor: (@document, @nodeMap) ->
+class TextSelectionObserver extends BaseObserver
+  EVENTS: {
+    SELECTION_CHANGED: 'select'
+  }
 
   observe: ->
-    @document.addEventListener(EVENT_NAME, @_onChange, true)
+    @document.addEventListener('selectionchange', @_onChange, true)
 
   disconnect: ->
-    @document.removeEventListener(EVENT_NAME, @_onChange, true)
+    @document.removeEventListener('selectionchange', @_onChange, true)
 
   _getSelection: (event) ->
     selection = @document.getSelection()
@@ -22,7 +23,7 @@ class TextSelectionObserver extends EventEmitter
     )
 
   _onChange: (event) =>
-    @emit('select', @_getSelection(event))
+    @emit(@EVENTS.SELECTION_CHANGED, @_getSelection(event))
 
 
 module.exports = TextSelectionObserver

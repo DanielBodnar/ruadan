@@ -1,13 +1,14 @@
-EventEmitter = require('eventemitter').EventEmitter
 VisibilityEvent = require('../../events/visibility.coffee')
+BaseObserver = require('./base_observer.coffee')
+
 
 # Detects if tab is visible to user.
 # Currently only detects if the tab is the active tab in a window.
 # It can't detect if a window is behind another.
-class VisibilityObserver extends EventEmitter
-  constructor: (@document) ->
-
-  VISIBILITY_EVENT: "visibility_changed"
+class VisibilityObserver extends BaseObserver
+  EVENTS: {
+    VISIBILITY: "visibility_changed"
+  }
 
   observe: ->
     @document.addEventListener('webkitvisibilitychange', @_onVisibilityChanged, false)
@@ -16,6 +17,6 @@ class VisibilityObserver extends EventEmitter
     @document.removeEventListener('webkitvisibilitychange', @_onVisibilityChanged, false)
 
   _onVisibilityChanged: =>
-    @emit(@VISIBILITY_EVENT, new VisibilityEvent(!document.webkitHidden))
+    @emit(@EVENTS.VISIBILITY, new VisibilityEvent(!@document.webkitHidden))
 
 module.exports = VisibilityObserver
