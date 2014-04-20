@@ -16,18 +16,3 @@ exports.autoload = autoload = (dir, app) ->
 # ['a', 'b', 'c'].last() => 'c'
 Array::last = ->
   this[this.length - 1]
-
-# Capitalize a string
-# string => String
-String::capitalize = () ->
-    this.replace /(?:^|\s)\S/g, (a) -> a.toUpperCase()
-
-# Classify a string
-# application_controller => ApplicationController
-String::classify = (str) ->
-  classified = []
-  words = str.split('_')
-  for word in words
-    classified.push word.capitalize()
-
-  classified.join('')

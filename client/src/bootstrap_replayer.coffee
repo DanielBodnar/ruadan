@@ -1,6 +1,6 @@
 Player = require('./replaying/player/player.coffee')
 EventDeserializer = require('./events/deserializer.coffee')
-
+baseURL = require('build_config/base_url.coffee')
 
 prepareEvents = (events)->
   events = events.map( (event) ->
@@ -20,7 +20,7 @@ doReplay = (events, document) ->
 
 getEvents = (session, document, cb)->
   request = new XMLHttpRequest()
-  request.open('GET', "//rlocal.giftsproject.com/view?sessionId=#{session}", true)
+  request.open('GET', "#{baseURL}/view?sessionId=#{session}", true)
 
   request.onload = ->
     if (request.status >= 200 && request.status < 400)
