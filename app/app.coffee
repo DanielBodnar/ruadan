@@ -1,24 +1,17 @@
 # Modules
-express = require 'express'
-http = require 'http'
+express = require('express')
 app = express()
-util = require('util')
 
-assets = require 'connect-assets'
-
-publicDir = __dirname + '/public'
-env = app.get 'env'
-
-# Boot setup
-require("#{__dirname}/../config/boot")(app)
+# Helpers setup
+requireApp("./config/helpers")(app)
+conf = requireApp('./config/config_manager.coffee')
 
 # Configuration
 app.configure ->
-  port = process.env.PORT || 3100
-  port = process.argv[process.argv.indexOf('-p') + 1] if process.argv.indexOf('-p') >= 0
-  app.set 'port', port
-  app.set 'views', "#{__dirname}/views"
-  app.set 'view engine', 'jade'
+
+  app.set 'port', conf.app.port
+  app.set 'views', "#{__dirname}/#{conf.app.views}"
+  app.set 'view engine', conf.app.views_engine
 
   app.use((req, res, next) ->
     res.header("Access-Control-Allow-Origin", "*")
@@ -28,8 +21,8 @@ app.configure ->
 
   app.use express.bodyParser({limit: '50mb'})
 
-  app.use express.static(__dirname + '/../public')
-  app.use express.static(__dirname + '/../bower_components')
+  app.use express.static("#{APP_ROOT}/public")
+  app.use express.static("#{APP_ROOT}/bower_components")
 
   app.use express.logger()
 
@@ -46,11 +39,9 @@ app.configure ->
 app.configure 'development', ->
   app.use express.errorHandler({showStack: true, dumpExceptions: true})
 
-
 # Routes
-require("#{__dirname}/routes")(app)
+requireApp("app/routes")(app)
 
+exports.app = app
 # Server
-http.createServer(app).listen(app.get('port'), ->
-  console.log "Express server listening on port #{app.get('port')} in #{app.settings.env} mode"
-)
+

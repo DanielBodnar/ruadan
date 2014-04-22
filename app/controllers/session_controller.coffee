@@ -1,4 +1,4 @@
-Session = require_app("app/models/session")
+Session = requireApp("app/models/session")
 
 module.exports = (app) ->
 

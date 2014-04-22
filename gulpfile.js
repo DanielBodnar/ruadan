@@ -1,3 +1,4 @@
+require('coffee-script/register');
 var gulp = require('gulp');
 var source = require('vinyl-source-stream');
 var watchify = require('watchify');
@@ -45,7 +46,6 @@ gulp.task('karma', function () {
 });
 
 gulp.task('mocha', function () {
-  require('coffee-script/register');
   require(PATHS.tests + '/spec_helper');
 
   gulp.src([PATHS.tests + '/**/*.{coffee,js}', '!' + PATHS.clientTests + '/**/*.{coffee,js}'], {read: false})
@@ -92,6 +92,9 @@ gulp.task('watch', function () {
   gulp.watch([PATHS.css + '/*.less'], ['css']);
 });
 
+gulp.task('set_test_env', function() {
+  process.env['NODE_ENV'] = 'test';
+});
 
 gulp.task('browserify_replayer', function () {
   var bundler = watchify(PATHS.client + '/src/bootstrap_replayer.coffee');
@@ -108,14 +111,24 @@ gulp.task('browserify_replayer', function () {
   return rebundle();
 });
 
-gulp.task('clear_redis', function() {
-  var Redis = require('redis');
-  Redis.createClient().flushdb();
+gulp.task('redis:clear', function() {
+  var store = require('./lib/redis_event_store.coffee');
+  store.getClient().flushdb();
+});
+
+var redisServer = null;
+gulp.task('redis:test:reload', function() {
+  var spawn = require('child_process').spawn;
+  if (redisServer) {
+    redisServer.kill('SIGHUP');
+  }
+
+  redisServer = spawn('redis-server', ['redis_test.conf']);
 });
 
 
 gulp.task('build', ['lint', 'browserify_replayer', 'browserify_recorder', 'css'], function(){});
-gulp.task('test', ['mocha', 'watch']);
-gulp.task('test-client', ['karma']);
+gulp.task('test', ['set_test_env', 'redis:test:reload', 'redis:clear', 'mocha', 'watch']);
+gulp.task('test_client', ['set_test_env', 'redis:test:reload', 'redis:clear', 'karma']);
 
 gulp.task('default', ['build', 'develop', 'watch'], function () {});

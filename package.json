@@ -13,7 +13,8 @@
     "hiredis": "*",
     "shortid": "*",
     "bluebird": "*",
-    "lodash": "*"
+    "lodash": "*",
+    "nconf": "^0.6.9"
   },
   "devDependencies": {
     "karma": "^0.12.1",
@@ -50,8 +51,7 @@
     "gulp-karma": "0.0.4",
     "karma-chrome-launcher": "^0.1.2",
     "js-fixtures": "^1.5.1",
-    "gulp-util": "^2.2.14",
-    "fakeredis": "^0.1.3"
+    "gulp-util": "^2.2.14"
   },
   "scripts": {
     "start": "gulp",

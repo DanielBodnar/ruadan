@@ -1,5 +1,5 @@
-EventStore = require_app("lib/redis_event_store")
-Event = require_app("app/models/event")
+EventStore = requireApp("lib/redis_event_store")
+Event = requireApp("app/models/event")
 
 class Session
   constructor: (id, name, startTimestamp, endTimestamp) ->
