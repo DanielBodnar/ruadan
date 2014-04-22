@@ -1,7 +1,6 @@
 RedisEventStore = rek('lib/redis_event_store')
 Promise = require("bluebird")
 Redis = require('redis')
-FakeRedis = require('fakeredis')
 ShortId = require('shortid')
 _ = require('lodash')
 
@@ -9,16 +8,12 @@ expect = chai.expect
 
 describe 'RedisEventStore', ->
   @timeout(500)
-  sandbox = sinon.sandbox.create()
-
-  myStubClient = FakeRedis.createClient()
 
   beforeEach ->
-    sandbox.stub(Redis, "createClient").returns(myStubClient)
+    @sandbox = sinon.sandbox.create()
 
   afterEach ->
-    myStubClient.flushdb()
-    sandbox.restore()
+    @sandbox.restore()
 
   it_should_return_a_promise = (func) ->
     it 'should return a promise', ->
@@ -33,7 +28,7 @@ describe 'RedisEventStore', ->
     sessionId = "someSessionId"
 
     beforeEach ->
-      sandbox.stub(ShortId, "generate").returns(sessionId)
+      @sandbox.stub(ShortId, "generate").returns(sessionId)
 
     it_should_return_a_promise(RedisEventStore.startSession)
 

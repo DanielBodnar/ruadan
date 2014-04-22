@@ -1,6 +1,6 @@
 _ = require('lodash')
-Event = require_app("app/models/event")
-Session = require_app("app/models/session")
+Event = requireApp("app/models/event")
+Session = requireApp("app/models/session")
 
 
 module.exports = (app) ->

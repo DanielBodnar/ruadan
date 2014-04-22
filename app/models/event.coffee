@@ -1,4 +1,4 @@
-EventStore = require_app("lib/redis_event_store")
+EventStore = requireApp("lib/redis_event_store")
 _ = require('lodash')
 
 class Event

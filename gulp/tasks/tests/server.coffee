@@ -5,7 +5,7 @@ mocha = require('gulp-mocha')
 
 PATHS = require('../paths.coffee')
 
-gulp.task('tests_ mocha', ->
+gulp.task('tests:server', ->
   require("#{PATHS.tests}/spec_helper")
 
   gulp.src([PATHS.tests + '/**/*.{coffee,js}', "!#{PATHS.clientTests}/**/*.{coffee,js}"], {read: false})

@@ -1,4 +1,4 @@
 gulp  = require('gulp')
-Redis = require('redis')
+store = require('./lib/redis_event_store.coffee')
 
-gulp.task('redis_clear', -> Redis.createClient().flushdb())
+gulp.task('redis:clear', -> store.getClient().flushdb())

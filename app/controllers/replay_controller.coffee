@@ -1,5 +1,5 @@
-Session = require_app("app/models/session")
-TimeHelpers = require_app("app/helpers/time.coffee")
+Session = requireApp("app/models/session")
+TimeHelpers = requireApp("app/helpers/time.coffee")
 
 module.exports = (app) ->
 

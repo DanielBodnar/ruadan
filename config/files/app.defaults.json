@@ -1,0 +1,7 @@
+{
+  "defaults": {
+    "port": 3100,
+    "views": "views",
+    "views_engine": "jade"
+  }
+}

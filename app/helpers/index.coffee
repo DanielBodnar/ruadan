@@ -1,16 +1,24 @@
-fs = require 'fs'
+fs = require('fs')
+path = require('path')
 
 # Recursively require a folder’s files
-exports.autoload = autoload = (dir, app) ->
-  fs.readdirSync(dir).forEach (file) ->
-    path = "#{dir}/#{file}"
-    stats = fs.lstatSync(path)
+exports.runForEachFile = runForEachFile = (dir, func)->
+  fs.readdirSync(dir).forEach((file) ->
+
+    file = path.join(dir, file)
+    stats = fs.lstatSync(file)
 
     # Go through the loop again if it is a directory
     if stats.isDirectory()
-      autoload path, app
+      runForEachFile(file, func)
     else
-      require(path)?(app)
+      func(file)
+  )
+
+exports.autoload = autoload = (dir, app) ->
+  runForEachFile(dir, (file)->
+    require(file)?(app)
+  )
 
 # Return last item of an array
 # ['a', 'b', 'c'].last() => 'c'

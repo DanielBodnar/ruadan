@@ -46,6 +46,9 @@ class EventStore
     zrangebyscoreAsync = _promisifyRedisCommand('zrangebyscore')
     zrangebyscoreAsync(_redisSessionEventsId(sessionId), 0, REDIS_POSITIVE_INFINITY)
 
+  @getClient: ->
+    _getClient()
+
   # returns a promise for a list of sessions matching to the given session keys
   # (basically, just get the timestamp for each session)
   @_getSessionsForIds: (sessionIds) ->
@@ -56,7 +59,6 @@ class EventStore
     )
 
     Promise.all(promises)
-
 
   #### PRIVATES #####################################################################
 
@@ -69,7 +71,8 @@ class EventStore
   # identified by the key 'session:<session_id>'
 
   _getClient = ->
-    _client || _client = Redis.createClient()
+    config = require('../config/config_manager.coffee')
+    _client || _client = Redis.createClient(config.redis.port, config.redis.host)
 
   _promisifyMethod = (obj, method) ->
     Promise.promisify(obj[method], obj)
