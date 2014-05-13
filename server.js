@@ -1,7 +1,7 @@
 require('coffee-script/register');
 
 var http = require('http');
-var app = require('./config/application.coffee');
+var app = require('./config/boot.coffee').app;
 
 
 http.createServer(app).listen(app.get('port'), function() {

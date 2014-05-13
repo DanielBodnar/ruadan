@@ -1,7 +1,7 @@
 gulp = require('gulp')
 watchify = require('watchify')
 gutil = require('gulp-util')
-transformBuildConfig = require('../../helpers/build_config_transform.coffee')
+transformBuildConfig = requireApp('./gulp/helpers/build_config_transform.coffee')
 rebundleHelper = require('./rebundle.coffee')
 
 PATHS = require('../paths.coffee')

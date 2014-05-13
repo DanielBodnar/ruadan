@@ -3,5 +3,11 @@
     "port": 3100,
     "views": "views",
     "views_engine": "jade"
+  },
+  "test": {
+    "base_url": "//rlocal.giftsproject.com"
+  },
+  "development": {
+    "base_url": "//rlocal.giftsproject.com"
   }
 }

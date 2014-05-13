@@ -6,7 +6,7 @@ BaseObserver = require('./base_observer.coffee')
 # Currently only detects if the tab is the active tab in a window.
 # It can't detect if a window is behind another.
 class VisibilityObserver extends BaseObserver
-  EVENTS: {
+  @EVENTS: {
     VISIBILITY: "visibility_changed"
   }
 
@@ -17,6 +17,6 @@ class VisibilityObserver extends BaseObserver
     @document.removeEventListener('webkitvisibilitychange', @_onVisibilityChanged, false)
 
   _onVisibilityChanged: =>
-    @emit(@EVENTS.VISIBILITY, new VisibilityEvent(!@document.webkitHidden))
+    @emit(@constructor.EVENTS.VISIBILITY, new VisibilityEvent(!@document.webkitHidden))
 
 module.exports = VisibilityObserver

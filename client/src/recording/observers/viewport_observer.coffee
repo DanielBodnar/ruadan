@@ -9,7 +9,7 @@ getHeight= (win) ->
   win.innerHeight
 
 class ViewportObserver extends BaseObserver
-  EVENTS: {
+  @EVENTS: {
     RESIZE: 'resize'
   }
 
@@ -31,7 +31,7 @@ class ViewportObserver extends BaseObserver
 #    clearInterval(@interval)
 
   _onChange: _.debounce((event) =>
-    @emit(@EVENTS.RESIZE, new ViewportEvent(@windowX, @windowY, getWidth(@window), getHeight(@window), event?.timeStamp))
+    @emit(@constructor.EVENTS.RESIZE, new ViewportEvent(@windowX, @windowY, getWidth(@window), getHeight(@window), event?.timeStamp))
   , 500)
 
 module.exports = ViewportObserver

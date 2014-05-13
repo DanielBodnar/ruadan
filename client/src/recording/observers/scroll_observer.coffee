@@ -3,19 +3,19 @@ BaseObserver = require('./base_observer.coffee')
 ScrollEvent = require('../../events/scroll.coffee')
 
 class ScrollObserver extends BaseObserver
-  EVENTS: {
+  @EVENTS: {
     SCROLL: 'scroll'
   }
 
   observe: ->
-    @window.addEventListener(@EVENTS.SCROLL, @_onChange, false)
+    @_throttledOnChange = _.throttle(@_onChange, 100)
+    @window.addEventListener(@constructor.EVENTS.SCROLL, @_throttledOnChange, false)
 
   disconnect: ->
-    @window.removeEventListener(@EVENTS.SCROLL, @_onChange, false)
+    @window.removeEventListener(@constructor.EVENTS.SCROLL, @_throttledOnChange, false)
 
-  _onChange: _.throttle((event) =>
-    @emit(@EVENTS.SCROLL, new ScrollEvent(@window.scrollX, @window.scrollY, event.timeStamp))
-  , 100)
+  _onChange: (event) =>
+    @emit(@constructor.EVENTS.SCROLL, new ScrollEvent(@window.scrollX, @window.scrollY, event.timeStamp))
 
 
 module.exports = ScrollObserver

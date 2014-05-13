@@ -1,4 +1,4 @@
-ObserverManager = require('./observers/observer_manager')
+ObserverManager = require('./observers/observer_manager.coffee')
 
 NodeMap = require('../node/node_map.coffee')
 
@@ -47,6 +47,7 @@ class Recorder
         @isRecording = true
         @observersManager.start(@_recordEvents.bind(@))
         @newPage(pageName)
+        console.log("::started recording::")
         callback(null, @sessionManager.getCurrentSession())
     )
 

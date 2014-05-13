@@ -8,7 +8,7 @@ Window = require('../../helpers/window.coffee')
 
 
 class MutationObserverObserver extends BaseObserver
-  EVENTS: {
+  @EVENTS: {
     CHANGE: 'change'
   }
 
@@ -39,7 +39,8 @@ class MutationObserverObserver extends BaseObserver
 
   _onChange: (mutations) ->
     result = Array.prototype.map.call(mutations, (mutation) => @_handleMutation(mutation))
-    @emit(@EVENTS.CHANGE, result.filter( (mutation) -> mutation? )) # we remove nulls since handleMutation may return null
+    filteredResult = result.filter( (mutation) -> mutation? ) # we remove nulls since handleMutation may return null
+    @emit(@constructor.EVENTS.CHANGE, filteredResult)
 
   # returns mutation event or null if event is not applicable.
   _handleMutation: (mutation) ->
@@ -63,7 +64,7 @@ class MutationObserverObserver extends BaseObserver
       when "childList"
         if (mutation.addedNodes.length > 0)
           parentId = @nodeMap.getNodeId(mutation.target)
-          return null unless parent?
+          return null unless parentId?
           return new AddNodesMutationEvent(
             Array.prototype.map.call(mutation.addedNodes, (node) => Serializer.serializeSubTree(node, @nodeMap)),
             parentId,

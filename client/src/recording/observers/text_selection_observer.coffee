@@ -2,7 +2,7 @@ BaseObserver = require('./base_observer.coffee')
 SelectionEvent = require('../../events/selection.coffee')
 
 class TextSelectionObserver extends BaseObserver
-  EVENTS: {
+  @EVENTS: {
     SELECTION_CHANGED: 'select'
   }
 
@@ -23,7 +23,7 @@ class TextSelectionObserver extends BaseObserver
     )
 
   _onChange: (event) =>
-    @emit(@EVENTS.SELECTION_CHANGED, @_getSelection(event))
+    @emit(@constructor.EVENTS.SELECTION_CHANGED, @_getSelection(event))
 
 
 module.exports = TextSelectionObserver

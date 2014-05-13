@@ -11,16 +11,6 @@ OBSERVERS = [
   require('./window_close_observer.coffee')
 ]
 
-
-_unbindObserverEvents= (observers) ->
-  for observer in observers
-    observer.unbindAllEvents()
-    observer.disconnect()
-
-_bindObserversEvents= (observers, cb)->
-  for observer in observers
-    observer.bindAllEvents(cb)
-
 class ObserverManager
   constructor: (window, rootElement, nodeMap)->
     @observers = []
@@ -40,6 +30,15 @@ class ObserverManager
   stop: ->
     _unbindObserverEvents(@observers)
     observer.disconnect() for observer in @observers
+
+  _unbindObserverEvents= (observers) ->
+    for observer in observers
+      observer.unbindAllEvents()
+      observer.disconnect()
+
+  _bindObserversEvents= (observers, cb)->
+    for observer in observers
+      observer.bindAllEvents(cb)
 
 
 

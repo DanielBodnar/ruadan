@@ -22,11 +22,11 @@ class BaseObserver extends EventEmitter
     @element = data.element
 
   bindAllEvents: (cb)->
-    for event in @EVENTS
+    for k, event of @constructor.EVENTS
       @on(event, cb)
 
   unbindAllEvents: ->
-    for event in @EVENTS
+    for k, event of @constructor.EVENTS
       @removeAllListeners(event)
 
 

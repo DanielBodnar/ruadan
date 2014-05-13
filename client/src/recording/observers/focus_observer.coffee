@@ -2,7 +2,7 @@ BaseObserver = require('./base_observer.coffee')
 FocusEvent = require('../../events/focus.coffee')
 
 class FocusObserver extends BaseObserver
-  EVENTS: {
+  @EVENTS: {
     FOCUS_CHANGED: "focus_changed"
   }
 
@@ -15,9 +15,9 @@ class FocusObserver extends BaseObserver
     @window.removeEventListener('blur', @_onBlur, false)
 
   _onFocus: =>
-    @emit(@EVENTS.FOCUS_CHANGED, new FocusEvent(true))
+    @emit(@constructor.EVENTS.FOCUS_CHANGED, new FocusEvent(true))
 
   _onBlur: =>
-    @emit(@EVENTS.FOCUS_CHANGED, new FocusEvent(false))
+    @emit(@constructor.EVENTS.FOCUS_CHANGED, new FocusEvent(false))
 
 module.exports = FocusObserver

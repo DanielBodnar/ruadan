@@ -3,7 +3,7 @@ gulp = require('gulp')
 
 PATHS = require('../paths.coffee')
 
-gulp.task('tests:frontend', ->
+gulp.task('test:frontend', ->
   gulp.src([
     PATHS.clientTests + '/**/*.{coffee,js}',
     './test/fixtures/client/**/*.*'

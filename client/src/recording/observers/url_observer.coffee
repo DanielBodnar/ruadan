@@ -2,7 +2,7 @@ BaseObserver = require('./base_observer.coffee')
 UrlEvent = require('../../events/url.coffee')
 
 class UrlObserver extends BaseObserver
-  EVENTS: {
+  @EVENTS: {
     URL_CHANGED: 'urlChanged'
   }
 
@@ -13,7 +13,7 @@ class UrlObserver extends BaseObserver
     @window.removeEventListener('hashchange', @_onChange, true)
 
   _onChange: (event) =>
-    @emit(@EVENTS.URL_CHANGED, new UrlEvent(event.oldURL, event.newURL, event.timeStamp))
+    @emit(@constructor.EVENTS.URL_CHANGED, new UrlEvent(event.oldURL, event.newURL, event.timeStamp))
 
 
 module.exports = UrlObserver

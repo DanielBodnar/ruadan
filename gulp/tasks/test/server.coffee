@@ -1,12 +1,11 @@
-require('coffee-script/register')
 gulp = require('gulp')
 plumber = require('gulp-plumber')
 mocha = require('gulp-mocha')
 
 PATHS = require('../paths.coffee')
 
-gulp.task('tests:server', ->
-  require("#{PATHS.tests}/spec_helper")
+gulp.task('test:server', ->
+  requireApp("#{PATHS.tests}/spec_helper")
 
   gulp.src([PATHS.tests + '/**/*.{coffee,js}', "!#{PATHS.clientTests}/**/*.{coffee,js}"], {read: false})
     .pipe(plumber())
