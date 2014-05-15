@@ -11,7 +11,11 @@ module.exports = (app) ->
   app.get '/replay/:sessionId', app.ReplayController.replay
   app.get '/replay', app.ReplayController.sessions
 
+# PhantomJs
+  app.get '/phantom/:sessionId', app.PhantomController.index
+
   app.get '/index', app.ApplicationController.index
+
 
   # Error handling (No previous route found. Assuming it’s a 404)
   app.get '/*', (req, res) ->

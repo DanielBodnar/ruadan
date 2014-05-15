@@ -88,7 +88,7 @@ class Recorder
       if (error?)
         console.error("Recording failed: " + error, event.toJson())
       else
-        console.log("Recorded", event.toJson())
+#        console.log("Recorded", event.toJson())
     )
 
 module.exports = Recorder

@@ -37,5 +37,6 @@ getEvents = (session, document, cb)->
 
 module.exports = window.bootstrapReplayer = {
   start: (session, document)-> getEvents(session, document, doReplay)
+  getEvents: getEvents
   prepareEvents: prepareEvents
 }

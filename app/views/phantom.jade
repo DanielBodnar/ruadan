@@ -1,0 +1,14 @@
+extends layout
+block content
+    script(src='//rlocal.giftsproject.com/build/replayer.js')
+    script.
+        var sessionId = "#{sessionId}";
+        console.log("bbbbb");
+        //window.callPhantom = window.callPhantom || function() {
+        //    console.log.apply(console, arguments)
+        //}
+        window.bootstrapReplayer.getEvents("#{sessionId}", window.document, function(events, document) {
+
+            window.callPhantom({ hello: 'world' });
+        });
+        //window.bootstrapReplayer.start("#{sessionId}", window.document)

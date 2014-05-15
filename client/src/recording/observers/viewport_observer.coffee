@@ -15,23 +15,24 @@ class ViewportObserver extends BaseObserver
 
   observe: ->
     @windowX = @windowY = 0
-    @window.addEventListener('resize', @_onChange, true)
+    @_debouncedOnChange = _.debounce(@_onChange, 100)
+    @window.addEventListener('resize', @_debouncedOnChange, true)
 #WHY DO WE NEED THIS?
-#    @interval = setInterval( ( =>
-#      newX = @window.screenLeft - @window.screen.availLeft
-#      newY = @window.screenTop - @window.screen.availTop
-#      if (@windowX != newX || @windowY != newY)
-#        @windowX = newX
-#        @windowY = newY
-#        @_onChange()
-#    ), 100)
+    @interval = setInterval( ( =>
+      newX = @window.screenLeft - @window.screen.availLeft
+      newY = @window.screenTop - @window.screen.availTop
+      if (@windowX != newX || @windowY != newY)
+        @windowX = newX
+        @windowY = newY
+        @_debouncedOnChange()
+    ), 100)
 
   disconnect: ->
     @window.removeEventListener('resize', @_debouncedOnChange, true)
 #    clearInterval(@interval)
 
-  _onChange: _.debounce((event) =>
-    @emit(@constructor.EVENTS.RESIZE, new ViewportEvent(@windowX, @windowY, getWidth(@window), getHeight(@window), event?.timeStamp))
-  , 500)
+  _onChange: (event) =>
+    resizeEvent = new ViewportEvent(@windowX, @windowY, getWidth(@window), getHeight(@window), event?.timeStamp)
+    @emit(@constructor.EVENTS.RESIZE, resizeEvent)
 
 module.exports = ViewportObserver
