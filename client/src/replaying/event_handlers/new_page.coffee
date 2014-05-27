@@ -20,6 +20,8 @@ class NewPage extends EventHandler
     rootDomNode = Deserializer.deserializeSubTree(@document.implementation.createHTMLDocument(),
                                                   snapshot,
                                                   @nodeMap)
+
+    rootDomNode.addEventListener("DOMContentLoaded", (-> debugger), false)
     @document.adoptNode(rootDomNode)
     @document.replaceChild(rootDomNode, @document.documentElement)
 

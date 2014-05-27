@@ -11,6 +11,6 @@ gulp.task('set_test_env', function() {
 requireDirectory(module, './gulp/tasks');
 
 
-gulp.task('build', ['lint', 'browserify_replayer', 'browserify_recorder', 'css'], function(){});
+gulp.task('build', ['lint', 'browserify_replayer', 'browserify_recorder', 'browserify_phantom', 'css'], function(){});
 gulp.task('test:all', ['set_test_env', 'tests:frontend', 'tests:server']);
 gulp.task('default', ['build', 'start_server', 'watch'], function () {});

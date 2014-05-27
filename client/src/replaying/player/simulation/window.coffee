@@ -2,6 +2,9 @@ EventEmitter = require('eventemitter').EventEmitter
 NodeMap = require('../../../node/node_map.coffee')
 Mouse = require("./mouse.coffee")
 
+handlers = [
+  
+]
 NewPageHandler = require('../../event_handlers/new_page.coffee')
 ScrollHandler = require('../../event_handlers/scroll.coffee')
 AddNodesHandler = require('../../event_handlers/mutation/add_nodes.coffee')
@@ -78,5 +81,6 @@ class Window extends EventEmitter
     @ui.chrome.appendChild(nofocusOverlay)
     @ui.chrome.appendChild(@ui.viewport)
     container.appendChild(@ui.chrome)
+
 
 module.exports = Window

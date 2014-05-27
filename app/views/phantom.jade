@@ -1,14 +1,24 @@
 extends layout
 block content
-    script(src='//rlocal.giftsproject.com/build/replayer.js')
+    script(src='//rlocal.giftsproject.com/build/phantom.js')
     script.
         var sessionId = "#{sessionId}";
-        console.log("bbbbb");
-        //window.callPhantom = window.callPhantom || function() {
-        //    console.log.apply(console, arguments)
-        //}
-        window.bootstrapReplayer.getEvents("#{sessionId}", window.document, function(events, document) {
+        var currentTimestamp = 0;
+        window.callPhantom = window.callPhantom || function() {
+            console.log.apply(console, arguments)
+        }
 
-            window.callPhantom({ hello: 'world' });
+        window.bootstrapPhantom.getEvents("#{sessionId}", function(ev) {
+            window.events = window.bootstrapPhantom.prepareEvents(ev);
+            window.simulator = new window.bootstrapPhantom.Simulator(window.events, window.document)
+            window.callPhantom("simulatorCreated");
         });
-        //window.bootstrapReplayer.start("#{sessionId}", window.document)
+
+        window.runNextTimestamp = function() {
+            var hasEvents = window.simulator.hasEventsForTargetTimestamp(currentTimestamp);
+            if (hasEvents) {
+                window.simulator.runToTimestamp(currentTimestamp)
+            }
+            currentTimestamp += 1;
+            return {hasEvents: hasEvents, timestamp: currentTimestamp}
+        }

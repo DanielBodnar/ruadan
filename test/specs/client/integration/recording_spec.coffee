@@ -57,7 +57,7 @@ describe 'recording replaying integration tests', ->
       fixtures.load('basic_replayer.html')
       events = Replayer.prepareEvents(events)
       simulator = new ReplaySimulator(events, fixturesDocument())
-      expect(->simulator.runEvents(events)).to.not.throw()
+      expect(->simulator._runEvents(events)).to.not.throw()
       expect(father.innerHTML).to.equal('<div class="b"></div><div class="c"></div>')
 
   describe "attribute on removed node", ->
@@ -73,7 +73,7 @@ describe 'recording replaying integration tests', ->
       fixtures.load('basic_replayer.html')
       events = Replayer.prepareEvents(events)
       simulator = new ReplaySimulator(events, fixturesDocument())
-      expect(->simulator.runEvents(events)).to.not.throw()
+      expect(->simulator._runEvents(events)).to.not.throw()
 
   describe "add node to removed parent", ->
     it "should replay the state correctly", ->
@@ -89,5 +89,5 @@ describe 'recording replaying integration tests', ->
       fixtures.load('basic_replayer.html')
       events = Replayer.prepareEvents(events)
       simulator = new ReplaySimulator(events, fixturesDocument())
-      expect(->simulator.runEvents(events)).to.not.throw()
+      expect(->simulator._runEvents(events)).to.not.throw()
 

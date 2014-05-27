@@ -1,5 +1,7 @@
 Timer = require('./timer.coffee')
 PlayerUI = require('./player_ui.coffee')
+EventDeserializer = require('../../events/deserializer.coffee')
+
 ReplaySimulator = require('./replay_simulator.coffee')
 
 class Player
@@ -79,5 +81,16 @@ class Player
       else
         @timer.setTime(0)
     )
+
+  @prepareEvents: (events)->
+    deserializedEvents = events.map( (event) ->
+      EventDeserializer.deserialize(event)
+    )
+
+    firstEventTimestamp = deserializedEvents[0].timestamp
+    deserializedEvents.forEach((event) ->
+      event.timestamp -= firstEventTimestamp
+    )
+    deserializedEvents
 
 module.exports = Player

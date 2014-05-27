@@ -3,30 +3,42 @@ require('./config/application.coffee');
 var spawn = require('child_process').spawn;
 var Session = require("./app/models/session.coffee");
 
+function startPhantom(lastSession, lastEventTimestamp){
+  var lastSessionId = lastSession.attributes.id;
+  console.log("::executing: 'phantomjs --load-images=true phantom.js " +
+      lastSessionId + ":"+
+      lastEventTimestamp + "'::");
+
+  var params = ["--load-images=true", "phantom.js", lastSessionId, lastEventTimestamp];
+  var phantom = spawn("phantomjs", params);
+
+  phantom.stdout.setEncoding("utf8");
+  phantom.stdout.on("data", function (data) {
+    console.log(data);
+  });
+
+  phantom.stderr.setEncoding("utf8");
+  phantom.stderr.on("data", function (data) {
+    console.log("stderr: " + data);
+  });
+}
 
 console.log("::Getting all sessions::");
+
 Session.all().then(function(sessions) {
     if (sessions.length === 0) {
-      throw 'no sessions';
+      throw "no sessions";
     } else {
-      var sessionsIds = sessions.map( function(session) {
-        return session.attributes.id;
-      });
 
-      var lastSession = sessionsIds[sessionsIds.length-1];
+      var lastSession = sessions[sessions.length-1];
 
-      console.log("::executing: '" + 'phantomjs --load-images=true phantom.js ' + lastSession + "'::");
+      lastSession.getEvents().then( function(events) {
 
-      var phantom = spawn('phantomjs',['--load-images=true', 'phantom.js', lastSession]);
+        var firstEventTimestamp = events[0].attributes.timestamp;
+        var lastEvent = events[events.length-1];
+        var lastEventTimestamp = lastEvent.attributes.timestamp - firstEventTimestamp;
 
-      phantom.stdout.setEncoding('utf8');
-      phantom.stdout.on('data', function (data) {
-        console.log("data", data);
-      });
-
-      phantom.stderr.setEncoding('utf8');
-      phantom.stderr.on('data', function (data) {
-        console.log('stderr: ' + data);
+        startPhantom(lastSession, lastEventTimestamp);
       });
     }
 });

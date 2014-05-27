@@ -24,6 +24,15 @@ class RemoveNodes extends EventHandler
 
   handle: (event) ->
     parent = @nodeMap.getNode(event.data.parentId)
-    event.data.removedNodeIds.map(@nodeMap.getNode.bind(@nodeMap)).filter(isRealChild.bind(@, parent)).forEach(parent.removeChild.bind(parent))
+    event.data.removedNodeIds
+      .map((id)=>
+        @nodeMap.getNode(id)
+      )
+      .filter((node)=>
+        isRealChild(parent, node)
+      )
+      .forEach((node)=>
+        parent.removeChild(node)
+      )
 
 module.exports = RemoveNodes

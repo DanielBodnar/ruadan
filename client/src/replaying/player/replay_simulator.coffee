@@ -12,29 +12,38 @@ class ReplaySimulator extends EventEmitter
     @desktop.closeAllWindows()
     @emit("reset")
 
+  hasEventsForTargetTimestamp: (targetTimestamp)->
+    eventsToRun = @_getEventsInRange(@lastPlayedTimestamp, targetTimestamp)
+    eventsToRun.length>0
+
   runToTimestamp: (targetTimestamp) ->
-    if (targetTimestamp < @lastPlayedTimestamp)
-      @resetDocument()
-      @runToTimestamp(targetTimestamp)
-    else
-      eventsToRun = @getEventsInRange(@lastPlayedTimestamp, targetTimestamp)
-      if (eventsToRun.length > 0)
-        @runEvents(eventsToRun)
-        @lastPlayedTimestamp = eventsToRun[eventsToRun.length - 1].timestamp
+    @resetDocument() if (targetTimestamp < @lastPlayedTimestamp)
 
-        if (@lastPlayedTimestamp == @events[@events.length - 1].timestamp)
-          @emit("simulationEnd")
+    eventsToRun = @_getEventsInRange(@lastPlayedTimestamp, targetTimestamp)
 
-  getEventsInRange: (start, end) ->
-    result = []
-    for event in @events
-      if ((start == null || event.timestamp > start) && (end == null || event.timestamp <= end))
-        result.push(event)
-    result
+    @_runEvents(eventsToRun)
 
-  runEvents: (events) ->
+    @lastPlayedTimestamp = targetTimestamp
+
+    if @lastPlayedTimestamp >= @getLastTimestamp(@events)
+      @emit("simulationEnd")
+
+  _getEventsInRange: (start, end) ->
+    _(@events)
+    .filter((event)->
+      start == null || event.timestamp > start
+    ).filter((event)->
+      end == null || event.timestamp <= end
+    ).value()
+
+  _runEvents: (events) ->
     events.forEach( (event) =>
       @desktop.getWindow(event.getWindowId()).runEvent(event)
     )
+
+  getLastTimestamp: (events)->
+    events[events.length - 1].timestamp
+
+
 
 module.exports = ReplaySimulator
