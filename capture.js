@@ -3,13 +3,13 @@ require('./config/application.coffee');
 var spawn = require('child_process').spawn;
 var Session = require("./app/models/session.coffee");
 
-function startPhantom(lastSession, lastEventTimestamp){
+function startPhantom(lastSession, lastEventTimestamp, width, height) {
   var lastSessionId = lastSession.attributes.id;
   console.log("::executing: 'phantomjs --load-images=true phantom.js " +
-      lastSessionId + ":"+
-      lastEventTimestamp + "'::");
+    lastSessionId + ":" +
+    lastEventTimestamp + "'::");
 
-  var params = ["--load-images=true", "phantom.js", lastSessionId, lastEventTimestamp];
+  var params = ["--load-images=true", "phantom.js", lastSessionId, lastEventTimestamp, width, height];
   var phantom = spawn("phantomjs", params);
 
   phantom.stdout.setEncoding("utf8");
@@ -25,20 +25,41 @@ function startPhantom(lastSession, lastEventTimestamp){
 
 console.log("::Getting all sessions::");
 
-Session.all().then(function(sessions) {
-    if (sessions.length === 0) {
-      throw "no sessions";
-    } else {
+Session.all().then(function (sessions) {
+  if (sessions.length === 0) {
+    throw "no sessions";
+  } else {
 
-      var lastSession = sessions[sessions.length-1];
+    var lastSession = sessions[sessions.length - 1];
 
-      lastSession.getEvents().then( function(events) {
+    lastSession.getEvents().then(function (events) {
+      var width = 0;
+      var height = 0;
+      events.forEach(function (event) {
+        switch(event.attributes.action){
+          case "viewport":
+            console.dir(event);
+            break;
+          case "newPage":
+            var data = events[0].attributes.data.viewport.data;
+            var tempWidth = data.left + data.width;
+            var tempHeight = data.top + data.height;
 
-        var firstEventTimestamp = events[0].attributes.timestamp;
-        var lastEvent = events[events.length-1];
-        var lastEventTimestamp = lastEvent.attributes.timestamp - firstEventTimestamp;
+            if(tempWidth>width){
+              width = tempWidth;
+            }
 
-        startPhantom(lastSession, lastEventTimestamp);
+            if(tempHeight>height) {
+              height = tempHeight;
+            }
+            break;
+        }
       });
-    }
+      var firstEventTimestamp = events[0].attributes.timestamp;
+      var lastEvent = events[events.length - 1];
+      var lastEventTimestamp = lastEvent.attributes.timestamp - firstEventTimestamp;
+
+      startPhantom(lastSession, lastEventTimestamp, width, height);
+    });
+  }
 });

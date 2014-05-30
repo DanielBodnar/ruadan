@@ -3,8 +3,12 @@ var args = require('system').args;
 
 var sessionId = args[1];
 var lastEventTimestamp = args[2];
+var width = args[3];
+var height = args[4];
+
 var currentTimestamp = 0;
 var timeout = null;
+var count = 0;
 
 function didRecordAll(){
   return currentTimestamp > lastEventTimestamp;
@@ -24,6 +28,7 @@ function takeSnapshotNow() {
       takeSnapshotNow();
     },0);
   } else {
+    page.viewportSize = { width: width, height: height };
     page.render('movie_export/' + currentTimestamp + '.png')
     timeout = setTimeout(function () {
       takeSnapshot();
@@ -61,10 +66,20 @@ page.onConsoleMessage = function (msg, lineNum, sourceId) {
   console.log('CONSOLE: ' + msg + ' (from line #' + lineNum + ' in "' + sourceId + '")');
 };
 
-page.onResourceRequested = function(requestData, networkRequest) {
-  console.log('Request (#' + requestData.id + '): ',
-      JSON.stringify(requestData),
-      JSON.stringify(networkRequest));
+page.onResourceReceived = function (res) {
+  if (!res.stage || res.stage === 'end') {
+    count -= 1;
+    if (count === 0) {
+      clearTimeout(timeout);
+      timeout = setTimeout(takeSnapshot, 100);
+    }
+  }
+};
+
+
+page.onResourceRequested = function (req) {
+  count += 1;
+  clearTimeout(timeout);
 };
 
 page.onError = function (msg, trace) {
@@ -79,8 +94,9 @@ page.onError = function (msg, trace) {
   console.error(msgStack.join('\n'));
 };
 
+page.viewportSize = { width: width, height: height };
+page.paperSize = { width: width+"px", height: height+"px", border: '0px' };
 page.open('http://rlocal.giftsproject.com/phantom/' + sessionId, function (status) {
-  console.log(status);
   if (status !== 'success') {
     throw 'Unable to access network';
   }

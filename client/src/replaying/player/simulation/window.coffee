@@ -1,10 +1,7 @@
 EventEmitter = require('eventemitter').EventEmitter
 NodeMap = require('../../../node/node_map.coffee')
 Mouse = require("./mouse.coffee")
-
-handlers = [
-  
-]
+_ = require('lodash')
 NewPageHandler = require('../../event_handlers/new_page.coffee')
 ScrollHandler = require('../../event_handlers/scroll.coffee')
 AddNodesHandler = require('../../event_handlers/mutation/add_nodes.coffee')
@@ -34,8 +31,9 @@ class Window extends EventEmitter
     @emit("closed")
 
   runEvent: (event) ->
-    handler = @eventHandlers.filter( (h) -> h.canHandle(event) )[0]
+    handler = _.find(@eventHandlers, (h) -> h.canHandle(event) )
     if (handler)
+      debugger
       handler.handle(event)
     else
       console.error("No event handler found for event", event)
@@ -62,6 +60,7 @@ class Window extends EventEmitter
 
     @eventHandlers = @eventHandlers.concat(url, scroll, viewport, newPage)
 
+
   _initUI: (container) ->
     @ui = {
       chrome: @document.createElement("DIV")
@@ -81,6 +80,5 @@ class Window extends EventEmitter
     @ui.chrome.appendChild(nofocusOverlay)
     @ui.chrome.appendChild(@ui.viewport)
     container.appendChild(@ui.chrome)
-
 
 module.exports = Window
