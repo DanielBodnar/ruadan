@@ -40,7 +40,7 @@ exclude = [
 ];
 
 proxies = {
-  '/': 'http://rlocal.giftsproject.com/'
+  '/': 'http://rlocal/'
 };
 
 // test results reporter to use

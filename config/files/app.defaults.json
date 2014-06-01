@@ -5,9 +5,9 @@
     "views_engine": "jade"
   },
   "test": {
-    "base_url": "//rlocal.giftsproject.com"
+    "base_url": "//rlocal"
   },
   "development": {
-    "base_url": "//rlocal.giftsproject.com"
+    "base_url": "//rlocal"
   }
 }

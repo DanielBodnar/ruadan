@@ -1,1 +1,1 @@
-module.exports = '//rlocal.giftsproject.com'
+module.exports = '//rlocal'

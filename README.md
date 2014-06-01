@@ -21,6 +21,8 @@ By recording various user interactions, like:
 * selection
 * DOM mutations
 
+and a few more
+
 We can serialize and see what exactly a user been doing on your website, to later on replay that.
 
 # Using
@@ -35,31 +37,43 @@ Currently, only the redis running on the local machine is supported.
 
 ## Running
 
-Create a bookmarklet that begins recording:
-
-```
-javascript:(function () {  
-	var ga = document.createElement('script');  
-	ga.type = 'text/javascript';  
-	ga.async = true;  
-	ga.src = ('http://127.0.0.1:3000/build/recorder.js');
-	document.getElementsByTagName("head")[0].appendChild(ga);
-})()
-```
-
-
 Clone the project and initialize the server by simply running
 
 ```
 > gulp
 ```
 
-Go to some site, preferebly a single page application site, and click the record bookmarklet.
-After you're done recording, goto: ``` http://127.0.0.1:3000/replay ```
-You should see the replay of your interaction.
+goto the index page at `http://rlocal/index` and create a bookmarklet for each link
+
+
+Go to some site, preferably a single page application site.
+
+to record a page do:
+- "load"
+- "record"
+
+to continue an existing recording(if you got a redirect) call:
+- "load"
+- "continue"
+
+to stop recording:
+- "stop"
+
+
+After you're done recording, goto: ``` http://rlocal/replay ```
 
 # Limitations
 
 * Ruadan does not serialize images/assets/fonts, so it'll get them again from your server
-* Iframes are not serialized, tracked
-* Flash is not supported
+* Iframes are not serialized or tracked
+* Flash is not supported, nor will it be
+
+
+
+# TODO
+- Many more tests
+- Add performance tests
+- Finalize the movie creation branch
+- Add a storage layer to decouple the recording from transmission to the server
+
+
